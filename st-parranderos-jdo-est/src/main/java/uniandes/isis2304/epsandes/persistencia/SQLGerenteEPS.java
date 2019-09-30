@@ -70,95 +70,12 @@ class SQLGerenteEPS
 	 * @param sedes - El número de sedes del bar
 	 * @return El número de tuplas insertadas
 	 */
-	public long adicionarAdministradorEPS (PersistenceManager pm, long idBar, String nombre, String ciudad, String presupuesto, int sedes) 
+	public long adicionarAdministradorEPS (PersistenceManager pm, long id, String nombre, String rol, int idEPS) 
 	{
-        Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaBar () + "(id, nombre, ciudad, presupuesto, cantsedes) values (?, ?, ?, ?, ?)");
-        q.setParameters(idBar, nombre, ciudad, presupuesto, sedes);
+        Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaEPS () + "(id, nombre, rol, idEPS) values (?, ?, ?, ?)");
+        q.setParameters(id, nombre, rol, idEPS);
         return (long) q.executeUnique();
 	}
 
-	/**
-	 * Crea y ejecuta la sentencia SQL para eliminar BARES de la base de datos de Parranderos, por su nombre
-	 * @param pm - El manejador de persistencia
-	 * @param nombreBar - El nombre del bar
-	 * @return EL número de tuplas eliminadas
-	 */
-	public long eliminarBaresPorNombre (PersistenceManager pm, String nombreBar)
-	{
-        Query q = pm.newQuery(SQL, "DELETE FROM " + pp.darTablaBar () + " WHERE nombre = ?");
-        q.setParameters(nombreBar);
-        return (long) q.executeUnique();
-	}
-
-	/**
-	 * Crea y ejecuta la sentencia SQL para eliminar UN BAR de la base de datos de Parranderos, por su identificador
-	 * @param pm - El manejador de persistencia
-	 * @param idBar - El identificador del bar
-	 * @return EL número de tuplas eliminadas
-	 */
-	public long eliminarBarPorId (PersistenceManager pm, long idBar)
-	{
-        Query q = pm.newQuery(SQL, "DELETE FROM " + pp.darTablaBar () + " WHERE id = ?");
-        q.setParameters(idBar);
-        return (long) q.executeUnique();
-	}
-
-	/**
-	 * Crea y ejecuta la sentencia SQL para encontrar la información de UN BAR de la 
-	 * base de datos de Parranderos, por su identificador
-	 * @param pm - El manejador de persistencia
-	 * @param idBar - El identificador del bar
-	 * @return El objeto BAR que tiene el identificador dado
-	 */
-	public AdministradorEPS darBarPorId (PersistenceManager pm, long idBar) 
-	{
-		Query q = pm.newQuery(SQL, "SELECT * FROM " + pp.darTablaBar () + " WHERE id = ?");
-		q.setResultClass(AdministradorEPS.class);
-		q.setParameters(idBar);
-		return (AdministradorEPS) q.executeUnique();
-	}
-
-	/**
-	 * Crea y ejecuta la sentencia SQL para encontrar la información de LOS BARES de la 
-	 * base de datos de Parranderos, por su nombre
-	 * @param pm - El manejador de persistencia
-	 * @param nombreBar - El nombre de bar buscado
-	 * @return Una lista de objetos BAR que tienen el nombre dado
-	 */
-	public List<AdministradorEPS> darBaresPorNombre (PersistenceManager pm, String nombreBar) 
-	{
-		Query q = pm.newQuery(SQL, "SELECT * FROM " + pp.darTablaAdministradorEPS () + " WHERE nombre = ?");
-		q.setResultClass(AdministradorEPS.class);
-		q.setParameters(nombreBar);
-		return (List<AdministradorEPS>) q.executeList();
-	}
-
-	/**
-	 * Crea y ejecuta la sentencia SQL para encontrar la información de LOS BARES de la 
-	 * base de datos de Parranderos
-	 * @param pm - El manejador de persistencia
-	 * @return Una lista de objetos BAR
-	 */
-	public List<AdministradorEPS> darBares (PersistenceManager pm)
-	{
-		Query q = pm.newQuery(SQL, "SELECT * FROM " + pp.darTablaAdministradorEPS ());
-		q.setResultClass(AdministradorEPS.class);
-		return (List<AdministradorEPS>) q.executeList();
-	}
-
-	/**
-	 * Crea y ejecuta la sentencia SQL para aumentar en uno el número de sedes de los bares de la 
-	 * base de datos de Parranderos
-	 * @param pm - El manejador de persistencia
-	 * @param ciudad - La ciudad a la cual se le quiere realizar el proceso
-	 * @return El número de tuplas modificadas
-	 */
-	/**
-	public long aumentarSedesBaresCiudad (PersistenceManager pm, String ciudad)
-	{
-        Query q = pm.newQuery(SQL, "UPDATE " + pp.darTablaAdministradorEPS () + " SET cantsedes = cantsedes + 1 WHERE ciudad = ?");
-        q.setParameters(ciudad);
-        return (long) q.executeUnique();
-	}
-	*/
+	
 }

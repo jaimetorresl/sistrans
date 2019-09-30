@@ -2,26 +2,30 @@ package uniandes.isis2304.epsandes.negocio;
 
 public class ServicioSalud implements VOServicioSalud{
 
-	private int capacidad;
-
-	private String horarioAtencion;
-
-	private long id;
 	
-	private String nombre;
+	private long id;
 
+	private String horaInicio;
+	
+	private String horaFin;
 
-
-
+	private String codigoTipoSS;
+	
+	private long idPaciente;
+	
+	private long idIPS;
+	
 	/**
 	 * Constructor por defecto
 	 */
 	public ServicioSalud() {
 
-		horarioAtencion = "";
-		capacidad = 0;
 		id = 0;
-		nombre = "";
+		horaInicio ="";
+		horaFin = "";
+		codigoTipoSS = "";
+		idPaciente = 0;
+		idIPS = 0;
 		
 	}
 	
