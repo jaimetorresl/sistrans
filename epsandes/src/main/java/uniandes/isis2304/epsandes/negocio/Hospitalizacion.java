@@ -12,7 +12,9 @@ public class Hospitalizacion implements VOHospitalizacion{
 	
 	private long idIPS;
 	
+	private int capacidad;
 	
+	private String horarioSemanal;
 	
 	public Hospitalizacion() {
 		
@@ -21,17 +23,21 @@ public class Hospitalizacion implements VOHospitalizacion{
 		esAfiliado = "";
 		numVisitas = 0;
 		idIPS = 0;
+		capacidad = 0;
+		horarioSemanal = "";
 		
 	}
 	
 	
-	public Hospitalizacion(long id, String ordenPrevia, String esAfiliado, int numVisitas, long idIPS) {
+	public Hospitalizacion(long id, String ordenPrevia, String esAfiliado, int numVisitas, long idIPS, int capacidad, String horarioSemanal) {
 		
 		this.id = id;
 		this.ordenPrevia = ordenPrevia;
 		this.esAfiliado = esAfiliado;
 		this.numVisitas = numVisitas;
 		this.idIPS = idIPS;
+		this.capacidad = capacidad;
+		this.horarioSemanal = horarioSemanal;
 		
 	}
 
@@ -64,13 +70,26 @@ public class Hospitalizacion implements VOHospitalizacion{
 		// TODO Auto-generated method stub
 		return idIPS;
 	}
+	
+	@Override
+	public int getCapacidad() {
+		// TODO Auto-generated method stub
+		return capacidad;
+	}
+
+
+	@Override
+	public String getHorarioSemanal() {
+		// TODO Auto-generated method stub
+		return horarioSemanal;
+	}
 
 
 	@Override
 	public String toString() {
 		return "Hospitalizacion [id=" + id + ", ordenPrevia=" + ordenPrevia + ", esAfiliado=" + esAfiliado
-				+ ", numVisitas=" + numVisitas + ", idIPS=" + idIPS + "]";
+				+ ", numVisitas=" + numVisitas + ", idIPS=" + idIPS + ", capacidad=" + capacidad + ", horarioSemanal="
+				+ horarioSemanal + "]";
 	}
-	
 
 }

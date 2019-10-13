@@ -178,46 +178,46 @@ public class EPSAndes {
 	 * 			M�todos para manejar los Servicios de salud
 	 *****************************************************************/
 
-	public Consulta registrarConsulta(String esAfiliado, String ordenPrevia, long idIPS)
+	public Consulta registrarConsulta(String esAfiliado, String ordenPrevia, long idIPS, int capacidad, String horarioSemanal)
 	{	
 		Consulta consulta;
 
 		log.info ("Adicionando consulta de la IPS: " + idIPS);
-		consulta = pp.adicionarConsulta(esAfiliado, ordenPrevia, idIPS);
+		consulta = pp.adicionarConsulta(esAfiliado, ordenPrevia, idIPS, capacidad, horarioSemanal);
 		log.info ("Adicionando consulta: " + consulta);
 		return consulta;
 
 	}
 	
 	
-	public Terapia registrarTerapia(String ordenPrevia, String esAfiliado, int numSesiones, String tipoTerapia, long idIPS)
+	public Terapia registrarTerapia(String ordenPrevia, String esAfiliado, int numSesiones, String tipoTerapia, long idIPS, int capacidad, String horarioSemanal)
 	{	
 		Terapia terapia;
 
 		log.info ("Adicionando terapia tipo: " + tipoTerapia);
-		terapia = pp.adicionarTerapia(ordenPrevia, esAfiliado, numSesiones, tipoTerapia, idIPS);
+		terapia = pp.adicionarTerapia(ordenPrevia, esAfiliado, numSesiones, tipoTerapia, idIPS, capacidad, horarioSemanal);
 		log.info ("Adicionando terapia: " + terapia);
 		return terapia;
 
 	}
 	
-	public ProcedimientoEsp registraProcedimientoEsp(String ordenPrevia, String esAfiliado, String conocimiento, String equipo, long idIPS)
+	public ProcedimientoEsp registraProcedimientoEsp(String ordenPrevia, String esAfiliado, String conocimiento, String equipo, long idIPS, int capacidad, String horarioSemanal)
 	{	
 		ProcedimientoEsp procedimiento;
 
 		log.info ("Adicionando procedimiento cono conocimiento en: " + conocimiento);
-		procedimiento = pp.adicionarProcedimiento(ordenPrevia, esAfiliado, conocimiento, equipo, idIPS);
+		procedimiento = pp.adicionarProcedimiento(ordenPrevia, esAfiliado, conocimiento, equipo, idIPS, capacidad, horarioSemanal);
 		log.info ("Adicionando procedimiento: " + procedimiento);
 		return procedimiento;
 
 	}
 	
-	public Hospitalizacion registrarHospitalizacion(String ordenPrevia, String esAfiliado, int numVisitas, long idIPS)
+	public Hospitalizacion registrarHospitalizacion(String ordenPrevia, String esAfiliado, int numVisitas, long idIPS, int capacidad, String horarioSemanal)
 	{	
 		Hospitalizacion hospitalizacion;
 
 		log.info ("Adicionando una hospitalizacion a la IPS: " + idIPS);
-		hospitalizacion = pp.adicionarHospitalizacion(ordenPrevia, esAfiliado, numVisitas, idIPS);
+		hospitalizacion = pp.adicionarHospitalizacion(ordenPrevia, esAfiliado, numVisitas, idIPS, capacidad, horarioSemanal);
 		log.info ("Adicionando hospitalizacion: " + hospitalizacion);
 		return hospitalizacion;
 
@@ -225,39 +225,20 @@ public class EPSAndes {
 	
 	
 	
+	/* ****************************************************************
+	 * 			M�todos para manejar los Servicios de cita
+	 *****************************************************************/
 	
-	
-	public void registrarOrdenServicioSalud(long idServicioSalud, long idMedico, long idAfiliado) {
+	public Cita registrarCita(String horaInicio, String horaFin, long idMedico, long idConsulta, long idTerapia, long idProcedimientoEsp, long idHospitalizacion) {
+		
+		Cita cita;
 
-
-		log.info("Registrando orden de servicio de salud");
-		pp.registrarOrdenServicioSalud(idServicioSalud, idMedico, idAfiliado);
-		log.info("Orden de servicio de salud registrado");
-
-
+		log.info ("Adicionando cita que empieza a las: " + horaInicio + " y termina a las: " + horaFin);
+		cita = pp.adicionarCita(horaInicio, horaFin, idMedico, idConsulta, idTerapia, idProcedimientoEsp, idHospitalizacion);
+		log.info ("Adicionando cita: " + cita);
+		return cita;
+		
 	}
-
-
-	public void reservarServicioSalud(long idAfiliado, long idServicio) {
-
-		log.info("Realizando reserva de servicio de salud");
-		pp.reservarServicioSalud(idAfiliado, idServicio);
-		log.info("Reserva de servicio de salud registrado");
-
-	}
-
-
-	public void registrarPrestServicio(long idServicio, long idAfiliado) {
-
-		log.info("Registrando prestacion de servicio de salud");
-		pp.registrarPrestServicio(idAfiliado, idServicio);
-		log.info("Prestacion de servicio de salud registrado");
-
-
-	}
-
-
-
 
 
 	/* ****************************************************************
