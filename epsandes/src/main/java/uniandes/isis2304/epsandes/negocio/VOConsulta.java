@@ -31,6 +31,10 @@ public interface VOConsulta {
 	
 	public long getIdIPS();
 	
+	public int getCapacidad();
+	
+	public String getHorarioSemanal();
+	
 	
 	
 	
