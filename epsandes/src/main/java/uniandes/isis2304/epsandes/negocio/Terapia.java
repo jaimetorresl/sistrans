@@ -14,6 +14,10 @@ public class Terapia implements VOTerapia{
 	
 	private long idIPS;
 	
+	private int capacidad;
+	
+	private String horarioSemanal;
+	
 	
 	public Terapia() {
 		
@@ -23,10 +27,12 @@ public class Terapia implements VOTerapia{
 		numSesiones = 0;
 		tipoTerapia = "";
 		idIPS = 0;
+		capacidad = 0;
+		horarioSemanal = "";
 		
 	}
 	
-	public Terapia(long id, String ordenPrevia, String esAfiliado, int numSesiones, String tipoTerapia, long idIPS) {
+	public Terapia(long id, String ordenPrevia, String esAfiliado, int numSesiones, String tipoTerapia, long idIPS, int capacidad, String horarioSemanal) {
 		
 		this.id = id;
 		this.ordenPrevia = ordenPrevia;
@@ -34,6 +40,8 @@ public class Terapia implements VOTerapia{
 		this.numSesiones = numSesiones;
 		this.tipoTerapia = tipoTerapia;
 		this.idIPS = idIPS;
+		this.capacidad = capacidad;
+		this.horarioSemanal = horarioSemanal;
 		
 	}
 	
@@ -74,4 +82,24 @@ public class Terapia implements VOTerapia{
 		return idIPS;
 	}
 
+	@Override
+	public int getCapacidad() {
+		// TODO Auto-generated method stub
+		return capacidad;
+	}
+
+	@Override
+	public String getHorarioSemanal() {
+		// TODO Auto-generated method stub
+		return horarioSemanal;
+	}
+
+	@Override
+	public String toString() {
+		return "Terapia [id=" + id + ", ordenPrevia=" + ordenPrevia + ", esAfiliado=" + esAfiliado + ", numSesiones="
+				+ numSesiones + ", tipoTerapia=" + tipoTerapia + ", idIPS=" + idIPS + ", capacidad=" + capacidad
+				+ ", horarioSemanal=" + horarioSemanal + "]";
+	}
+
+	
 }

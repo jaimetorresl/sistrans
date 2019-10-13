@@ -78,14 +78,14 @@ public class EPSAndes {
 		log.info ("Registrando eps: " + nombre);
 
 
-			eps = pp.registrarEPS(nombre);
-			log.info ("EPS registrada: " + nombre);
+		eps = pp.registrarEPS(nombre);
+		log.info ("EPS registrada: " + nombre);
 
 
 		return eps;
 
 	}
-	
+
 
 	/* ****************************************************************
 	 * 			M�todos para manejar las IPS
@@ -105,50 +105,52 @@ public class EPSAndes {
 		return ips;
 
 	}
-	
-	
+
+
 	/* ****************************************************************
 	 * 			M�todos para manejar los USUARIOS
 	 *****************************************************************/
-	public UsuarioEPS registrarUsuarioEPS (String nombre, String estado, long numDocumento, int tipoDocumento, String fechaNacimiento, long idEPS, String esAfiliado, String correo)
+	public UsuarioIPS registrarUsuarioIPS (String nombre, String estado, long numDocumento, int tipoDocumento, String fechaNacimiento, long idEPS, String esAfiliado, String correo)
 	{	
-		UsuarioEPS usuarioEPS;
-		
-		log.info ("Adicionando usuarioEPS: " + nombre);
-        UsuarioEPS usuarioEPS = pp.adicionarUsuarioEPS (nombre, presupuesto, ciudad);
-        log.info ("Adicionando usuarioEPS: " + usuarioEPS);
-        return usuarioEPS;
+		UsuarioIPS usuarioIPS;
+
+		log.info ("Adicionando usuarioIPS: " + nombre);
+		usuarioIPS = pp.adicionarUsuarioIPS (nombre, estado, numDocumento, tipoDocumento, fechaNacimiento, idEPS, esAfiliado, correo);
+		log.info ("Adicionando usuarioIPS: " + usuarioIPS);
+		return usuarioIPS;
 
 	}
-	
-	
-	
-	
+
+
+	public UsuarioEPS registrarUsuarioEPS (String nombre, int rol, long idEPS, String correo)
+	{	
+		UsuarioEPS usuarioEPS;
+
+		log.info ("Adicionando usuarioEPS: " + nombre);
+		usuarioEPS = pp.adicionarUsuarioEPS(nombre, rol, idEPS, correo);
+		log.info ("Adicionando usuarioEPS: " + usuarioEPS);
+		return usuarioEPS;
+
+	}
+
+
+
+
 	/* ****************************************************************
 	 * 			M�todos para manejar los MEDICOS
 	 *****************************************************************/
-	
+
 	/**
 	 * Registra a la EPS de manera persistente un medico asociado a una o varias IPS
 	 * Adiciona entradas al log de la aplicaci�n
 	 */
-	public Medico registrarMedico (String nombre, long id, String especialidad, int numRegMedico, String tipo, long idIPS)
+	public Medico registrarMedico (String nombre, String especialidad, int numRegMedico)
 	{	
 		Medico medico;
-		log.info ("Registrando medico: " + nombre + " con id: " + id);
 
-		if(buscarMedicoPorId(id) == null) {
-
-			medico = pp.registrarMedico (nombre, id, especialidad, numRegMedico, tipo, idIPS);		
-			log.info ("Registrando medico: " + medico);
-
-
-		} else {
-
-			log.info("El medico no cumple con los requisitos para ser ingresado");
-
-		}
-
+		log.info ("Adicionando medico: " + nombre);
+		medico = pp.adicionarMedico(nombre, especialidad, numRegMedico);
+		log.info ("Adicionando medico: " + medico);
 		return medico;
 
 	}
@@ -172,79 +174,92 @@ public class EPSAndes {
 	}
 
 
-
-	/* ****************************************************************
-	 * 			M�todos para manejar los Afiliados (paciente)
-	 *****************************************************************/
-
-	public UsuarioIPS registrarAfiliado(long id, String nombre, String estado, long numDocumento, long tipoDocumento,
-			String fechaNacimiento, long idEPS) {
-
-		UsuarioIPS paciente;
-		log.info("Registrando Paciente: " + nombre);
-
-		paciente = pp.registrarPaciente(id, nombre, estado, numDocumento, tipoDocumento, fechaNacimiento, idEPS);
-
-		log.info ("Paciente registrado: " + paciente);
-
-		return paciente;
-
-
-	}
-
-
-
 	/* ****************************************************************
 	 * 			M�todos para manejar los Servicios de salud
 	 *****************************************************************/
 
-	public ServicioSalud registrarServicioSalud(long id, int capacidad, String horarioAtencion,
-			long idIPS, String nombre) {
+	public Consulta registrarConsulta(String esAfiliado, String ordenPrevia, long idIPS)
+	{	
+		Consulta consulta;
 
-			ServicioSalud servicio;
-			log.info("Registrando Servicio de salud: " + nombre);
+		log.info ("Adicionando consulta de la IPS: " + idIPS);
+		consulta = pp.adicionarConsulta(esAfiliado, ordenPrevia, idIPS);
+		log.info ("Adicionando consulta: " + consulta);
+		return consulta;
 
-			servicio = pp.registrarServicioSalud(id, capacidad, horarioAtencion, idIPS, nombre);
-
-			log.info ("Servicio de salud registrado: " + servicio);
-
-			return servicio;
-
-		}
-	
-	public void registrarOrdenServicioSalud(long idServicioSalud, long idMedico, long idAfiliado) {
-		
-		
-		log.info("Registrando orden de servicio de salud");
-		pp.registrarOrdenServicioSalud(idServicioSalud, idMedico, idAfiliado);
-		log.info("Orden de servicio de salud registrado");
-		
-		
 	}
 	
 	
+	public Terapia registrarTerapia(String ordenPrevia, String esAfiliado, int numSesiones, String tipoTerapia, long idIPS)
+	{	
+		Terapia terapia;
+
+		log.info ("Adicionando terapia tipo: " + tipoTerapia);
+		terapia = pp.adicionarTerapia(ordenPrevia, esAfiliado, numSesiones, tipoTerapia, idIPS);
+		log.info ("Adicionando terapia: " + terapia);
+		return terapia;
+
+	}
+	
+	public ProcedimientoEsp registraProcedimientoEsp(String ordenPrevia, String esAfiliado, String conocimiento, String equipo, long idIPS)
+	{	
+		ProcedimientoEsp procedimiento;
+
+		log.info ("Adicionando procedimiento cono conocimiento en: " + conocimiento);
+		procedimiento = pp.adicionarProcedimiento(ordenPrevia, esAfiliado, conocimiento, equipo, idIPS);
+		log.info ("Adicionando procedimiento: " + procedimiento);
+		return procedimiento;
+
+	}
+	
+	public Hospitalizacion registrarHospitalizacion(String ordenPrevia, String esAfiliado, int numVisitas, long idIPS)
+	{	
+		Hospitalizacion hospitalizacion;
+
+		log.info ("Adicionando una hospitalizacion a la IPS: " + idIPS);
+		hospitalizacion = pp.adicionarHospitalizacion(ordenPrevia, esAfiliado, numVisitas, idIPS);
+		log.info ("Adicionando hospitalizacion: " + hospitalizacion);
+		return hospitalizacion;
+
+	}
+	
+	
+	
+	
+	
+	public void registrarOrdenServicioSalud(long idServicioSalud, long idMedico, long idAfiliado) {
+
+
+		log.info("Registrando orden de servicio de salud");
+		pp.registrarOrdenServicioSalud(idServicioSalud, idMedico, idAfiliado);
+		log.info("Orden de servicio de salud registrado");
+
+
+	}
+
+
 	public void reservarServicioSalud(long idAfiliado, long idServicio) {
-		
+
 		log.info("Realizando reserva de servicio de salud");
 		pp.reservarServicioSalud(idAfiliado, idServicio);
 		log.info("Reserva de servicio de salud registrado");
 
 	}
-	
-	
+
+
 	public void registrarPrestServicio(long idServicio, long idAfiliado) {
-		
+
 		log.info("Registrando prestacion de servicio de salud");
 		pp.registrarPrestServicio(idAfiliado, idServicio);
 		log.info("Prestacion de servicio de salud registrado");
-		
-		
+
+
 	}
-	
-	
-	
-	
-	
+
+
+
+
+
 	/* ****************************************************************
 	 * 			Métodos para administración
 	 *****************************************************************/
@@ -256,11 +271,11 @@ public class EPSAndes {
 	 */
 	public long [] limpiarEPSAndes ()
 	{
-        log.info ("Limpiando la BD de EPSAndes");
-        long [] borrrados = pp.limpiarEPSAndes();	
-        log.info ("Limpiando la BD de EPSAndes: Listo!");
-        return borrrados;
+		log.info ("Limpiando la BD de EPSAndes");
+		long [] borrrados = pp.limpiarEPSAndes();	
+		log.info ("Limpiando la BD de EPSAndes: Listo!");
+		return borrrados;
 	}
-	
+
 
 }
