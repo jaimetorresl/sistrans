@@ -1,0 +1,21 @@
+{
+	"title": "Nombres de las tablas de EPSAndes Uniandes para la aplicación B",
+	"unidadPersistencia": "EPSAndes",
+	"tablas":
+	[
+		"EPSAndes_sequence",
+		"B_EPS",
+		"B_UsuarioEPS",
+		"B_IPS",
+		"B_UsuarioIPS",
+		"B_Consulta",
+		"B_Terapia",
+		"B_ProcedimientoEsp",
+		"B_Hospitalizacion",
+		"B_Medico",
+		"B_IPSMedico",
+		"B_Cita",
+		"B_Receta"
+		
+	]
+}

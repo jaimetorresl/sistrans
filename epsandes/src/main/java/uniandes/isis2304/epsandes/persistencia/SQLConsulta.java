@@ -20,7 +20,8 @@ import java.util.List;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
-import uniandes.isis2304.epsandes.negocio.UsuarioIPS;
+import uniandes.isis2304.epsandes.negocio.AdministradorEPS;
+import uniandes.isis2304.epsandes.negocio.EPS;
 
 /**
  * Clase que encapsula los métodos que hacen acceso a la base de datos para el concepto BAR de Parranderos
@@ -28,7 +29,7 @@ import uniandes.isis2304.epsandes.negocio.UsuarioIPS;
  * 
  * @author Germán Bravo
  */
-class SQLPaciente 
+class SQLConsulta 
 {
 	/* ****************************************************************
 	 * 			Constantes
@@ -55,7 +56,7 @@ class SQLPaciente
 	 * Constructor
 	 * @param pp - El Manejador de persistencia de la aplicación
 	 */
-	public SQLPaciente (PersistenciaEPSAndes pp)
+	public SQLConsulta (PersistenciaEPSAndes pp)
 	{
 		this.pp = pp;
 	}
@@ -63,44 +64,43 @@ class SQLPaciente
 	/**
 	 * Crea y ejecuta la sentencia SQL para adicionar un BAR a la base de datos de Parranderos
 	 * @param pm - El manejador de persistencia
-	 * @param idBar - El identificador del bar
+	 * @param idEPS - El identificador del bar
 	 * @param nombre - El nombre del bar
 	 * @param ciudad - La ciudad del bar
 	 * @param presupuesto - El presupuesto del bar (ALTO, MEDIO, BAJO)
 	 * @param sedes - El número de sedes del bar
 	 * @return El número de tuplas insertadas
 	 */
-	public long adicionarPaciente (PersistenceManager pm, long id, String nombre, String estado, long numDocumento, int tipoDocumento,
-			String fechaNacimiento, long idEPS, boolean esAfiliado) 
+	public long adicionarEPS(PersistenceManager pm, long idEPS, String nombre) 
 	{
-        Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaPaciente () + "(id, nombre, estado, numDocumento, tipoDocumento, fechaNacimiento, idEPS, esAfiliado) values (?, ?, ?, ?, ?, ?, ?, ?)");
-        q.setParameters(id, nombre, estado, numDocumento, tipoDocumento, fechaNacimiento, idEPS, esAfiliado);
+        Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaEPS () + "(id, nombre) values (?, ?)");
+        q.setParameters(idEPS, nombre);
         return (long) q.executeUnique();
 	}
 
 	/**
 	 * Crea y ejecuta la sentencia SQL para eliminar BARES de la base de datos de Parranderos, por su nombre
 	 * @param pm - El manejador de persistencia
-	 * @param nombreBar - El nombre del bar
+	 * @param nombreEPS - El nombre del bar
 	 * @return EL número de tuplas eliminadas
 	 */
-	public long eliminarPacientePorNombre (PersistenceManager pm, String nombre)
+	public long eliminarEPSPorNombre (PersistenceManager pm, String nombreEPS)
 	{
-        Query q = pm.newQuery(SQL, "DELETE FROM " + pp.darTablaPaciente () + " WHERE nombre = ?");
-        q.setParameters(nombre);
+        Query q = pm.newQuery(SQL, "DELETE FROM " + pp.darTablaEPS () + " WHERE nombre = ?");
+        q.setParameters(nombreEPS);
         return (long) q.executeUnique();
 	}
 
 	/**
 	 * Crea y ejecuta la sentencia SQL para eliminar UN BAR de la base de datos de Parranderos, por su identificador
 	 * @param pm - El manejador de persistencia
-	 * @param idBar - El identificador del bar
+	 * @param idEPS - El identificador del bar
 	 * @return EL número de tuplas eliminadas
 	 */
-	public long eliminarPacientePorId (PersistenceManager pm, long id)
+	public long eliminarEPSPorId (PersistenceManager pm, long idEPS)
 	{
-        Query q = pm.newQuery(SQL, "DELETE FROM " + pp.darTablaPaciente () + " WHERE id = ?");
-        q.setParameters(id);
+        Query q = pm.newQuery(SQL, "DELETE FROM " + pp.darTablaEPS () + " WHERE id = ?");
+        q.setParameters(idEPS);
         return (long) q.executeUnique();
 	}
 
@@ -108,15 +108,15 @@ class SQLPaciente
 	 * Crea y ejecuta la sentencia SQL para encontrar la información de UN BAR de la 
 	 * base de datos de Parranderos, por su identificador
 	 * @param pm - El manejador de persistencia
-	 * @param idBar - El identificador del bar
+	 * @param idEPS - El identificador del bar
 	 * @return El objeto BAR que tiene el identificador dado
 	 */
-	public UsuarioIPS darPacientePorId (PersistenceManager pm, long id) 
+	public EPS darEPSPorId (PersistenceManager pm, long idEPS) 
 	{
-		Query q = pm.newQuery(SQL, "SELECT * FROM " + pp.darTablaPaciente () + " WHERE id = ?");
-		q.setResultClass(UsuarioIPS.class);
-		q.setParameters(id);
-		return (UsuarioIPS) q.executeUnique();
+		Query q = pm.newQuery(SQL, "SELECT * FROM " + pp.darTablaEPS () + " WHERE id = ?");
+		q.setResultClass(AdministradorEPS.class);
+		q.setParameters(idEPS);
+		return (EPS) q.executeUnique();
 	}
 
 	/**
@@ -126,12 +126,12 @@ class SQLPaciente
 	 * @param nombreBar - El nombre de bar buscado
 	 * @return Una lista de objetos BAR que tienen el nombre dado
 	 */
-	public List<UsuarioIPS> darPacientePorNombre (PersistenceManager pm, String nombre) 
+	public List<EPS> darEPSPorNombre (PersistenceManager pm, String nombreBar) 
 	{
-		Query q = pm.newQuery(SQL, "SELECT * FROM " + pp.darTablaPaciente () + " WHERE nombre = ?");
-		q.setResultClass(UsuarioIPS.class);
-		q.setParameters(nombre);
-		return (List<UsuarioIPS>) q.executeList();
+		Query q = pm.newQuery(SQL, "SELECT * FROM " + pp.darTablaEPS () + " WHERE nombre = ?");
+		q.setResultClass(EPS.class);
+		q.setParameters(nombreBar);
+		return (List<EPS>) q.executeList();
 	}
 
 	/**
@@ -140,11 +140,11 @@ class SQLPaciente
 	 * @param pm - El manejador de persistencia
 	 * @return Una lista de objetos BAR
 	 */
-	public List<UsuarioIPS> darBares (PersistenceManager pm)
+	public List<EPS> darEPSs (PersistenceManager pm)
 	{
-		Query q = pm.newQuery(SQL, "SELECT * FROM " + pp.darTablaPaciente ());
-		q.setResultClass(UsuarioIPS.class);
-		return (List<UsuarioIPS>) q.executeList();
+		Query q = pm.newQuery(SQL, "SELECT * FROM " + pp.darTablaEPS ());
+		q.setResultClass(EPS.class);
+		return (List<EPS>) q.executeList();
 	}
 
 	/**

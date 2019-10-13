@@ -29,7 +29,7 @@ import uniandes.isis2304.epsandes.negocio.EPS;
  * 
  * @author Germán Bravo
  */
-class SQLEPS 
+class SQLUsuarioIPS 
 {
 	/* ****************************************************************
 	 * 			Constantes
@@ -56,7 +56,7 @@ class SQLEPS
 	 * Constructor
 	 * @param pp - El Manejador de persistencia de la aplicación
 	 */
-	public SQLEPS (PersistenciaEPSAndes pp)
+	public SQLUsuarioIPS (PersistenciaEPSAndes pp)
 	{
 		this.pp = pp;
 	}
@@ -97,7 +97,7 @@ class SQLEPS
 	 * @param idEPS - El identificador del bar
 	 * @return EL número de tuplas eliminadas
 	 */
-	public long eliminarCitaPorId (PersistenceManager pm, long idEPS)
+	public long eliminarEPSPorId (PersistenceManager pm, long idEPS)
 	{
         Query q = pm.newQuery(SQL, "DELETE FROM " + pp.darTablaEPS () + " WHERE id = ?");
         q.setParameters(idEPS);
@@ -111,10 +111,10 @@ class SQLEPS
 	 * @param idEPS - El identificador del bar
 	 * @return El objeto BAR que tiene el identificador dado
 	 */
-	public EPS darCitaPorId (PersistenceManager pm, long idCita) 
+	public EPS darEPSPorId (PersistenceManager pm, long idEPS) 
 	{
 		Query q = pm.newQuery(SQL, "SELECT * FROM " + pp.darTablaEPS () + " WHERE id = ?");
-		q.setResultClass(AdministradorCita.class);
+		q.setResultClass(AdministradorEPS.class);
 		q.setParameters(idEPS);
 		return (EPS) q.executeUnique();
 	}

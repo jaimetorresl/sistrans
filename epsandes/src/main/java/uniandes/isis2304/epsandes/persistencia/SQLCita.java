@@ -15,14 +15,13 @@
 
 package uniandes.isis2304.epsandes.persistencia;
 
-
-import java.util.LinkedList;
 import java.util.List;
 
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
-
-import uniandes.isis2304.epsandes.negocio.ServicioSalud;
+import uniandes.isis2304.epsandes.negocio.Cita;
+import uniandes.isis2304.epsandes.negocio.EPS;
+import uniandes.isis2304.epsandes.negocio.Cita;
 
 /**
  * Clase que encapsula los métodos que hacen acceso a la base de datos para el concepto BAR de Parranderos
@@ -30,7 +29,7 @@ import uniandes.isis2304.epsandes.negocio.ServicioSalud;
  * 
  * @author Germán Bravo
  */
-class SQLServicioSalud 
+class SQLCita 
 {
 	/* ****************************************************************
 	 * 			Constantes
@@ -57,7 +56,7 @@ class SQLServicioSalud
 	 * Constructor
 	 * @param pp - El Manejador de persistencia de la aplicación
 	 */
-	public SQLServicioSalud (PersistenciaEPSAndes pp)
+	public SQLCita (PersistenciaEPSAndes pp)
 	{
 		this.pp = pp;
 	}
@@ -72,13 +71,25 @@ class SQLServicioSalud
 	 * @param sedes - El número de sedes del bar
 	 * @return El número de tuplas insertadas
 	 */
-	public long adicionarServicioSalud (PersistenceManager pm, long id, String horaInicio, String horaFin , String tipoSS, long paciente, long idIPS) 
+	public long adicionarCita (PersistenceManager pm, long id, String horaInicio, String horaFin, long idMedico, long idConsulta, long idTerapia, long idProcedimientoEsp, long idHospitalizacion) 
 	{
-        Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaServicioSalud () + "(id, horaInicio, horarioFinal, tipoSS, paciente, idIPS) values (?, ?, ?, ?, ?, ?)");
-        q.setParameters(id, horaInicio, horaFin, tipoSS, paciente, idIPS);
+        Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaCita () + "(id, horaInincio, horaIniciFin, idMedico, idConsulta, idTerapia, idProcedimientoEsp, idHospitalizacion) values (?, ?, ?, ?, ?, ?, ?, ?)");
+        q.setParameters(id, horaInicio, horaFin, idMedico, idConsulta, idTerapia, idProcedimientoEsp, idHospitalizacion);
         return (long) q.executeUnique();
 	}
-	
+
+	/**
+	 * Crea y ejecuta la sentencia SQL para eliminar BARES de la base de datos de Parranderos, por su nombre
+	 * @param pm - El manejador de persistencia
+	 * @param nombreBar - El nombre del bar
+	 * @return EL número de tuplas eliminadas
+	 */
+	public long eliminarCitaPorNombre (PersistenceManager pm, String nombre)
+	{
+        Query q = pm.newQuery(SQL, "DELETE FROM " + pp.darTablaCita () + " WHERE nombre = ?");
+        q.setParameters(nombre);
+        return (long) q.executeUnique();
+	}
 
 	/**
 	 * Crea y ejecuta la sentencia SQL para eliminar UN BAR de la base de datos de Parranderos, por su identificador
@@ -86,9 +97,9 @@ class SQLServicioSalud
 	 * @param idBar - El identificador del bar
 	 * @return EL número de tuplas eliminadas
 	 */
-	public long eliminarServicioSaludPorId (PersistenceManager pm, long id)
+	public long eliminarCitaPorId (PersistenceManager pm, long id)
 	{
-        Query q = pm.newQuery(SQL, "DELETE FROM " + pp.darTablaServicioSalud () + " WHERE id = ?");
+        Query q = pm.newQuery(SQL, "DELETE FROM " + pp.darTablaCita () + " WHERE id = ?");
         q.setParameters(id);
         return (long) q.executeUnique();
 	}
@@ -97,48 +108,44 @@ class SQLServicioSalud
 	 * Crea y ejecuta la sentencia SQL para encontrar la información de UN BAR de la 
 	 * base de datos de Parranderos, por su identificador
 	 * @param pm - El manejador de persistencia
-	 * @param idBar - El identificador del bar
+	 * @param id - El identificador del bar
 	 * @return El objeto BAR que tiene el identificador dado
 	 */
-	public ServicioSalud darServicioSaludPorId (PersistenceManager pm, long id) 
+	public Cita darCitaPorId (PersistenceManager pm, long id) 
 	{
-		Query q = pm.newQuery(SQL, "SELECT * FROM " + pp.darTablaServicioSalud () + " WHERE id = ?");
-		q.setResultClass(ServicioSalud.class);
+		Query q = pm.newQuery(SQL, "SELECT * FROM " + pp.darTablaCita () + " WHERE id = ?");
+		q.setResultClass(Cita.class);
 		q.setParameters(id);
-		return (ServicioSalud) q.executeUnique();
+		return (Cita) q.executeUnique();
 	}
 
-	
-	
-	public List<ServicioSalud> darServicioSalud (PersistenceManager pm)
+	/**
+	 * Crea y ejecuta la sentencia SQL para encontrar la información de LOS BARES de la 
+	 * base de datos de Parranderos, por su nombre
+	 * @param pm - El manejador de persistencia
+	 * @param nombreBar - El nombre de bar buscado
+	 * @return Una lista de objetos BAR que tienen el nombre dado
+	 */
+	public List<Cita> darCitaPorNombre (PersistenceManager pm, String nombre) 
 	{
-		Query q = pm.newQuery(SQL, "SELECT * FROM " + pp.darTablaServicioSalud ());
-		q.setResultClass(ServicioSalud.class);
-		return (List<ServicioSalud>) q.executeList();
+		Query q = pm.newQuery(SQL, "SELECT * FROM " + pp.darTablaCita () + " WHERE nombre = ?");
+		q.setResultClass(Cita.class);
+		q.setParameters(nombre);
+		return (List<Cita>) q.executeList();
 	}
-	
-	
-//	public List<ServicioSalud> darServicioSaludMasSolicitados(PersistenceManager pm)
-//	{
-//		Query q = pm.newQuery(SQL, "SELECT * FROM " + pp.darTablaServicioSalud ());
-//		q.setResultClass(ServicioSalud.class);
-//		
-//		
-//		
-//		List<ServicioSalud> list20 = new LinkedList<ServicioSalud>;
-//		
-//		
-//		for (int i = 0; i < list20.size(); i++) {
-//			
-//			
-//			
-//			
-//		}
-//		
-//		
-//		
-//		return (List<ServicioSalud>) q.executeList();
-//	}
+
+	/**
+	 * Crea y ejecuta la sentencia SQL para encontrar la información de LOS BARES de la 
+	 * base de datos de Parranderos
+	 * @param pm - El manejador de persistencia
+	 * @return Una lista de objetos BAR
+	 */
+	public List<Cita> darCitas (PersistenceManager pm)
+	{
+		Query q = pm.newQuery(SQL, "SELECT * FROM " + pp.darTablaCita ());
+		q.setResultClass(Cita.class);
+		return (List<Cita>) q.executeList();
+	}
 
 	/**
 	 * Crea y ejecuta la sentencia SQL para aumentar en uno el número de sedes de los bares de la 
@@ -155,4 +162,5 @@ class SQLServicioSalud
         return (long) q.executeUnique();
 	}
 	*/
+	
 }

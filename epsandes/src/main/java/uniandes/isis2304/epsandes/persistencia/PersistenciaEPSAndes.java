@@ -225,7 +225,7 @@ public class PersistenciaEPSAndes {
 		sqlEPS = new SQLEPS(this);
 		sqlRecepcionistaIPS = new SQLRecepcionistaIPS(this);
 		sqlGerenteEPS = new SQLGerenteEPS(this);
-		sqlResultado = new SQLResultado(this);
+		sqlResultado = new SQLReceta(this);
 		sqlPrestacion = new SQLPrestacionServicio(this);
 		sqlMedicoSS = new SQLMedicoSS(this);
 	}

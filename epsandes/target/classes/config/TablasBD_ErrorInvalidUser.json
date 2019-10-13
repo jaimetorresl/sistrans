@@ -1,0 +1,20 @@
+{
+	"title": "Nombres de las tablas de EPSAndes Uniandes para pruebas de la aplicación cuando la base de datos no existe o está caida",
+	"unidadPersistencia": "EPSAndesErrorUser",
+	"tablas":
+	[
+		"EPSAndes_sequence",
+		"X_EPS",
+		"X_UsuarioEPS",
+		"X_IPS",
+		"X_UsuarioIPS",
+		"X_Consulta",
+		"X_Terapia",
+		"X_ProcedimientoEsp",
+		"X_Hospitalizacion",
+		"X_Medico",
+		"X_IPSMedico",
+		"X_Cita",
+		"X_Receta"
+	]
+}
