@@ -14,6 +14,10 @@ public class ProcedimientoEsp implements VOProcedimientoEsp{
 	
 	private long idIPS;
 	
+	private int capacidad;
+	
+	private String horarioSemanal;
+	
 	
 	public ProcedimientoEsp() {
 		
@@ -23,11 +27,13 @@ public class ProcedimientoEsp implements VOProcedimientoEsp{
 		conocimiento = "";
 		equipo = "";
 		idIPS = 0;
+		capacidad = 0;
+		horarioSemanal = "";
 		
 	}
 	
 	
-	public ProcedimientoEsp(long id, String esAfiliado, String ordenPrevia, String conocimiento, String equipo, long idIPS) {
+	public ProcedimientoEsp(long id, String esAfiliado, String ordenPrevia, String conocimiento, String equipo, long idIPS, int capacidad, String horarioSemanal) {
 		
 		this.id = id;
 		this.esAfiliado = esAfiliado;
@@ -35,6 +41,8 @@ public class ProcedimientoEsp implements VOProcedimientoEsp{
 		this.conocimiento = conocimiento;
 		this.equipo = equipo;
 		this.idIPS = idIPS;
+		this.capacidad = capacidad;
+		this.horarioSemanal = horarioSemanal;
 		
 	}
 
@@ -73,13 +81,26 @@ public class ProcedimientoEsp implements VOProcedimientoEsp{
 		// TODO Auto-generated method stub
 		return idIPS;
 	}
+	
+	@Override
+	public int getCapacidad() {
+		// TODO Auto-generated method stub
+		return capacidad;
+	}
+
+
+	@Override
+	public String getHorarioSemanal() {
+		// TODO Auto-generated method stub
+		return horarioSemanal;
+	}
 
 
 	@Override
 	public String toString() {
 		return "ProcedimientoEsp [id=" + id + ", esAfiliado=" + esAfiliado + ", ordenPrevia=" + ordenPrevia
-				+ ", conocimiento=" + conocimiento + ", equipo=" + equipo + ", idIPS=" + idIPS + "]";
+				+ ", conocimiento=" + conocimiento + ", equipo=" + equipo + ", idIPS=" + idIPS + ", capacidad="
+				+ capacidad + ", horarioSemanal=" + horarioSemanal + "]";
 	}
-	
 
 }

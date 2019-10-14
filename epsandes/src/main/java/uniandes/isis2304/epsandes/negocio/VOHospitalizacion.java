@@ -12,6 +12,10 @@ public interface VOHospitalizacion {
 	
 	public long getIdIPS();
 	
+	public int getCapacidad();
+
+	public String getHorarioSemanal();
+	
 	@Override
 	/**
 	 * @return Una cadena de caracteres con todos los atributos
