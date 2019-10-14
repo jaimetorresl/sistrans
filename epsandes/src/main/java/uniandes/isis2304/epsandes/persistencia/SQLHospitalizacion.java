@@ -20,7 +20,9 @@ import java.util.List;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
-import uniandes.isis2304.epsandes.negocio.AdministradorEPS;
+
+import uniandes.isis2304.epsandes.negocio.EPS;
+import uniandes.isis2304.epsandes.negocio.Hospitalizacion;
 
 /**
  * Clase que encapsula los métodos que hacen acceso a la base de datos para el concepto BAR de Parranderos
@@ -28,7 +30,7 @@ import uniandes.isis2304.epsandes.negocio.AdministradorEPS;
  * 
  * @author Germán Bravo
  */
-class SQLTipoSS 
+class SQLHospitalizacion 
 {
 	/* ****************************************************************
 	 * 			Constantes
@@ -55,7 +57,7 @@ class SQLTipoSS
 	 * Constructor
 	 * @param pp - El Manejador de persistencia de la aplicación
 	 */
-	public SQLTipoSS (PersistenciaEPSAndes pp)
+	public SQLHospitalizacion (PersistenciaEPSAndes pp)
 	{
 		this.pp = pp;
 	}
@@ -70,23 +72,10 @@ class SQLTipoSS
 	 * @param sedes - El número de sedes del bar
 	 * @return El número de tuplas insertadas
 	 */
-	public long adicionarTipoSS  (PersistenceManager pm, String codigo, String nombre, boolean requiereReserva) 
+	public long adicionarHospitalizacion (PersistenceManager pm, long id, String ordenPrevia, String esAfiliado, int numVisitas, long idIPS, int capacidad, String horarioSemanal ) 
 	{
-        Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaIPSTipoSS() + "(codigo, nombre, requiereReserva) values (?, ?, ?)");
-        q.setParameters(codigo, nombre, requiereReserva);
-        return (long) q.executeUnique();
-	}
-
-	/**
-	 * Crea y ejecuta la sentencia SQL para eliminar BARES de la base de datos de Parranderos, por su nombre
-	 * @param pm - El manejador de persistencia
-	 * @param nombreBar - El nombre del bar
-	 * @return EL número de tuplas eliminadas
-	 */
-	public long eliminarAfiliadoPorNombre (PersistenceManager pm, String nombreBar)
-	{
-        Query q = pm.newQuery(SQL, "DELETE FROM " + pp.darTablaIPSTipoSS () + " WHERE nombre = ?");
-        q.setParameters(nombreBar);
+        Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaHospitalizacion () + "(id, ordenPrevia, esAfiliado, numVisitas, idIPS, capacidad, horarioSemanal) values (?, ?, ?, ?, ?, ?, ?)");
+        q.setParameters(id, ordenPrevia, esAfiliado, numVisitas, idIPS, capacidad, horarioSemanal);
         return (long) q.executeUnique();
 	}
 
@@ -96,10 +85,10 @@ class SQLTipoSS
 	 * @param idBar - El identificador del bar
 	 * @return EL número de tuplas eliminadas
 	 */
-	public long eliminarAfiliadoPorId (PersistenceManager pm, long idBar)
+	public long eliminarHospitalizacionPorId (PersistenceManager pm, long id)
 	{
-        Query q = pm.newQuery(SQL, "DELETE FROM " + pp.darTablaIPSTipoSS () + " WHERE id = ?");
-        q.setParameters(idBar);
+        Query q = pm.newQuery(SQL, "DELETE FROM " + pp.darTablaHospitalizacion () + " WHERE id = ?");
+        q.setParameters(id);
         return (long) q.executeUnique();
 	}
 
@@ -107,30 +96,15 @@ class SQLTipoSS
 	 * Crea y ejecuta la sentencia SQL para encontrar la información de UN BAR de la 
 	 * base de datos de Parranderos, por su identificador
 	 * @param pm - El manejador de persistencia
-	 * @param idBar - El identificador del bar
+	 * @param id - El identificador del bar
 	 * @return El objeto BAR que tiene el identificador dado
 	 */
-	public AdministradorEPS darAfiliadoPorId (PersistenceManager pm, long idBar) 
+	public Hospitalizacion darHospitalizacionPorId (PersistenceManager pm, long id) 
 	{
-		Query q = pm.newQuery(SQL, "SELECT * FROM " + pp.darTablaIPSTipoSS () + " WHERE id = ?");
-		q.setResultClass(AdministradorEPS.class);
-		q.setParameters(idBar);
-		return (AdministradorEPS) q.executeUnique();
-	}
-
-	/**
-	 * Crea y ejecuta la sentencia SQL para encontrar la información de LOS BARES de la 
-	 * base de datos de Parranderos, por su nombre
-	 * @param pm - El manejador de persistencia
-	 * @param nombreBar - El nombre de bar buscado
-	 * @return Una lista de objetos BAR que tienen el nombre dado
-	 */
-	public List<AdministradorEPS> darAfiliadoPorNombre (PersistenceManager pm, String nombreBar) 
-	{
-		Query q = pm.newQuery(SQL, "SELECT * FROM " + pp.darTablaIPSTipoSS () + " WHERE nombre = ?");
-		q.setResultClass(AdministradorEPS.class);
-		q.setParameters(nombreBar);
-		return (List<AdministradorEPS>) q.executeList();
+		Query q = pm.newQuery(SQL, "SELECT * FROM " + pp.darTablaHospitalizacion () + " WHERE id = ?");
+		q.setResultClass(Hospitalizacion.class);
+		q.setParameters(id);
+		return (Hospitalizacion) q.executeUnique();
 	}
 
 	/**
@@ -139,26 +113,11 @@ class SQLTipoSS
 	 * @param pm - El manejador de persistencia
 	 * @return Una lista de objetos BAR
 	 */
-	public List<AdministradorEPS> darAfiliado (PersistenceManager pm)
+	public List<Hospitalizacion> darHospitalizacions (PersistenceManager pm)
 	{
-		Query q = pm.newQuery(SQL, "SELECT * FROM " + pp.darTablaIPSTipoSS ());
-		q.setResultClass(AdministradorEPS.class);
-		return (List<AdministradorEPS>) q.executeList();
+		Query q = pm.newQuery(SQL, "SELECT * FROM " + pp.darTablaHospitalizacion ());
+		q.setResultClass(Hospitalizacion.class);
+		return (List<Hospitalizacion>) q.executeList();
 	}
-
-	/**
-	 * Crea y ejecuta la sentencia SQL para aumentar en uno el número de sedes de los bares de la 
-	 * base de datos de Parranderos
-	 * @param pm - El manejador de persistencia
-	 * @param ciudad - La ciudad a la cual se le quiere realizar el proceso
-	 * @return El número de tuplas modificadas
-	 */
-	/**
-	public long aumentarSedesBaresCiudad (PersistenceManager pm, String ciudad)
-	{
-        Query q = pm.newQuery(SQL, "UPDATE " + pp.darTablaBar () + " SET cantsedes = cantsedes + 1 WHERE ciudad = ?");
-        q.setParameters(ciudad);
-        return (long) q.executeUnique();
-	}
-	*/
+	
 }

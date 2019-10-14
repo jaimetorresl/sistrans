@@ -20,7 +20,7 @@ import java.util.List;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
-import uniandes.isis2304.epsandes.negocio.AdministradorEPS;
+
 import uniandes.isis2304.epsandes.negocio.EPS;
 
 /**
@@ -97,7 +97,7 @@ class SQLEPS
 	 * @param idEPS - El identificador del bar
 	 * @return EL número de tuplas eliminadas
 	 */
-	public long eliminarCitaPorId (PersistenceManager pm, long idEPS)
+	public long eliminarEPSPorId (PersistenceManager pm, long idEPS)
 	{
         Query q = pm.newQuery(SQL, "DELETE FROM " + pp.darTablaEPS () + " WHERE id = ?");
         q.setParameters(idEPS);
@@ -111,10 +111,10 @@ class SQLEPS
 	 * @param idEPS - El identificador del bar
 	 * @return El objeto BAR que tiene el identificador dado
 	 */
-	public EPS darCitaPorId (PersistenceManager pm, long idCita) 
+	public EPS darEPSPorId (PersistenceManager pm, long idEPS) 
 	{
 		Query q = pm.newQuery(SQL, "SELECT * FROM " + pp.darTablaEPS () + " WHERE id = ?");
-		q.setResultClass(AdministradorCita.class);
+		q.setResultClass(EPS.class);
 		q.setParameters(idEPS);
 		return (EPS) q.executeUnique();
 	}

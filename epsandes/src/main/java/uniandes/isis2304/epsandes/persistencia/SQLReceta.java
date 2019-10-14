@@ -21,6 +21,7 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
 import uniandes.isis2304.epsandes.negocio.Receta;
+import uniandes.isis2304.epsandes.negocio.Receta;
 
 /**
  * Clase que encapsula los métodos que hacen acceso a la base de datos para el concepto BAR de Parranderos
@@ -34,7 +35,7 @@ class SQLReceta
 	 * 			Constantes
 	 *****************************************************************/
 	/**
-	 * Cadena que representa el tipo de consulta que se va a realizar en las sentencias de acceso a la base de datos
+	 * Cadena que representa el tipo de Receta que se va a realizar en las sentencias de acceso a la base de datos
 	 * Se renombra acá para facilitar la escritura de las sentencias
 	 */
 	private final static String SQL = PersistenciaEPSAndes.SQL;
@@ -70,10 +71,10 @@ class SQLReceta
 	 * @param sedes - El número de sedes del bar
 	 * @return El número de tuplas insertadas
 	 */
-	public long adicionarResultado (PersistenceManager pm, long idBar, String diagnostico, int tratamiento) 
+	public long adicionarReceta (PersistenceManager pm, long id, String diagnostico, String medicamentos, long idConsulta, long idTerapia, long idProcedimientosEsp, long idHospitalizacion, long idCita) 
 	{
-        Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaResultado () + "(id, diagnostico, tratamiento) values (?, ?, ?)");
-        q.setParameters(idBar, diagnostico, tratamiento);
+        Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaReceta () + "(id, diagnostico, medicamentos, idConsulta, idTerapia, idProcedimientosEsp, idHospitalizacion, idCita) values (?, ?, ?, ?, ?, ?)");
+        q.setParameters(id, diagnostico, medicamentos, idConsulta, idTerapia, idProcedimientosEsp, idHospitalizacion, idCita);
         return (long) q.executeUnique();
 	}
 
@@ -83,9 +84,9 @@ class SQLReceta
 	 * @param idBar - El identificador del bar
 	 * @return EL número de tuplas eliminadas
 	 */
-	public long eliminarResultadoPorId (PersistenceManager pm, long id)
+	public long eliminarRecetaPorId (PersistenceManager pm, long id)
 	{
-        Query q = pm.newQuery(SQL, "DELETE FROM " + pp.darTablaResultado () + " WHERE id = ?");
+        Query q = pm.newQuery(SQL, "DELETE FROM " + pp.darTablaReceta () + " WHERE id = ?");
         q.setParameters(id);
         return (long) q.executeUnique();
 	}
@@ -94,12 +95,12 @@ class SQLReceta
 	 * Crea y ejecuta la sentencia SQL para encontrar la información de UN BAR de la 
 	 * base de datos de Parranderos, por su identificador
 	 * @param pm - El manejador de persistencia
-	 * @param idBar - El identificador del bar
+	 * @param id - El identificador del bar
 	 * @return El objeto BAR que tiene el identificador dado
 	 */
-	public Receta darResultadoPorId (PersistenceManager pm, long id) 
+	public Receta darRecetaPorId (PersistenceManager pm, long id) 
 	{
-		Query q = pm.newQuery(SQL, "SELECT * FROM " + pp.darTablaResultado () + " WHERE id = ?");
+		Query q = pm.newQuery(SQL, "SELECT * FROM " + pp.darTablaReceta () + " WHERE id = ?");
 		q.setResultClass(Receta.class);
 		q.setParameters(id);
 		return (Receta) q.executeUnique();
@@ -111,26 +112,10 @@ class SQLReceta
 	 * @param pm - El manejador de persistencia
 	 * @return Una lista de objetos BAR
 	 */
-	public List<Receta> darResultado (PersistenceManager pm)
+	public List<Receta> darRecetas (PersistenceManager pm)
 	{
-		Query q = pm.newQuery(SQL, "SELECT * FROM " + pp.darTablaResultado ());
+		Query q = pm.newQuery(SQL, "SELECT * FROM " + pp.darTablaReceta ());
 		q.setResultClass(Receta.class);
 		return (List<Receta>) q.executeList();
 	}
-
-	/**
-	 * Crea y ejecuta la sentencia SQL para aumentar en uno el número de sedes de los bares de la 
-	 * base de datos de Parranderos
-	 * @param pm - El manejador de persistencia
-	 * @param ciudad - La ciudad a la cual se le quiere realizar el proceso
-	 * @return El número de tuplas modificadas
-	 */
-	/**
-	public long aumentarSedesBaresCiudad (PersistenceManager pm, String ciudad)
-	{
-        Query q = pm.newQuery(SQL, "UPDATE " + pp.darTablaBar () + " SET cantsedes = cantsedes + 1 WHERE ciudad = ?");
-        q.setParameters(ciudad);
-        return (long) q.executeUnique();
-	}
-	*/
 }

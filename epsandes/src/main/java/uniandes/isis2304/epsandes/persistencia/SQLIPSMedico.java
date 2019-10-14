@@ -40,7 +40,7 @@ public class SQLIPSMedico {
 	 */
 	public long adicionarIPSMedico (PersistenceManager pm, long idMedico, long idIPS) 
 	{
-        Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaIPS () + "(id) values (?, ?)");
+        Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaIPS () + "(idMedico, idIPS) values (?, ?)");
         q.setParameters(idMedico, idIPS);
         return (long) q.executeUnique();
 	}

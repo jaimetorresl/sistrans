@@ -19,9 +19,7 @@ import uniandes.isis2304.epsandes.negocio.EPS;
 import uniandes.isis2304.epsandes.negocio.EPSAndes;
 import uniandes.isis2304.epsandes.negocio.IPS;
 import uniandes.isis2304.epsandes.negocio.Medico;
-import uniandes.isis2304.epsandes.negocio.MedicoSS;
-import uniandes.isis2304.epsandes.negocio.PrestacionServicio;
-import uniandes.isis2304.epsandes.negocio.ServicioSalud;
+
 import uniandes.isis2304.epsandes.negocio.UsuarioEPS;
 
 public class PersistenciaEPSAndes {
@@ -226,9 +224,9 @@ public class PersistenciaEPSAndes {
 		sqlCita = new SQLCita(this);
 		sqlConsulta = new SQLConsulta(this);
 		sqlTerapia = new SQLTerapia(this);
-		sqlProcedimientoEPS = new SQLProcedimientoEPS(this);
+		sqlProcedimientoEsp = new SQLProcedimientoEsp(this);
 		sqlHospitalizacion = new SQLHospitalizacion(this);
-		sqlIpsMedico = new SQLIpsMedico(this);
+		sqlIpsMedico = new SQLIPSMedico(this);
 		//sqlRecepcionistaIPS = new SQLRecepcionistaIPS(this);
 
 	}
@@ -316,7 +314,7 @@ public class PersistenciaEPSAndes {
 		return tablas.get (10);
 	}
 
-	public String darTablaIpsMedico() {
+	public String darTablaIPSMedico() {
 
 		return tablas.get(11);
 

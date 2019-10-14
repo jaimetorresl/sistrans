@@ -77,23 +77,34 @@ class SQLUtil
 	 */
 	public long [] limpiarEPSAndes (PersistenceManager pm)
 	{
-        Query qAdministradorEPS = pm.newQuery(SQL, "DELETE FROM " + pp.darTablaAdministradorEPS() );          
+        Query qCita = pm.newQuery(SQL, "DELETE FROM " + pp.darTablaCita() );  
+        Query qConsulta = pm.newQuery(SQL, "DELETE FROM " + pp.darTablaConsulta() );
+        Query qHospitalizacion = pm.newQuery(SQL, "DELETE FROM " + pp.darTablaHospitalizacion() );
         Query qEPS = pm.newQuery(SQL, "DELETE FROM " + pp.darTablaEPS() );
         Query qIPS = pm.newQuery(SQL, "DELETE FROM " + pp.darTablaIPS() );
+        Query qIPSMedico = pm.newQuery(SQL, "DELETE FROM " + pp.darTablaIPSMedico() );
         Query qMedico = pm.newQuery(SQL, "DELETE FROM " + pp.darTablaMedico() );
-        Query qPaciente = pm.newQuery(SQL, "DELETE FROM " + pp.darTablaPaciente() );
-        Query qResultado = pm.newQuery(SQL, "DELETE FROM " + pp.darTablaResultado () );
-        Query qServicioSalud = pm.newQuery(SQL, "DELETE FROM " + pp.darTablaServicioSalud () );
+        Query qProcedimientoEsp = pm.newQuery(SQL, "DELETE FROM " + pp.darTablaProcedimientoEsp() );
+        Query qReceta = pm.newQuery(SQL, "DELETE FROM " + pp.darTablaReceta() );
+        Query qTerapia = pm.newQuery(SQL, "DELETE FROM " + pp.darTablaTerapia() );
+        Query qUsuarioEPS= pm.newQuery(SQL, "DELETE FROM " + pp.darTablaUsuarioEPS() );
+        Query qUsuarioIPS= pm.newQuery(SQL, "DELETE FROM " + pp.darTablaUsuarioIPS() );
 
-        long administradoresEPSEliminados = (long) qAdministradorEPS.executeUnique ();
+        long citasEliminadas = (long) qCita.executeUnique ();
+        long consultasEliminadas = (long) qConsulta.executeUnique ();
         long epsEliminadas = (long) qEPS.executeUnique ();
+        long hospitalizacionesEliminadas = (long) qHospitalizacion.executeUnique ();
         long ipsEliminadas = (long) qIPS.executeUnique ();
+        long ipsMedicoEliminados = (long) qIPSMedico.executeUnique ();
         long medicoEliminados = (long) qMedico.executeUnique ();
-        long pacienteEliminados = (long) qPaciente.executeUnique ();
-        long resultadoEliminados = (long) qResultado.executeUnique ();
-        long servicioSaludEliminados = (long) qServicioSalud.executeUnique ();
-        return new long[] {administradoresEPSEliminados, epsEliminadas, ipsEliminadas, 
-        		medicoEliminados, pacienteEliminados, resultadoEliminados, servicioSaludEliminados};
+        long procedimientoEliminados = (long) qProcedimientoEsp.executeUnique ();
+        long recetaEliminados = (long) qReceta.executeUnique ();
+        long terapiaEliminados = (long) qTerapia.executeUnique ();
+        long usuarioEPSEliminados = (long) qUsuarioEPS.executeUnique ();
+        long usuarioIPSEliminados = (long) qUsuarioIPS.executeUnique ();
+        return new long[] { citasEliminadas, consultasEliminadas, epsEliminadas, hospitalizacionesEliminadas,
+        		            ipsEliminadas, ipsMedicoEliminados, medicoEliminados, procedimientoEliminados,
+        		            recetaEliminados, terapiaEliminados, usuarioEPSEliminados, usuarioIPSEliminados};
 	}
 
 }

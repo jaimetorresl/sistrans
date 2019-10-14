@@ -147,20 +147,5 @@ class SQLCita
 		return (List<Cita>) q.executeList();
 	}
 
-	/**
-	 * Crea y ejecuta la sentencia SQL para aumentar en uno el número de sedes de los bares de la 
-	 * base de datos de Parranderos
-	 * @param pm - El manejador de persistencia
-	 * @param ciudad - La ciudad a la cual se le quiere realizar el proceso
-	 * @return El número de tuplas modificadas
-	 */
-	/**
-	public long aumentarSedesBaresCiudad (PersistenceManager pm, String ciudad)
-	{
-        Query q = pm.newQuery(SQL, "UPDATE " + pp.darTablaBar () + " SET cantsedes = cantsedes + 1 WHERE ciudad = ?");
-        q.setParameters(ciudad);
-        return (long) q.executeUnique();
-	}
-	*/
-	
+
 }
