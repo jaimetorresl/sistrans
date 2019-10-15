@@ -15,12 +15,18 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import uniandes.isis2304.epsandes.negocio.Cita;
+import uniandes.isis2304.epsandes.negocio.Consulta;
 import uniandes.isis2304.epsandes.negocio.EPS;
 import uniandes.isis2304.epsandes.negocio.EPSAndes;
+import uniandes.isis2304.epsandes.negocio.Hospitalizacion;
 import uniandes.isis2304.epsandes.negocio.IPS;
 import uniandes.isis2304.epsandes.negocio.Medico;
-
+import uniandes.isis2304.epsandes.negocio.ProcedimientoEsp;
+import uniandes.isis2304.epsandes.negocio.Receta;
+import uniandes.isis2304.epsandes.negocio.Terapia;
 import uniandes.isis2304.epsandes.negocio.UsuarioEPS;
+import uniandes.isis2304.epsandes.negocio.UsuarioIPS;
 
 public class PersistenciaEPSAndes {
 
@@ -347,6 +353,10 @@ public class PersistenciaEPSAndes {
 		return resp;
 	}
 
+	
+	/* ****************************************************************
+	 * 			M�todos para manejar las EPS
+	 *****************************************************************/
 
 	/**
 	 * M�todo que inserta, de manera transaccional, una tupla en la tabla PrestacionServicio
@@ -388,6 +398,10 @@ public class PersistenciaEPSAndes {
 		}
 	}
 
+	
+	/* ****************************************************************
+	 * 			M�todos para manejar los IPS
+	 *****************************************************************/
 
 	public IPS registrarIPS(String nombre, String tipo, String localizacion, long idEPS)
 	{
@@ -424,6 +438,10 @@ public class PersistenciaEPSAndes {
 	}
 
 
+	/* ****************************************************************
+	 * 			M�todos para manejar los USUARIOS
+	 *****************************************************************/
+	
 	public UsuarioEPS registrarUsuarioEPS(String nombre, int rol, long idEPS, String correo)
 	{
 
@@ -435,7 +453,7 @@ public class PersistenciaEPSAndes {
 		try
 		{
 			tx.begin();
-			long tuplasInsertadas = sqlUsuarioEPS.adicionarUsuarioEPS(pm, id, nombre, tipo, localizacion, idEPS);
+			long tuplasInsertadas = sqlUsuarioEPS.adicionarUsuarioEPS(pm, id, nombre, rol, idEPS, correo);
 			tx.commit();
 
 			log.trace ("Inserci�n de UsuarioEPS: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
@@ -457,21 +475,38 @@ public class PersistenciaEPSAndes {
 			pm.close();
 		}
 	}
+	
+	public UsuarioIPS registrarUsuarioIPS(String nombre, String estado, long numDocumento, int tipoDocumento, String fechaNacimiento, long idEPS, String esAfiliado, String correo) {
 
-	/**
-	 * Extrae el mensaje de la exception JDODataStoreException embebido en la Exception e, que da el detalle espec�fico del problema encontrado
-	 * @param e - La excepci�n que ocurrio
-	 * @return El mensaje de la excepci�n JDO
-	 */
-	private String darDetalleException(Exception e) 
-	{
-		String resp = "";
-		if (e.getClass().getName().equals("javax.jdo.JDODataStoreException"))
+		PersistenceManager pm = pmf.getPersistenceManager();
+
+		long id = nextval ();
+
+		Transaction tx=pm.currentTransaction();
+		try
 		{
-			JDODataStoreException je = (javax.jdo.JDODataStoreException) e;
-			return je.getNestedExceptions() [0].getMessage();
+			tx.begin();
+			long tuplasInsertadas = sqlUsuarioIPS.adicionarUsuarioIPS(pm, id, nombre, estado, numDocumento, tipoDocumento, fechaNacimiento, idEPS, esAfiliado, correo);
+			tx.commit();
+
+			log.trace ("Inserci�n de UsuarioEPS: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
+
+			return new UsuarioIPS(id, nombre, estado, numDocumento, tipoDocumento, fechaNacimiento, idEPS, esAfiliado, correo);
 		}
-		return resp;
+		catch (Exception e)
+		{
+			//        	e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			return null;
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
 	}
 
 
@@ -486,20 +521,22 @@ public class PersistenciaEPSAndes {
 	 * @param nombre - El nombre del tipo de bebida
 	 * @return El objeto TipoBebida adicionado. null si ocurre alguna Excepci�n
 	 */
-	public Medico registrarMedico(PersistenceManager pm, long id, String especialidad,int numRegMedico, String tipo, String nombre)
+	public Medico registrarMedico(String nombre, String especialidad, long numRegMedico)
 	{
-		pm = pmf.getPersistenceManager();
+		PersistenceManager pm = pmf.getPersistenceManager();
+		
+		long id = nextval ();
+		
 		Transaction tx=pm.currentTransaction();
 		try
 		{
 			tx.begin();
-			long idMedico = nextval ();
-			long tuplasInsertadas = sqlMedico.adicionarMedico(pm, idMedico, especialidad, numRegMedico, tipo, nombre);
+			long tuplasInsertadas = sqlMedico.adicionarMedico(pm, id, nombre, especialidad, numRegMedico);
 			tx.commit();
 
 			log.trace ("Inserci�n de medico: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
 
-			return new Medico(idMedico, especialidad, nombre, tipo, numRegMedico);
+			return new Medico(id, nombre, especialidad, numRegMedico);
 		}
 		catch (Exception e)
 		{
@@ -522,29 +559,206 @@ public class PersistenciaEPSAndes {
 	/* ****************************************************************
 	 * 			M�todos para manejar los SERVICIOS DE SALUD
 	 *****************************************************************/
-
-	/**
-	 * M�todo que inserta, de manera transaccional, una tupla en la tabla Servicio Salud
-	 * Adiciona entradas al log de la aplicaci�n
-	 * @param nombre - El nombre del tipo de bebida
-	 * @return El objeto TipoBebida adicionado. null si ocurre alguna Excepci�n
-	 */
-	public ServicioSalud registrarServicioSalud(PersistenceManager pm, long id, String horaInicio, String horaFinal,
-			String codigoTipoSS, long idPaciente, long idIPS)
+	
+	public Consulta registarConsulta(String esAfiliado, String ordenPrevia, long idIPS, int capacidad, String horarioSemanal)
 	{
-		pm = pmf.getPersistenceManager();
+		PersistenceManager pm = pmf.getPersistenceManager();
+		
+		long id = nextval ();
+		
 		Transaction tx=pm.currentTransaction();
 		try
 		{
 			tx.begin();
-			long idServicio = nextval ();
-			long tuplasInsertadas = sqlServicioSalud.adicionarServicioSalud(pm, id, horaInicio, horaFinal, codigoTipoSS, idPaciente, idIPS);
-
+			long tuplasInsertadas = sqlConsulta.adicionarConsulta(pm, id, ordenPrevia, esAfiliado, idIPS, capacidad, horarioSemanal);
 			tx.commit();
 
-			log.trace ("Inserci�n de servicio de salud: " + id + ": " + tuplasInsertadas + " tuplas insertadas");
+			log.trace ("Inserci�n de consulta afiliada a la ips: " + idIPS + ": " + tuplasInsertadas + " tuplas insertadas");
 
-			return new ServicioSalud(id, horaInicio, horaFinal, codigoTipoSS, idPaciente, idIPS);
+			return new Consulta(id, esAfiliado, ordenPrevia, idIPS, capacidad, horarioSemanal);
+		}
+		catch (Exception e)
+		{
+			//        	e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			return null;
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
+	}
+	
+	
+	
+	public Terapia registrarTerapia(String esAfiliado, String ordenPrevia, int numSesiones, String tipoTerapia, long idIPS, int capacidad, String horarioSemanal)
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+		
+		long id = nextval ();
+		
+		Transaction tx=pm.currentTransaction();
+		try
+		{
+			tx.begin();
+			long tuplasInsertadas = sqlTerapia.adicionarTerapia(pm, id, ordenPrevia, esAfiliado, numSesiones, tipoTerapia, idIPS, capacidad, horarioSemanal);
+			tx.commit();
+
+			log.trace ("Inserci�n de terapia afiliada a la ips: " + idIPS + ": " + tuplasInsertadas + " tuplas insertadas");
+
+			return new Terapia(id, ordenPrevia, esAfiliado, numSesiones, tipoTerapia, idIPS, capacidad, horarioSemanal);
+		}
+		catch (Exception e)
+		{
+			//        	e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			return null;
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
+	}
+	
+	
+	public ProcedimientoEsp registrarProcedimientoEsp(String esAfiliado, String ordenPrevia, String conocimiento, String equipo, long idIPS, int capacidad, String horarioSemanal)
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+		
+		long id = nextval ();
+		
+		Transaction tx=pm.currentTransaction();
+		try
+		{
+			tx.begin();
+			long tuplasInsertadas = sqlProcedimientoEsp.adicionarProcedimientoEsp(pm, id, ordenPrevia, esAfiliado, conocimiento, equipo, idIPS, capacidad, horarioSemanal);
+			tx.commit();
+
+			log.trace ("Inserci�n de procedimiento especial afiliada a la ips: " + idIPS + ": " + tuplasInsertadas + " tuplas insertadas");
+
+			return new ProcedimientoEsp(id, esAfiliado, ordenPrevia, conocimiento, equipo, idIPS, capacidad, horarioSemanal);
+		}
+		catch (Exception e)
+		{
+			//        	e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			return null;
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
+	}
+	
+	
+	
+	public Hospitalizacion registarHospitalizacion(String ordenPrevia, String esAfiliado, int numVisitas, long idIPS, int capacidad, String horarioSemanal)
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+		
+		long id = nextval ();
+		
+		Transaction tx=pm.currentTransaction();
+		try
+		{
+			tx.begin();
+			long tuplasInsertadas = sqlHospitalizacion.adicionarHospitalizacion(pm, id, ordenPrevia, esAfiliado, numVisitas, idIPS, capacidad, horarioSemanal);
+			tx.commit();
+
+			log.trace ("Inserci�n de hospitalizacion afiliada a la ips: " + idIPS + ": " + tuplasInsertadas + " tuplas insertadas");
+
+			return new Hospitalizacion(id, ordenPrevia, esAfiliado, numVisitas, idIPS, capacidad, horarioSemanal);
+		}
+		catch (Exception e)
+		{
+			//        	e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			return null;
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
+	}
+	
+	
+	
+	
+	/* ****************************************************************
+	 * 			M�todos para manejar las CITAS
+	 *****************************************************************/
+	
+	public Cita registrarCita(String horaInicio, String horaFin, long idMedico, long idConsulta, long idTerapia, long idProcedimientoEsp, long idHospitalizacion, long idUsuarioIPS)
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+		
+		long id = nextval ();
+		
+		Transaction tx=pm.currentTransaction();
+		try
+		{
+			tx.begin();
+			long tuplasInsertadas = sqlCita.adicionarCita(pm, id, horaInicio, horaFin, idMedico, idConsulta, idTerapia, idProcedimientoEsp, idHospitalizacion, idUsuarioIPS);
+			tx.commit();
+
+			log.trace ("Inserci�n de cita asociada al medico: " + idMedico + ": " + tuplasInsertadas + " tuplas insertadas");
+
+			return new Cita(id, horaInicio, horaFin, idMedico, idConsulta, idTerapia, idProcedimientoEsp, idHospitalizacion, idUsuarioIPS);
+		}
+		catch (Exception e)
+		{
+			//        	e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			return null;
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
+	}
+	
+	
+	/* ****************************************************************
+	 * 	 M�todos para manejar las RECETAS (cumplimientos de las citas)
+	 *****************************************************************/
+	
+	
+	public Receta registrarReceta(String diagnostico, String medicamentos, long idConsulta, long idTerapia, long idProcedimientoEsp, long idHospitalizacion, long idCita)
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+		
+		long id = nextval ();
+		
+		Transaction tx=pm.currentTransaction();
+		try
+		{
+			tx.begin();
+			long tuplasInsertadas = sqlReceta.adicionarReceta(pm, id, diagnostico, medicamentos, idConsulta, idTerapia, idProcedimientoEsp, idHospitalizacion, idCita);
+			tx.commit();
+
+			log.trace ("Inserci�n de receta asociada a la cita: " + idCita + ": " + tuplasInsertadas + " tuplas insertadas");
+
+			return new Receta(diagnostico, medicamentos, id, idConsulta, idTerapia, idProcedimientoEsp, idHospitalizacion);
 		}
 		catch (Exception e)
 		{
@@ -562,78 +776,22 @@ public class PersistenciaEPSAndes {
 		}
 	}
 
-
+	
+	
 	/**
-	 * M�todo que inserta, de manera transaccional, una tupla en la tabla MedicoSS
-	 * Adiciona entradas al log de la aplicaci�n
-	 * @param nombre - El nombre del tipo de bebida
-	 * @return El objeto TipoBebida adicionado. null si ocurre alguna Excepci�n
+	 * Extrae el mensaje de la exception JDODataStoreException embebido en la Exception e, que da el detalle espec�fico del problema encontrado
+	 * @param e - La excepci�n que ocurrio
+	 * @return El mensaje de la excepci�n JDO
 	 */
-	public MedicoSS registrarOrdenServicioSalud(PersistenceManager pm, long idServicio, long idMedico)
+	private String darDetalleException(Exception e) 
 	{
-		pm = pmf.getPersistenceManager();
-		Transaction tx=pm.currentTransaction();
-		try
+		String resp = "";
+		if (e.getClass().getName().equals("javax.jdo.JDODataStoreException"))
 		{
-			tx.begin();
-			long tuplasInsertadas = sqlMedicoSS.adicionarMedicoSS(pm, idMedico, idServicio);
-			tx.commit();
-
-			log.trace ("Inserci�n de servicio de salud: " + idServicio + ": " + tuplasInsertadas + " tuplas insertadas");
-
-			return new MedicoSS(idMedico, idServicio);
+			JDODataStoreException je = (javax.jdo.JDODataStoreException) e;
+			return je.getNestedExceptions() [0].getMessage();
 		}
-		catch (Exception e)
-		{
-			//        	e.printStackTrace();
-			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
-			return null;
-		}
-		finally
-		{
-			if (tx.isActive())
-			{
-				tx.rollback();
-			}
-			pm.close();
-		}
-	}
-
-
-	/**
-	 * M�todo que inserta, de manera transaccional, una tupla en la tabla PrestacionServicio
-	 * Adiciona entradas al log de la aplicaci�n
-	 * @param nombre - El nombre del tipo de bebida
-	 * @return El objeto TipoBebida adicionado. null si ocurre alguna Excepci�n
-	 */
-	public PrestacionServicio registrarPrestacionServicioSalud(PersistenceManager pm, long idServicio, long idResultado)
-	{
-		pm = pmf.getPersistenceManager();
-		Transaction tx=pm.currentTransaction();
-		try
-		{
-			tx.begin();
-			long tuplasInsertadas = sqlPrestacion.adicionarPrestacion(pm, idServicio, idResultado);
-			tx.commit();
-
-			log.trace ("Inserci�n de prestacion de ss: " + idServicio + ": " + tuplasInsertadas + " tuplas insertadas");
-
-			return new PrestacionServicio(idResultado, idServicio);
-		}
-		catch (Exception e)
-		{
-			//        	e.printStackTrace();
-			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
-			return null;
-		}
-		finally
-		{
-			if (tx.isActive())
-			{
-				tx.rollback();
-			}
-			pm.close();
-		}
+		return resp;
 	}
 
 

@@ -24,7 +24,7 @@ public interface VOMedico {
 	/**
 	 * @return el numero de registro del medico
 	 */
-	public int numRegMedico();
+	public long numRegMedico();
 	
 
 	/**

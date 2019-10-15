@@ -71,9 +71,9 @@ class SQLCita
 	 * @param sedes - El número de sedes del bar
 	 * @return El número de tuplas insertadas
 	 */
-	public long adicionarCita (PersistenceManager pm, long id, String horaInicio, String horaFin, long idMedico, long idConsulta, long idTerapia, long idProcedimientoEsp, long idHospitalizacion) 
+	public long adicionarCita (PersistenceManager pm, long id, String horaInicio, String horaFin, long idMedico, long idConsulta, long idTerapia, long idProcedimientoEsp, long idHospitalizacion, long idUsuarioIPS) 
 	{
-        Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaCita () + "(id, horaInincio, horaIniciFin, idMedico, idConsulta, idTerapia, idProcedimientoEsp, idHospitalizacion) values (?, ?, ?, ?, ?, ?, ?, ?)");
+        Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaCita () + "(id, horaInincio, horaIniciFin, idMedico, idConsulta, idTerapia, idProcedimientoEsp, idHospitalizacion, idUsuarioIPS) values (?, ?, ?, ?, ?, ?, ?, ?, ?)");
         q.setParameters(id, horaInicio, horaFin, idMedico, idConsulta, idTerapia, idProcedimientoEsp, idHospitalizacion);
         return (long) q.executeUnique();
 	}

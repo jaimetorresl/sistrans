@@ -9,7 +9,6 @@ import com.google.gson.JsonObject;
 
 import uniandes.isis2304.epsandes.persistencia.PersistenciaEPSAndes;
 //import uniandes.isis2304.epsandes.persistencia.PersistenciaEPSAndes;
-import uniandes.isis2304.parranderos.negocio.Bebedor;
 
 
 /**
@@ -91,7 +90,7 @@ public class EPSAndes {
 	 * 			M�todos para manejar las IPS
 	 *****************************************************************/
 
-	public IPS registrarIPS(long id, String nombre, String tipo, String localizacion, long idEPS) {
+	public IPS registrarIPS(String nombre, String tipo, String localizacion, long idEPS) {
 
 
 
@@ -115,7 +114,7 @@ public class EPSAndes {
 		UsuarioIPS usuarioIPS;
 
 		log.info ("Adicionando usuarioIPS: " + nombre);
-		usuarioIPS = pp.adicionarUsuarioIPS (nombre, estado, numDocumento, tipoDocumento, fechaNacimiento, idEPS, esAfiliado, correo);
+		usuarioIPS = pp.registrarUsuarioIPS (nombre, estado, numDocumento, tipoDocumento, fechaNacimiento, idEPS, esAfiliado, correo);
 		log.info ("Adicionando usuarioIPS: " + usuarioIPS);
 		return usuarioIPS;
 
@@ -127,7 +126,7 @@ public class EPSAndes {
 		UsuarioEPS usuarioEPS;
 
 		log.info ("Adicionando usuarioEPS: " + nombre);
-		usuarioEPS = pp.adicionarUsuarioEPS(nombre, rol, idEPS, correo);
+		usuarioEPS = pp.registrarUsuarioEPS(nombre, rol, idEPS, correo);
 		log.info ("Adicionando usuarioEPS: " + usuarioEPS);
 		return usuarioEPS;
 
@@ -144,34 +143,34 @@ public class EPSAndes {
 	 * Registra a la EPS de manera persistente un medico asociado a una o varias IPS
 	 * Adiciona entradas al log de la aplicaci�n
 	 */
-	public Medico registrarMedico (String nombre, String especialidad, int numRegMedico)
+	public Medico registrarMedico (String nombre, String especialidad, long numRegMedico)
 	{	
 		Medico medico;
 
 		log.info ("Adicionando medico: " + nombre);
-		medico = pp.adicionarMedico(nombre, especialidad, numRegMedico);
+		medico = pp.registrarMedico(nombre, especialidad, numRegMedico);
 		log.info ("Adicionando medico: " + medico);
 		return medico;
 
 	}
 
 
-	/**
-	 * Se busca un medico dentro de la lista de medicos existentes (por su id).
-	 * @param id del medico a buscar
-	 * @return medico o null por si no se encontro
-	 */
-	public Medico buscarMedicoPorId(long id) {
-
-		Medico medicoId;
-		log.info("Buscando medico");
-
-		medicoId = pp.buscarMedicoPorId(id);
-		log.info ("Medico encontrado: " + medicoId);
-
-		return medicoId;
-
-	}
+//	/**
+//	 * Se busca un medico dentro de la lista de medicos existentes (por su id).
+//	 * @param id del medico a buscar
+//	 * @return medico o null por si no se encontro
+//	 */
+//	public Medico buscarMedicoPorId(long id) {
+//
+//		Medico medicoId;
+//		log.info("Buscando medico");
+//
+//		medicoId = pp.buscarMedicoPorId(id);
+//		log.info ("Medico encontrado: " + medicoId);
+//
+//		return medicoId;
+//
+//	}
 
 
 	/* ****************************************************************
@@ -183,7 +182,7 @@ public class EPSAndes {
 		Consulta consulta;
 
 		log.info ("Adicionando consulta de la IPS: " + idIPS);
-		consulta = pp.adicionarConsulta(esAfiliado, ordenPrevia, idIPS, capacidad, horarioSemanal);
+		consulta = pp.registarConsulta(esAfiliado, ordenPrevia, idIPS, capacidad, horarioSemanal);
 		log.info ("Adicionando consulta: " + consulta);
 		return consulta;
 
@@ -195,7 +194,7 @@ public class EPSAndes {
 		Terapia terapia;
 
 		log.info ("Adicionando terapia tipo: " + tipoTerapia);
-		terapia = pp.adicionarTerapia(ordenPrevia, esAfiliado, numSesiones, tipoTerapia, idIPS, capacidad, horarioSemanal);
+		terapia = pp.registrarTerapia(ordenPrevia, esAfiliado, numSesiones, tipoTerapia, idIPS, capacidad, horarioSemanal);
 		log.info ("Adicionando terapia: " + terapia);
 		return terapia;
 
@@ -206,7 +205,7 @@ public class EPSAndes {
 		ProcedimientoEsp procedimiento;
 
 		log.info ("Adicionando procedimiento cono conocimiento en: " + conocimiento);
-		procedimiento = pp.adicionarProcedimiento(ordenPrevia, esAfiliado, conocimiento, equipo, idIPS, capacidad, horarioSemanal);
+		procedimiento = pp.registrarProcedimientoEsp(ordenPrevia, esAfiliado, conocimiento, equipo, idIPS, capacidad, horarioSemanal);
 		log.info ("Adicionando procedimiento: " + procedimiento);
 		return procedimiento;
 
@@ -217,7 +216,7 @@ public class EPSAndes {
 		Hospitalizacion hospitalizacion;
 
 		log.info ("Adicionando una hospitalizacion a la IPS: " + idIPS);
-		hospitalizacion = pp.adicionarHospitalizacion(ordenPrevia, esAfiliado, numVisitas, idIPS, capacidad, horarioSemanal);
+		hospitalizacion = pp.registarHospitalizacion(ordenPrevia, esAfiliado, numVisitas, idIPS, capacidad, horarioSemanal);
 		log.info ("Adicionando hospitalizacion: " + hospitalizacion);
 		return hospitalizacion;
 
@@ -229,12 +228,12 @@ public class EPSAndes {
 	 * 			M�todos para manejar los Servicios de cita
 	 *****************************************************************/
 	
-	public Cita registrarCita(String horaInicio, String horaFin, long idMedico, long idConsulta, long idTerapia, long idProcedimientoEsp, long idHospitalizacion) {
+	public Cita registrarCita(String horaInicio, String horaFin, long idMedico, long idConsulta, long idTerapia, long idProcedimientoEsp, long idHospitalizacion, long idUsuarioIPS) {
 		
 		Cita cita;
 
 		log.info ("Adicionando cita que empieza a las: " + horaInicio + " y termina a las: " + horaFin);
-		cita = pp.adicionarCita(horaInicio, horaFin, idMedico, idConsulta, idTerapia, idProcedimientoEsp, idHospitalizacion);
+		cita = pp.registrarCita(horaInicio, horaFin, idMedico, idConsulta, idTerapia, idProcedimientoEsp, idHospitalizacion, idUsuarioIPS);
 		log.info ("Adicionando cita: " + cita);
 		return cita;
 		

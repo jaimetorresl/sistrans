@@ -9,7 +9,7 @@ public class Medico implements VOMedico {
 	
 	private long id;
 	
-	private int numRegMedico;
+	private long numRegMedico;
 
 	private String nombre;
 	
@@ -40,7 +40,7 @@ public class Medico implements VOMedico {
 	 * @param tipo - El tipo de medico que es 
 	 * @param nombre - El nombre del medico
 	 */
-    public Medico(long id, String especialidad, String nombre, int numRegMedico) 
+    public Medico(long id, String especialidad, String nombre, long numRegMedico) 
     {
     	this.id = id;
 		this.nombre = nombre;
@@ -63,7 +63,7 @@ public class Medico implements VOMedico {
 	}
 
 	@Override
-	public int numRegMedico() {
+	public long numRegMedico() {
 		// TODO Auto-generated method stub
 		return numRegMedico;
 	}

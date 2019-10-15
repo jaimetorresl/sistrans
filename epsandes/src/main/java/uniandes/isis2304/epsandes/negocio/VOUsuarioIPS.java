@@ -46,7 +46,7 @@ public interface VOUsuarioIPS {
 	/**
 	 * @return true si el paciente es afiliado a la EPS, false de lo contrario
 	 */
-	public boolean getEsAfiliado();
+	public String getEsAfiliado();
 	
 	
 	/**

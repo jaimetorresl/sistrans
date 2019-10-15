@@ -16,7 +16,7 @@ public class UsuarioIPS implements VOUsuarioIPS
 	
 	private String fechaNacimiento;
 	
-	private boolean esAfiliado;
+	private String esAfiliado;
 	
 	private String correo;
 	
@@ -35,7 +35,7 @@ public class UsuarioIPS implements VOUsuarioIPS
     	tipoDocumento = 0;
     	fechaNacimiento = "";
     	idEPS = 0;
-    	esAfiliado = true;
+    	esAfiliado = "";
     	correo = "";
 		
 		
@@ -45,7 +45,7 @@ public class UsuarioIPS implements VOUsuarioIPS
 	/**
 	 * Constructor con valores de un usuario de IPS
 	 */
-    public UsuarioIPS(Long id, String nombre, String estado, Long numDocumento, int tipoDocumento, String fechaNacimiento, Long idEPS, boolean esAfiliado, String correo) 
+    public UsuarioIPS(Long id, String nombre, String estado, Long numDocumento, int tipoDocumento, String fechaNacimiento, Long idEPS, String esAfiliado, String correo) 
     {
     	this.id = id;
     	this.nombre = nombre;
@@ -91,7 +91,7 @@ public class UsuarioIPS implements VOUsuarioIPS
 	}
 
 	@Override
-	public boolean getEsAfiliado() {
+	public String getEsAfiliado() {
 		// TODO Auto-generated method stub
 		return esAfiliado;
 	}

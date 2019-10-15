@@ -9,7 +9,9 @@ import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
 
 import uniandes.isis2304.epsandes.negocio.EPSAndes;
+import uniandes.isis2304.epsandes.negocio.IPS;
 import uniandes.isis2304.epsandes.negocio.VOEPS;
+import uniandes.isis2304.epsandes.negocio.VOIPS;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -224,11 +226,11 @@ public class InterfazEpsAndesApp extends JFrame implements ActionListener {
     }
     
 	/* ****************************************************************
-	 * 			CRUD de TipoBebida
+	 * 			CRUD de EPS
 	 *****************************************************************/
     
     
-    public void adicionarEPS()
+public void adicionarEPS()
   {
   	try 
   	{
@@ -238,14 +240,15 @@ public class InterfazEpsAndesApp extends JFrame implements ActionListener {
   		
   		if (nombreEPS != null)
     		{
-        		VOTipoBebida tb = parranderos.adicionarTipoBebida (nombreTipo);
-        		VOEPS eps = epsandes.registrarEPS(0, nombreEPS);
-        		if (tb == null)
+  			
+        		VOEPS eps = epsandes.registrarEPS(nombreEPS);
+        		
+        		if (eps == null)
         		{
-        			throw new Exception ("No se pudo crear un tipo de bebida con nombre: " + nombreTipo);
+        			throw new Exception ("No se pudo crear una EPS con nombre: " + nombreEPS);
         		}
-        		String resultado = "En adicionarTipoBebida\n\n";
-        		resultado += "Tipo de bebida adicionado exitosamente: " + tb;
+        		String resultado = "En adicionarEPS\n\n";
+        		resultado += "EPS adicionado exitosamente: " + eps;
     			resultado += "\n Operaci�n terminada";
     			panelDatos.actualizarInterfaz(resultado);
     		}
@@ -254,10 +257,6 @@ public class InterfazEpsAndesApp extends JFrame implements ActionListener {
     			panelDatos.actualizarInterfaz("Operaci�n cancelada por el usuario");
     		}
   		
-  		
-  		
-  		
-  		
   	
 	} 
   	catch (Exception e) 
@@ -265,140 +264,52 @@ public class InterfazEpsAndesApp extends JFrame implements ActionListener {
 //			e.printStackTrace();
 			String resultado = generarMensajeError(e);
 			panelDatos.actualizarInterfaz(resultado);
-		}
+	}
   }
     
-    
-    
-    
-    
-    
-    
-    
-    
-//    /**
-//     * Adiciona un tipo de bebida con la informaci�n dada por el usuario
-//     * Se crea una nueva tupla de tipoBebida en la base de datos, si un tipo de bebida con ese nombre no exist�a
-//     */
-//    public void adicionarTipoBebida( )
-//    {
-//    	try 
-//    	{
-//    		String nombreTipo = JOptionPane.showInputDialog (this, "Nombre del tipo de bedida?", "Adicionar tipo de bebida", JOptionPane.QUESTION_MESSAGE);
-//    		if (nombreTipo != null)
-//    		{
-//        		VOTipoBebida tb = parranderos.adicionarTipoBebida (nombreTipo);
-//        		if (tb == null)
-//        		{
-//        			throw new Exception ("No se pudo crear un tipo de bebida con nombre: " + nombreTipo);
-//        		}
-//        		String resultado = "En adicionarTipoBebida\n\n";
-//        		resultado += "Tipo de bebida adicionado exitosamente: " + tb;
-//    			resultado += "\n Operaci�n terminada";
-//    			panelDatos.actualizarInterfaz(resultado);
-//    		}
-//    		else
-//    		{
-//    			panelDatos.actualizarInterfaz("Operaci�n cancelada por el usuario");
-//    		}
-//		} 
-//    	catch (Exception e) 
-//    	{
-////			e.printStackTrace();
-//			String resultado = generarMensajeError(e);
-//			panelDatos.actualizarInterfaz(resultado);
-//		}
-//    }
-//
-//    /**
-//     * Consulta en la base de datos los tipos de bebida existentes y los muestra en el panel de datos de la aplicaci�n
-//     */
-//    public void listarTipoBebida( )
-//    {
-//    	try 
-//    	{
-//			List <VOTipoBebida> lista = parranderos.darVOTiposBebida();
-//
-//			String resultado = "En listarTipoBebida";
-//			resultado +=  "\n" + listarTiposBebida (lista);
-//			panelDatos.actualizarInterfaz(resultado);
-//			resultado += "\n Operaci�n terminada";
-//		} 
-//    	catch (Exception e) 
-//    	{
-////			e.printStackTrace();
-//			String resultado = generarMensajeError(e);
-//			panelDatos.actualizarInterfaz(resultado);
-//		}
-//    }
-//
-//    /**
-//     * Borra de la base de datos el tipo de bebida con el identificador dado po el usuario
-//     * Cuando dicho tipo de bebida no existe, se indica que se borraron 0 registros de la base de datos
-//     */
-//    public void eliminarTipoBebidaPorId( )
-//    {
-//    	try 
-//    	{
-//    		String idTipoStr = JOptionPane.showInputDialog (this, "Id del tipo de bedida?", "Borrar tipo de bebida por Id", JOptionPane.QUESTION_MESSAGE);
-//    		if (idTipoStr != null)
-//    		{
-//    			long idTipo = Long.valueOf (idTipoStr);
-//    			long tbEliminados = parranderos.eliminarTipoBebidaPorId (idTipo);
-//
-//    			String resultado = "En eliminar TipoBebida\n\n";
-//    			resultado += tbEliminados + " Tipos de bebida eliminados\n";
-//    			resultado += "\n Operaci�n terminada";
-//    			panelDatos.actualizarInterfaz(resultado);
-//    		}
-//    		else
-//    		{
-//    			panelDatos.actualizarInterfaz("Operaci�n cancelada por el usuario");
-//    		}
-//		} 
-//    	catch (Exception e) 
-//    	{
-////			e.printStackTrace();
-//			String resultado = generarMensajeError(e);
-//			panelDatos.actualizarInterfaz(resultado);
-//		}
-//    }
-//
-//    /**
-//     * Busca el tipo de bebida con el nombre indicado por el usuario y lo muestra en el panel de datos
-//     */
-//    public void buscarTipoBebidaPorNombre( )
-//    {
-//    	try 
-//    	{
-//    		String nombreTb = JOptionPane.showInputDialog (this, "Nombre del tipo de bedida?", "Buscar tipo de bebida por nombre", JOptionPane.QUESTION_MESSAGE);
-//    		if (nombreTb != null)
-//    		{
-//    			VOTipoBebida tipoBebida = parranderos.darTipoBebidaPorNombre (nombreTb);
-//    			String resultado = "En buscar Tipo Bebida por nombre\n\n";
-//    			if (tipoBebida != null)
-//    			{
-//        			resultado += "El tipo de bebida es: " + tipoBebida;
-//    			}
-//    			else
-//    			{
-//        			resultado += "Un tipo de bebida con nombre: " + nombreTb + " NO EXISTE\n";    				
-//    			}
-//    			resultado += "\n Operaci�n terminada";
-//    			panelDatos.actualizarInterfaz(resultado);
-//    		}
-//    		else
-//    		{
-//    			panelDatos.actualizarInterfaz("Operaci�n cancelada por el usuario");
-//    		}
-//		} 
-//    	catch (Exception e) 
-//    	{
-////			e.printStackTrace();
-//			String resultado = generarMensajeError(e);
-//			panelDatos.actualizarInterfaz(resultado);
-//		}
-//    }
+  
+
+
+public void adicionarIPS()
+{
+	try 
+	{
+		
+		
+		String nombreIPS = JOptionPane.showInputDialog(this, "Nombre de IPS?", "Adicionar IPS", JOptionPane.QUESTION_MESSAGE);
+		String tipo = JOptionPane.showInputDialog(this, "Tipo de IPS?", "Adicionar IPS", JOptionPane.QUESTION_MESSAGE);
+		String localizacion = JOptionPane.showInputDialog(this, "Localizacion de IPS?", "Adicionar IPS", JOptionPane.QUESTION_MESSAGE);
+		String idEPS = JOptionPane.showInputDialog(this, "IdEPS de IPS?", "Adicionar IPS", JOptionPane.QUESTION_MESSAGE);
+		long idEPS2 = Long.parseLong(idEPS);
+		
+		if (nombreIPS != null)
+  		{
+			
+      		VOIPS ips = epsandes.registrarIPS(nombreIPS, tipo, localizacion, idEPS2);
+      		
+      		if (ips == null)
+      		{
+      			throw new Exception ("No se pudo crear una IPS con nombre: " + nombreIPS);
+      		}
+      		String resultado = "En adicionarIPS\n\n";
+      		resultado += "IPS adicionado exitosamente: " + ips;
+  			resultado += "\n Operaci�n terminada";
+  			panelDatos.actualizarInterfaz(resultado);
+  		}
+  		else
+  		{
+  			panelDatos.actualizarInterfaz("Operaci�n cancelada por el usuario");
+  		}
+		
+	
+	} 
+	catch (Exception e) 
+	{
+//			e.printStackTrace();
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+	}
+}
     
     
 

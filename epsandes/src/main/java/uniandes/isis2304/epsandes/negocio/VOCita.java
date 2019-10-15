@@ -19,6 +19,8 @@ public interface VOCita {
 	
 	public long getIdHospitalizacion();
 	
+	public long getIdUsuarioIPS();
+	
 	@Override
 	/**
 	 * @return Una cadena de caracteres con todos los atributos
