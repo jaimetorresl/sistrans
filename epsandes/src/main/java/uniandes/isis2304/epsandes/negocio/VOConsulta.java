@@ -33,10 +33,19 @@ public interface VOConsulta {
 	
 	public int getCapacidad();
 	
-	public String getHorarioSemanal();
+	public String getHoraInicio();
 	
+	public String getHoraFin();
 	
+	public String getFechaInicio();
 	
+	public String getFechaFin();
+	
+	public String getDiaInicio();
+	
+	public String getDiaFin();
+	
+	public long getIdRecepcionistaIPS();
 	
 	@Override
 	/**

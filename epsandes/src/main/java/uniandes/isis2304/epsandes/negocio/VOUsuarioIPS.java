@@ -9,12 +9,6 @@ package uniandes.isis2304.epsandes.negocio;
  */
 public interface VOUsuarioIPS {
 	
-	/**
-	 * @return id del paciente o afiliado
-	 */
-	
-	public Long getId();
-	
 	
 	/**
 	 * @return estado del paciente o afiliado (hospitalizado, consulta, etc)
@@ -53,6 +47,11 @@ public interface VOUsuarioIPS {
 	 * @return id eps a la cual se encuentra asociado
 	 */
 	public Long getIdEPS();
+	
+	
+	public int getEdad();
+	
+	public String getGenero();
 	
 	@Override
 	/**

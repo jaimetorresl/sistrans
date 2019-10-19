@@ -192,7 +192,7 @@ public class ConexionTest
 		// Ahora si se puede probar si la tabla existe o no...
 		try
 		{
-			epsAndes.darTiposBebida ();
+			epsAndes
 			fail ("Debería fallar. La tabla consultada no existe en la BD");
 		}
 		catch (Exception e)

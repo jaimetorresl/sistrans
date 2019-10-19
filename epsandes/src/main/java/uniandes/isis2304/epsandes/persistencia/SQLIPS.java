@@ -69,7 +69,7 @@ class SQLIPS
 	 * @param sedes - El número de sedes del bar
 	 * @return El número de tuplas insertadas
 	 */
-	public long adicionarIPS (PersistenceManager pm, long id, String nombre, String tipo, String localizacion, long idEPS) 
+	public long adicionarIPS (PersistenceManager pm, long id, String nombre, String tipo, String localizacion, long idEPS) throws Exception 
 	{
         Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaIPS () + "(id, nombre, tipo, localizacion, idEPS) values (?, ?, ?, ?, ?)");
         q.setParameters(id, nombre, tipo, localizacion, idEPS);

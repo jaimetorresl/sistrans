@@ -23,13 +23,7 @@ public interface VOReceta {
 	 * @return tratamiento que debe seguir por cierto tiempo deterinado y especificado
 	 */
 
-	public long getIdConsulta();
-
-	public long getIdTerapia();
-
-	public long getIdProcedimientoEsp();
-
-	public long getIdHospitalizacion();
+	public long getIdCita();
 
 	/**
 	 * @return id de la receta que fue entregada

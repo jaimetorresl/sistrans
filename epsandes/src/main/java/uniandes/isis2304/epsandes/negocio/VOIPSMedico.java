@@ -6,4 +6,7 @@ public interface VOIPSMedico {
 	
 	public long getIdIPS();
 
+	
+	public String toString();
+	
 }

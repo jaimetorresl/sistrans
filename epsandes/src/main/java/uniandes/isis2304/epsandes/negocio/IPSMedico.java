@@ -32,9 +32,12 @@ public class IPSMedico implements VOIPSMedico{
 		// TODO Auto-generated method stub
 		return idIPS;
 	}
-	
-	
-	
-	
+
+
+	@Override
+	public String toString() {
+		return "IPSMedico [idMedico=" + idMedico + ", idIPS=" + idIPS + "]";
+	}
+
 
 }

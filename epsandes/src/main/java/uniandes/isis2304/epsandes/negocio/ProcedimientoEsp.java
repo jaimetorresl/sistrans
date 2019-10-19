@@ -1,26 +1,38 @@
 package uniandes.isis2304.epsandes.negocio;
 
 public class ProcedimientoEsp implements VOProcedimientoEsp{
-	
+
 	private long id;
-	
+
 	private String esAfiliado;
-	
+
 	private String ordenPrevia;
-	
+
 	private String conocimiento;
-	
+
 	private String equipo;
-	
+
 	private long idIPS;
-	
+
 	private int capacidad;
-	
-	private String horarioSemanal;
-	
-	
+
+	private String horaInicio;
+
+	private String horaFin;
+
+	private String fechaInicio;
+
+	private String fechaFin;
+
+	private String diaInicio;
+
+	private String diaFin;
+
+	private long idRecepcionista;
+
+
 	public ProcedimientoEsp() {
-		
+
 		id = 0;
 		esAfiliado = "";
 		ordenPrevia = "";
@@ -28,13 +40,22 @@ public class ProcedimientoEsp implements VOProcedimientoEsp{
 		equipo = "";
 		idIPS = 0;
 		capacidad = 0;
-		horarioSemanal = "";
-		
+		horaInicio = "";
+		horaFin = "";
+		fechaInicio = "";
+		fechaFin = "";
+		diaInicio = "";
+		diaFin = "";
+		idRecepcionista = 0;
+
 	}
-	
-	
-	public ProcedimientoEsp(long id, String esAfiliado, String ordenPrevia, String conocimiento, String equipo, long idIPS, int capacidad, String horarioSemanal) {
-		
+
+
+	public ProcedimientoEsp(long id, String esAfiliado, String ordenPrevia, String conocimiento, 
+			String equipo, long idIPS, int capacidad, String horarioSemanal,
+			String horaInicio, String horaFin, String fechaInicio, String fechaFin, 
+    		String diaInicio, String diaFin, long idRecepcionista) {
+
 		this.id = id;
 		this.esAfiliado = esAfiliado;
 		this.ordenPrevia = ordenPrevia;
@@ -42,8 +63,14 @@ public class ProcedimientoEsp implements VOProcedimientoEsp{
 		this.equipo = equipo;
 		this.idIPS = idIPS;
 		this.capacidad = capacidad;
-		this.horarioSemanal = horarioSemanal;
-		
+		this.horaInicio = horaInicio;
+    	this.horaFin = horaFin;
+    	this.fechaInicio = fechaInicio;
+    	this.fechaFin = fechaFin;
+    	this.diaInicio = diaInicio;
+    	this.diaFin = diaFin;
+    	this.idRecepcionista = idRecepcionista;
+
 	}
 
 	@Override
@@ -81,7 +108,7 @@ public class ProcedimientoEsp implements VOProcedimientoEsp{
 		// TODO Auto-generated method stub
 		return idIPS;
 	}
-	
+
 	@Override
 	public int getCapacidad() {
 		// TODO Auto-generated method stub
@@ -90,9 +117,51 @@ public class ProcedimientoEsp implements VOProcedimientoEsp{
 
 
 	@Override
-	public String getHorarioSemanal() {
+	public String getHoraInicio() {
 		// TODO Auto-generated method stub
-		return horarioSemanal;
+		return horaInicio;
+	}
+
+
+	@Override
+	public String getHoraFin() {
+		// TODO Auto-generated method stub
+		return horaFin;
+	}
+
+
+	@Override
+	public String getFechaInicio() {
+		// TODO Auto-generated method stub
+		return fechaInicio;
+	}
+
+
+	@Override
+	public String getFechaFin() {
+		// TODO Auto-generated method stub
+		return fechaFin;
+	}
+
+
+	@Override
+	public String getDiaInicio() {
+		// TODO Auto-generated method stub
+		return diaInicio;
+	}
+
+
+	@Override
+	public String getDiaFin() {
+		// TODO Auto-generated method stub
+		return diaFin;
+	}
+
+
+	@Override
+	public long getIdRecepcionistaIPS() {
+		// TODO Auto-generated method stub
+		return idRecepcionista;
 	}
 
 
@@ -100,7 +169,10 @@ public class ProcedimientoEsp implements VOProcedimientoEsp{
 	public String toString() {
 		return "ProcedimientoEsp [id=" + id + ", esAfiliado=" + esAfiliado + ", ordenPrevia=" + ordenPrevia
 				+ ", conocimiento=" + conocimiento + ", equipo=" + equipo + ", idIPS=" + idIPS + ", capacidad="
-				+ capacidad + ", horarioSemanal=" + horarioSemanal + "]";
+				+ capacidad + ", horaInicio=" + horaInicio + ", horaFin=" + horaFin + ", fechaInicio=" + fechaInicio
+				+ ", fechaFin=" + fechaFin + ", diaInicio=" + diaInicio + ", diaFin=" + diaFin + ", idRecepcionista="
+				+ idRecepcionista + "]";
 	}
 
+	
 }

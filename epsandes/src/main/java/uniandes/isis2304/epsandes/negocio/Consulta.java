@@ -14,7 +14,19 @@ public class Consulta implements VOConsulta{
 	
 	private int capacidad;
 	
-	private String horarioSemanal;
+	private String horaInicio;
+	
+	private String horaFin;
+	
+	private String fechaInicio;
+	
+	private String fechaFin;
+	
+	private String diaInicio;
+	
+	private String diaFin;
+	
+	private long idRecepcionista;
 	
 	/**
      * Constructor por defecto
@@ -26,7 +38,13 @@ public class Consulta implements VOConsulta{
 		esAfiliado = "N";
 		idIPS = 0;
 		capacidad = 0;
-		horarioSemanal = "";
+		horaInicio = "";
+		horaFin = "";
+		fechaInicio = "";
+		fechaFin = "";
+		diaInicio = "";
+		diaFin = "";
+		idRecepcionista = 0;
 		
 	}
 	
@@ -37,14 +55,22 @@ public class Consulta implements VOConsulta{
 	 * @param tipoConsulta - El tipo de la consulta 
 	 * @param ordenPrevia - Si es necesario tener una orden previa para poder hacer uso de la consulta
 	 */
-    public Consulta(long id, String esAfiliado, String ordenPrevia, long idIPS, int capacidad, String horarioSemanal) 
+    public Consulta(long id, String esAfiliado, String ordenPrevia, long idIPS, int capacidad, 
+    		String horaInicio, String horaFin, String fechaInicio, String fechaFin, 
+    		String diaInicio, String diaFin, long idRecepcionista) 
     {
     	this.id = id;
     	this.esAfiliado = esAfiliado;
     	this.ordenPrevia = ordenPrevia;
     	this.idIPS = idIPS;
     	this.capacidad = capacidad;
-    	this.horarioSemanal = horarioSemanal;
+    	this.horaInicio = horaInicio;
+    	this.horaFin = horaFin;
+    	this.fechaInicio = fechaInicio;
+    	this.fechaFin = fechaFin;
+    	this.diaInicio = diaInicio;
+    	this.diaFin = diaFin;
+    	this.idRecepcionista = idRecepcionista;
 		
 	}
 	
@@ -84,19 +110,63 @@ public class Consulta implements VOConsulta{
 		return capacidad;
 	}
 
+	
+	@Override
+	public String getHoraInicio() {
+		// TODO Auto-generated method stub
+		return horaInicio;
+	}
+
 
 	@Override
-	public String getHorarioSemanal() {
+	public String getHoraFin() {
 		// TODO Auto-generated method stub
-		return horarioSemanal;
+		return horaFin;
+	}
+
+
+	@Override
+	public String getFechaInicio() {
+		// TODO Auto-generated method stub
+		return fechaInicio;
+	}
+
+
+	@Override
+	public String getFechaFin() {
+		// TODO Auto-generated method stub
+		return fechaFin;
+	}
+
+
+	@Override
+	public String getDiaInicio() {
+		// TODO Auto-generated method stub
+		return diaInicio;
+	}
+
+
+	@Override
+	public String getDiaFin() {
+		// TODO Auto-generated method stub
+		return diaFin;
+	}
+
+
+	@Override
+	public long getIdRecepcionistaIPS() {
+		// TODO Auto-generated method stub
+		return idRecepcionista;
 	}
 
 
 	@Override
 	public String toString() {
 		return "Consulta [id=" + id + ", esAfiliado=" + esAfiliado + ", ordenPrevia=" + ordenPrevia + ", idIPS=" + idIPS
-				+ ", capacidad=" + capacidad + ", horarioSemanal=" + horarioSemanal + "]";
+				+ ", capacidad=" + capacidad + ", horaInicio=" + horaInicio + ", horaFin=" + horaFin + ", fechaInicio="
+				+ fechaInicio + ", fechaFin=" + fechaFin + ", diaInicio=" + diaInicio + ", diaFin=" + diaFin
+				+ ", idRecepcionista=" + idRecepcionista + "]";
 	}
-	
+
 
 }

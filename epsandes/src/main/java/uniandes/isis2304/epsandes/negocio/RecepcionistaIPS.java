@@ -1,35 +1,35 @@
 package uniandes.isis2304.epsandes.negocio;
 
-public class UsuarioEPS implements VOUsuarioEPS{
+public class RecepcionistaIPS implements VORecepcionistaIPS{
 	
-	
+
 	private long id;
 	
 	private String nombre;
 	
 	private int rol;
 	
-	private long idEPS;
+	private long idIPS;
 	
 	private String correo;
 	
-	public UsuarioEPS() {
+	public RecepcionistaIPS() {
 		
 		id = 0;
 		nombre = "";
 		rol = 0;
-		idEPS = 0;
+		idIPS = 0;
 		correo = "";
 		
 	}
 	
 	
-	public UsuarioEPS(long id, String nombre, int rol, long idEPS, String correo) {
+	public RecepcionistaIPS(long id, String nombre, int rol, long idIPS, String correo) {
 		
 		this.id = id;
 		this.nombre = nombre;
 		this.rol = rol;
-		this.idEPS = idEPS;
+		this.idIPS = idIPS;
 		this.correo = correo;
 		
 	}
@@ -54,9 +54,9 @@ public class UsuarioEPS implements VOUsuarioEPS{
 	}
 
 	@Override
-	public long getIdEPS() {
+	public long getIdIPS() {
 		// TODO Auto-generated method stub
-		return idEPS;
+		return idIPS;
 	}
 
 	@Override
@@ -68,10 +68,9 @@ public class UsuarioEPS implements VOUsuarioEPS{
 
 	@Override
 	public String toString() {
-		return "UsuarioEPS [id=" + id + ", nombre=" + nombre + ", rol=" + rol + ", idEPS=" + idEPS + ", correo="
+		return "UsuarioEPS [id=" + id + ", nombre=" + nombre + ", rol=" + rol + ", idIPS=" + idIPS + ", correo="
 				+ correo + "]";
 	}
-	
 	
 	
 

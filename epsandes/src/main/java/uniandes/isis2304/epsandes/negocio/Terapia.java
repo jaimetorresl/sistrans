@@ -16,8 +16,19 @@ public class Terapia implements VOTerapia{
 	
 	private int capacidad;
 	
-	private String horarioSemanal;
+	private String horaInicio;
 	
+	private String horaFin;
+	
+	private String fechaInicio;
+	
+	private String fechaFin;
+	
+	private String diaInicio;
+	
+	private String diaFin;
+	
+	private long idRecepcionista;
 	
 	public Terapia() {
 		
@@ -28,11 +39,19 @@ public class Terapia implements VOTerapia{
 		tipoTerapia = "";
 		idIPS = 0;
 		capacidad = 0;
-		horarioSemanal = "";
+		horaInicio = "";
+		horaFin = "";
+		fechaInicio = "";
+		fechaFin = "";
+		diaInicio = "";
+		diaFin = "";
+		idRecepcionista = 0;
 		
 	}
 	
-	public Terapia(long id, String ordenPrevia, String esAfiliado, int numSesiones, String tipoTerapia, long idIPS, int capacidad, String horarioSemanal) {
+	public Terapia(long id, String ordenPrevia, String esAfiliado, int numSesiones, String tipoTerapia, 
+			long idIPS, int capacidad, String horarioSemanal, String horaInicio, String horaFin, 
+			String fechaInicio, String fechaFin, String diaInicio, String diaFin, long idRecepcionista) {
 		
 		this.id = id;
 		this.ordenPrevia = ordenPrevia;
@@ -41,7 +60,13 @@ public class Terapia implements VOTerapia{
 		this.tipoTerapia = tipoTerapia;
 		this.idIPS = idIPS;
 		this.capacidad = capacidad;
-		this.horarioSemanal = horarioSemanal;
+		this.horaInicio = horaInicio;
+    	this.horaFin = horaFin;
+    	this.fechaInicio = fechaInicio;
+    	this.fechaFin = fechaFin;
+    	this.diaInicio = diaInicio;
+    	this.diaFin = diaFin;
+    	this.idRecepcionista = idRecepcionista;
 		
 	}
 	
@@ -89,16 +114,60 @@ public class Terapia implements VOTerapia{
 	}
 
 	@Override
-	public String getHorarioSemanal() {
+	public String getHoraInicio() {
 		// TODO Auto-generated method stub
-		return horarioSemanal;
+		return horaInicio;
+	}
+
+
+	@Override
+	public String getHoraFin() {
+		// TODO Auto-generated method stub
+		return horaFin;
+	}
+
+
+	@Override
+	public String getFechaInicio() {
+		// TODO Auto-generated method stub
+		return fechaInicio;
+	}
+
+
+	@Override
+	public String getFechaFin() {
+		// TODO Auto-generated method stub
+		return fechaFin;
+	}
+
+
+	@Override
+	public String getDiaInicio() {
+		// TODO Auto-generated method stub
+		return diaInicio;
+	}
+
+
+	@Override
+	public String getDiaFin() {
+		// TODO Auto-generated method stub
+		return diaFin;
+	}
+
+
+	@Override
+	public long getIdRecepcionistaIPS() {
+		// TODO Auto-generated method stub
+		return idRecepcionista;
 	}
 
 	@Override
 	public String toString() {
 		return "Terapia [id=" + id + ", ordenPrevia=" + ordenPrevia + ", esAfiliado=" + esAfiliado + ", numSesiones="
 				+ numSesiones + ", tipoTerapia=" + tipoTerapia + ", idIPS=" + idIPS + ", capacidad=" + capacidad
-				+ ", horarioSemanal=" + horarioSemanal + "]";
+				+ ", horaInicio=" + horaInicio + ", horaFin=" + horaFin + ", fechaInicio=" + fechaInicio + ", fechaFin="
+				+ fechaFin + ", diaInicio=" + diaInicio + ", diaFin=" + diaFin + ", idRecepcionista=" + idRecepcionista
+				+ "]";
 	}
 
 	

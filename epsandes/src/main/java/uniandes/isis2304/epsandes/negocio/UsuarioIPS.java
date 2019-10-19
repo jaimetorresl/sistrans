@@ -3,9 +3,6 @@ package uniandes.isis2304.epsandes.negocio;
 public class UsuarioIPS implements VOUsuarioIPS
 {
 	
-	
-	private long id;
-	
 	private String nombre;
 	
 	private String estado;
@@ -22,13 +19,16 @@ public class UsuarioIPS implements VOUsuarioIPS
 	
 	private long idEPS;
 	
+	private int edad;
+	
+	private String genero;
+	
 
 	/**
      * Constructor por defecto
      */
 	public UsuarioIPS() {
 		
-		id = 0;
     	nombre = "";
     	estado = "";
     	numDocumento = 0;
@@ -37,6 +37,8 @@ public class UsuarioIPS implements VOUsuarioIPS
     	idEPS = 0;
     	esAfiliado = "";
     	correo = "";
+    	edad = 0;
+    	genero = "";
 		
 		
 	}
@@ -45,9 +47,9 @@ public class UsuarioIPS implements VOUsuarioIPS
 	/**
 	 * Constructor con valores de un usuario de IPS
 	 */
-    public UsuarioIPS(Long id, String nombre, String estado, Long numDocumento, int tipoDocumento, String fechaNacimiento, Long idEPS, String esAfiliado, String correo) 
+    public UsuarioIPS(String nombre, String estado, Long numDocumento, int tipoDocumento, String fechaNacimiento, Long idEPS, String esAfiliado, String correo, int edad, String genero) 
     {
-    	this.id = id;
+    	
     	this.nombre = nombre;
     	this.estado = estado;
     	this.numDocumento = numDocumento;
@@ -56,6 +58,8 @@ public class UsuarioIPS implements VOUsuarioIPS
     	this.idEPS = idEPS;
     	this.esAfiliado = esAfiliado;
     	this.correo = correo;
+    	this.edad = edad;
+    	this.genero = genero;
 		
 	}
 
@@ -96,11 +100,6 @@ public class UsuarioIPS implements VOUsuarioIPS
 		return esAfiliado;
 	}
 	
-	@Override
-	public Long getId() {
-		// TODO Auto-generated method stub
-		return id;
-	}
 	
 	@Override
 	public Long getIdEPS() {
@@ -109,13 +108,28 @@ public class UsuarioIPS implements VOUsuarioIPS
 	}
 
 
+
+	@Override
+	public int getEdad() {
+		// TODO Auto-generated method stub
+		return edad;
+	}
+
+
+	@Override
+	public String getGenero() {
+		// TODO Auto-generated method stub
+		return genero;
+	}
+
+
 	@Override
 	public String toString() {
-		return "UsuarioIPS [id=" + id + ", nombre=" + nombre + ", estado=" + estado + ", numDocumento=" + numDocumento
+		return "UsuarioIPS [nombre=" + nombre + ", estado=" + estado + ", numDocumento=" + numDocumento
 				+ ", tipoDocumento=" + tipoDocumento + ", fechaNacimiento=" + fechaNacimiento + ", esAfiliado="
-				+ esAfiliado + ", correo=" + correo + ", idEPS=" + idEPS + "]";
+				+ esAfiliado + ", correo=" + correo + ", idEPS=" + idEPS + ", edad=" + edad + ", genero=" + genero
+				+ "]";
 	}
 	
-
 
 }
