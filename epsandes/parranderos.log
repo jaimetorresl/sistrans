@@ -114,3 +114,69 @@
 16:46:00,534 (AWT-EventQueue-0) INFO  [uniandes.isis2304.parranderos.negocio.Parranderos] - Eliminando bebedor con sus visitas v1: 1 bebedor y 3 visitas
 16:46:00,534 (AWT-EventQueue-0) INFO  [uniandes.isis2304.parranderos.negocio.Parranderos] - Eliminando bar por nombre: Los Amigos
 16:46:00,549 (AWT-EventQueue-0) INFO  [uniandes.isis2304.parranderos.negocio.Parranderos] - Eliminando bar: 1 tuplas eliminadas
+17:13:33,120 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazEpsAndesApp] - Se encontr� un archivo de configuraci�n v�lido: Interfaz
+17:13:33,121 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazEpsAndesApp] - Se aplica configuraci�n indicada en el archivo de configuraci�n
+17:13:33,133 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazEpsAndesApp] - Se encontr� un archivo de configuraci�n v�lido: Tablas BD
+17:14:38,722 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazEpsAndesApp] - Se encontr� un archivo de configuraci�n v�lido: Interfaz
+17:14:38,722 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazEpsAndesApp] - Se aplica configuraci�n indicada en el archivo de configuraci�n
+17:14:38,734 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazEpsAndesApp] - Se encontr� un archivo de configuraci�n v�lido: Tablas BD
+17:19:16,901 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazEpsAndesApp] - Se encontr� un archivo de configuraci�n v�lido: Interfaz
+17:19:16,901 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazEpsAndesApp] - Se aplica configuraci�n indicada en el archivo de configuraci�n
+17:19:16,913 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazEpsAndesApp] - Se encontr� un archivo de configuraci�n v�lido: Tablas BD
+17:28:07,513 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazEpsAndesApp] - Se encontr� un archivo de configuraci�n v�lido: Interfaz
+17:28:07,514 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazEpsAndesApp] - Se aplica configuraci�n indicada en el archivo de configuraci�n
+17:28:07,527 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazEpsAndesApp] - Se encontr� un archivo de configuraci�n v�lido: Tablas BD
+17:31:22,735 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazEpsAndesApp] - Se encontr� un archivo de configuraci�n v�lido: Interfaz
+17:31:22,736 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazEpsAndesApp] - Se aplica configuraci�n indicada en el archivo de configuraci�n
+17:31:22,748 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazEpsAndesApp] - Se encontr� un archivo de configuraci�n v�lido: Tablas BD
+17:32:20,971 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazEpsAndesApp] - Se encontr� un archivo de configuraci�n v�lido: Interfaz
+17:32:20,972 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazEpsAndesApp] - Se aplica configuraci�n indicada en el archivo de configuraci�n
+17:32:20,986 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazEpsAndesApp] - Se encontr� un archivo de configuraci�n v�lido: Tablas BD
+17:44:07,340 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazEpsAndesApp] - Se encontr� un archivo de configuraci�n v�lido: Interfaz
+17:44:07,340 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazEpsAndesApp] - Se aplica configuraci�n indicada en el archivo de configuraci�n
+17:44:07,352 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazEpsAndesApp] - Se encontr� un archivo de configuraci�n v�lido: Tablas BD
+18:40:25,740 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazEpsAndesApp] - Se encontr� un archivo de configuraci�n v�lido: Interfaz
+18:40:25,741 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazEpsAndesApp] - Se aplica configuraci�n indicada en el archivo de configuraci�n
+18:40:25,753 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazEpsAndesApp] - Se encontr� un archivo de configuraci�n v�lido: Tablas BD
+18:49:48,446 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazEpsAndesApp] - Se encontr� un archivo de configuraci�n v�lido: Interfaz
+18:49:48,447 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazEpsAndesApp] - Se aplica configuraci�n indicada en el archivo de configuraci�n
+18:49:48,459 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazEpsAndesApp] - Se encontr� un archivo de configuraci�n v�lido: Tablas BD
+18:51:07,308 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazEpsAndesApp] - Se encontr� un archivo de configuraci�n v�lido: Interfaz
+18:51:07,309 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazEpsAndesApp] - Se aplica configuraci�n indicada en el archivo de configuraci�n
+18:51:07,321 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazEpsAndesApp] - Se encontr� un archivo de configuraci�n v�lido: Tablas BD
+18:52:39,030 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazEpsAndesApp] - Se encontr� un archivo de configuraci�n v�lido: Interfaz
+18:52:39,031 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazEpsAndesApp] - Se aplica configuraci�n indicada en el archivo de configuraci�n
+18:52:39,042 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazEpsAndesApp] - Se encontr� un archivo de configuraci�n v�lido: Tablas BD
+18:56:56,736 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazEpsAndesApp] - Se encontr� un archivo de configuraci�n v�lido: Interfaz
+18:56:56,737 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazEpsAndesApp] - Se aplica configuraci�n indicada en el archivo de configuraci�n
+18:56:56,748 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazEpsAndesApp] - Se encontr� un archivo de configuraci�n v�lido: Tablas BD
+19:02:11,332 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazEpsAndesApp] - Se encontr� un archivo de configuraci�n v�lido: Interfaz
+19:02:11,332 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazEpsAndesApp] - Se aplica configuraci�n indicada en el archivo de configuraci�n
+19:02:11,344 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazEpsAndesApp] - Se encontr� un archivo de configuraci�n v�lido: Tablas BD
+19:02:45,239 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazEpsAndesApp] - Se encontr� un archivo de configuraci�n v�lido: Interfaz
+19:02:45,239 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazEpsAndesApp] - Se aplica configuraci�n indicada en el archivo de configuraci�n
+19:02:45,251 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazEpsAndesApp] - Se encontr� un archivo de configuraci�n v�lido: Tablas BD
+19:04:16,227 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazEpsAndesApp] - Se encontr� un archivo de configuraci�n v�lido: Interfaz
+19:04:16,228 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazEpsAndesApp] - Se aplica configuraci�n indicada en el archivo de configuraci�n
+19:04:16,240 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazEpsAndesApp] - Se encontr� un archivo de configuraci�n v�lido: Tablas BD
+19:07:30,916 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazEpsAndesApp] - Se encontr� un archivo de configuraci�n v�lido: Interfaz
+19:07:30,917 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazEpsAndesApp] - Se aplica configuraci�n indicada en el archivo de configuraci�n
+19:07:30,929 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazEpsAndesApp] - Se encontr� un archivo de configuraci�n v�lido: Tablas BD
+19:09:20,791 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazEpsAndesApp] - Se encontr� un archivo de configuraci�n v�lido: Interfaz
+19:09:20,792 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazEpsAndesApp] - Se aplica configuraci�n indicada en el archivo de configuraci�n
+19:09:20,804 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazEpsAndesApp] - Se encontr� un archivo de configuraci�n v�lido: Tablas BD
+19:12:11,995 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazEpsAndesApp] - Se encontr� un archivo de configuraci�n v�lido: Interfaz
+19:12:11,996 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazEpsAndesApp] - Se aplica configuraci�n indicada en el archivo de configuraci�n
+19:12:12,007 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazEpsAndesApp] - Se encontr� un archivo de configuraci�n v�lido: Tablas BD
+19:17:04,078 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazEpsAndesApp] - Se encontr� un archivo de configuraci�n v�lido: Interfaz
+19:17:04,078 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazEpsAndesApp] - Se aplica configuraci�n indicada en el archivo de configuraci�n
+19:17:04,090 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazEpsAndesApp] - Se encontr� un archivo de configuraci�n v�lido: Tablas BD
+19:18:25,684 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazEpsAndesApp] - Se encontr� un archivo de configuraci�n v�lido: Interfaz
+19:18:25,685 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazEpsAndesApp] - Se aplica configuraci�n indicada en el archivo de configuraci�n
+19:18:25,696 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazEpsAndesApp] - Se encontr� un archivo de configuraci�n v�lido: Tablas BD
+19:19:18,341 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazEpsAndesApp] - Se encontr� un archivo de configuraci�n v�lido: Interfaz
+19:19:18,341 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazEpsAndesApp] - Se aplica configuraci�n indicada en el archivo de configuraci�n
+19:19:18,353 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazEpsAndesApp] - Se encontr� un archivo de configuraci�n v�lido: Tablas BD
+19:31:24,498 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazEpsAndesApp] - Se encontr� un archivo de configuraci�n v�lido: Interfaz
+19:31:24,498 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazEpsAndesApp] - Se aplica configuraci�n indicada en el archivo de configuraci�n
+19:31:24,509 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazEpsAndesApp] - Se encontr� un archivo de configuraci�n v�lido: Tablas BD

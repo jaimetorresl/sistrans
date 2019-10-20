@@ -8,7 +8,6 @@ import org.apache.log4j.Logger;
 import com.google.gson.JsonObject;
 
 import uniandes.isis2304.epsandes.persistencia.PersistenciaEPSAndes;
-//import uniandes.isis2304.epsandes.persistencia.PersistenciaEPSAndes;
 
 
 /**
@@ -80,7 +79,7 @@ public class EPSAndes {
 		eps = pp.registrarEPS(nombre);
 		log.info ("EPS registrada: " + nombre);
 
-
+		System.out.println(eps.getNombre());
 		return eps;
 
 	}

@@ -126,12 +126,12 @@ public class PersistenciaEPSAndes {
 	 */
 	private PersistenciaEPSAndes() {
 
-		pmf = JDOHelper.getPersistenceManagerFactory("Parranderos");		
+		pmf = JDOHelper.getPersistenceManagerFactory("EPSAndes");		
 		crearClasesSQL ();
 
 		// Define los nombres por defecto de las tablas de la base de datos
 		tablas = new LinkedList<String> ();
-		tablas.add ("Parranderos_sequence");
+		tablas.add ("EPSAndes_sequence");
 		tablas.add ("EPS");
 		tablas.add ("IPS");
 		tablas.add ("USUARIOIPS");
@@ -155,10 +155,13 @@ public class PersistenciaEPSAndes {
 	{
 		crearClasesSQL ();
 		tablas = leerNombresTablas (tableConfig);
-
+		
 		String unidadPersistencia = tableConfig.get ("unidadPersistencia").getAsString ();
 		log.trace ("Accediendo unidad de persistencia: " + unidadPersistencia);
-		pmf = JDOHelper.getPersistenceManagerFactory (unidadPersistencia);
+		System.out.println("---------------------> "+unidadPersistencia+"  {"+tableConfig+" }");
+		 System.out.println("Working Directory = " +
+	              System.getProperty("user.dir"));		
+		 pmf = JDOHelper.getPersistenceManagerFactory (unidadPersistencia);
 	}
 
 	/**
@@ -220,7 +223,7 @@ public class PersistenciaEPSAndes {
 	private void crearClasesSQL ()
 	{
 
-		sqlUtil = new SQLUtil(this);
+		
 		sqlEPS = new SQLEPS(this);
 		sqlIPS = new SQLIPS(this);
 		sqlUsuarioEPS = new SQLUsuarioEPS(this);
@@ -234,6 +237,7 @@ public class PersistenciaEPSAndes {
 		sqlHospitalizacion = new SQLHospitalizacion(this);
 		sqlIpsMedico = new SQLIPSMedico(this);
 		//sqlRecepcionistaIPS = new SQLRecepcionistaIPS(this);
+		sqlUtil = new SQLUtil(this);
 
 	}
 
@@ -379,7 +383,6 @@ public class PersistenciaEPSAndes {
 			tx.commit();
 
 			log.trace ("Inserci�n de EPS: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
-
 			return new EPS(id, nombre);
 		}
 		catch (Exception e)

@@ -241,6 +241,7 @@ public void adicionarEPS()
   		if (nombreEPS != null)
     		{
   			
+  		
         		VOEPS eps = epsandes.registrarEPS(nombreEPS);
         		
         		if (eps == null)
@@ -376,7 +377,7 @@ public void adicionarIPS()
 		try 
 		{
     		// Ejecuci�n de la demo y recolecci�n de los resultados
-			long eliminados [] = parranderos.limpiarParranderos();
+			long eliminados [] = epsandes.limpiarEPSAndes();
 			
 			// Generaci�n de la cadena de caracteres con la traza de la ejecuci�n de la demo
 			String resultado = "\n\n************ Limpiando la base de datos ************ \n";
@@ -473,21 +474,21 @@ public void adicionarIPS()
 	/* ****************************************************************
 	 * 			M�todos privados para la presentaci�n de resultados y otras operaciones
 	 *****************************************************************/
-    /**
-     * Genera una cadena de caracteres con la lista de los tipos de bebida recibida: una l�nea por cada tipo de bebida
-     * @param lista - La lista con los tipos de bebida
-     * @return La cadena con una l�ea para cada tipo de bebida recibido
-     */
-    private String listarTiposBebida(List<VOTipoBebida> lista) 
-    {
-    	String resp = "Los tipos de bebida existentes son:\n";
-    	int i = 1;
-        for (VOTipoBebida tb : lista)
-        {
-        	resp += i++ + ". " + tb.toString() + "\n";
-        }
-        return resp;
-	}
+//    /**
+//     * Genera una cadena de caracteres con la lista de los tipos de bebida recibida: una l�nea por cada tipo de bebida
+//     * @param lista - La lista con los tipos de bebida
+//     * @return La cadena con una l�ea para cada tipo de bebida recibido
+//     */
+//    private String listarTiposBebida(List<VOTipoBebida> lista) 
+//    {
+//    	String resp = "Los tipos de bebida existentes son:\n";
+//    	int i = 1;
+//        for (VOTipoBebida tb : lista)
+//        {
+//        	resp += i++ + ". " + tb.toString() + "\n";
+//        }
+//        return resp;
+//	}
 
     /**
      * Genera una cadena de caracteres con la descripci�n de la excepcion e, haciendo �nfasis en las excepcionsde JDO

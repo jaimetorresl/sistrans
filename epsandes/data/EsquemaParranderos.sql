@@ -6,7 +6,7 @@
 -- Ejecútelo como un script - Utilice el botón correspondiente de la pestaña utilizada
 
 -- Creación del secuenciador
-create sequence parranderos_sequence;
+create sequence EPSAndes_sequence;
 
 -- Creaación de la tabla TIPOBEBIDA y especificación de sus restricciones
 CREATE TABLE A_TIPOBEBIDA
