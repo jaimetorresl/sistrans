@@ -180,3 +180,13 @@
 19:31:24,498 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazEpsAndesApp] - Se encontr� un archivo de configuraci�n v�lido: Interfaz
 19:31:24,498 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazEpsAndesApp] - Se aplica configuraci�n indicada en el archivo de configuraci�n
 19:31:24,509 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazEpsAndesApp] - Se encontr� un archivo de configuraci�n v�lido: Tablas BD
+19:44:32,504 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazEpsAndesApp] - Se encontr� un archivo de configuraci�n v�lido: Interfaz
+19:44:32,504 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazEpsAndesApp] - Se aplica configuraci�n indicada en el archivo de configuraci�n
+19:44:32,516 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazEpsAndesApp] - Se encontr� un archivo de configuraci�n v�lido: Tablas BD
+20:05:32,870 (main) INFO  [uniandes.isis2304.epsandes.interfazApp.InterfazEpsAndesApp] - Se encontr� un archivo de configuraci�n v�lido: Interfaz
+20:05:32,870 (main) INFO  [uniandes.isis2304.epsandes.interfazApp.InterfazEpsAndesApp] - Se aplica configuraci�n indicada en el archivo de configuraci�n
+20:05:32,882 (main) INFO  [uniandes.isis2304.epsandes.interfazApp.InterfazEpsAndesApp] - Se encontr� un archivo de configuraci�n v�lido: Tablas BD
+20:05:41,164 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Registrando eps: epsjaime
+20:05:41,258 (AWT-EventQueue-0) ERROR [uniandes.isis2304.epsandes.negocio.EPSAndes] - Exception : SQL query "INSERT INTO A_EPS(id, nombre) values (?, ?)" requires 2 parameters yet none have been supplied
+
+20:05:41,260 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - EPS registrada: epsjaime

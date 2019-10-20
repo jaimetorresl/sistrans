@@ -71,8 +71,8 @@ class SQLIPS
 	 */
 	public long adicionarIPS (PersistenceManager pm, long id, String nombre, String tipo, String localizacion, long idEPS) throws Exception 
 	{
-        Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaIPS () + "(id, nombre, tipo, localizacion, idEPS) values (?, ?, ?, ?, ?)");
-        q.setParameters(id, nombre, tipo, localizacion, idEPS);
+        Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaIPS () + "(id, nombre, localizacion, ideps, tipo) values (?, ?, ?, ?, ?)");
+        q.setParameters(id, nombre, localizacion, idEPS, tipo);
         return (long) q.executeUnique();
 	}
 

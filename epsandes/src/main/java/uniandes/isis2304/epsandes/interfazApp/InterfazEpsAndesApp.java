@@ -1,4 +1,4 @@
-package uniandes.isis2304.parranderos.interfazApp;
+package uniandes.isis2304.epsandes.interfazApp;
 
 import org.apache.log4j.Logger;
 

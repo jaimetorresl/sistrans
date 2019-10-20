@@ -14,6 +14,17 @@
 				}
 			]
 		},
+		
+		{ "menuTitle": "IPS",
+		  "options":
+			[
+				{
+					"label": "Adicionar",
+					"event": "adicionarIPS"
+				}
+			]
+		},
+		
 		{ "menuTitle": "Mantenimiento",
 		  "options":
 			[
