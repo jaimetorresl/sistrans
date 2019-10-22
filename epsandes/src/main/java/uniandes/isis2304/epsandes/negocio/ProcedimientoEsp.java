@@ -52,7 +52,7 @@ public class ProcedimientoEsp implements VOProcedimientoEsp{
 
 
 	public ProcedimientoEsp(long id, String esAfiliado, String ordenPrevia, String conocimiento, 
-			String equipo, long idIPS, int capacidad, String horarioSemanal,
+			String equipo, long idIPS, int capacidad,
 			String horaInicio, String horaFin, String fechaInicio, String fechaFin, 
     		String diaInicio, String diaFin, long idRecepcionista) {
 

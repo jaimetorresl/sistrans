@@ -21,8 +21,10 @@ import uniandes.isis2304.epsandes.negocio.EPS;
 import uniandes.isis2304.epsandes.negocio.EPSAndes;
 import uniandes.isis2304.epsandes.negocio.Hospitalizacion;
 import uniandes.isis2304.epsandes.negocio.IPS;
+import uniandes.isis2304.epsandes.negocio.IPSMedico;
 import uniandes.isis2304.epsandes.negocio.Medico;
 import uniandes.isis2304.epsandes.negocio.ProcedimientoEsp;
+import uniandes.isis2304.epsandes.negocio.RecepcionistaIPS;
 import uniandes.isis2304.epsandes.negocio.Receta;
 import uniandes.isis2304.epsandes.negocio.Terapia;
 import uniandes.isis2304.epsandes.negocio.UsuarioEPS;
@@ -86,6 +88,8 @@ public class PersistenciaEPSAndes {
 	 * Atributo para el acceso a la tabla UsuarioIPS de la base de datos
 	 */
 	private SQLUsuarioIPS sqlUsuarioIPS;
+	
+	private SQLRecepcionistaIPS sqlRecepcionistaIPS;
 
 	/**
 	 * Atributo para el acceso a la tabla Medico de la base de datos
@@ -236,7 +240,7 @@ public class PersistenciaEPSAndes {
 		sqlProcedimientoEsp = new SQLProcedimientoEsp(this);
 		sqlHospitalizacion = new SQLHospitalizacion(this);
 		sqlIpsMedico = new SQLIPSMedico(this);
-		//sqlRecepcionistaIPS = new SQLRecepcionistaIPS(this);
+		sqlRecepcionistaIPS = new SQLRecepcionistaIPS(this);
 		sqlUtil = new SQLUtil(this);
 
 	}
@@ -439,6 +443,45 @@ public class PersistenciaEPSAndes {
 			pm.close();
 		}
 	}
+	
+	
+	
+	public RecepcionistaIPS registrarRecepcionistaIPS(String nombre, int rol, long idIPS, String correo)
+	{
+		
+		PersistenceManager pm = pmf.getPersistenceManager();
+
+		long id = nextval ();
+
+		Transaction tx=pm.currentTransaction();
+		try
+		{
+			tx.begin();
+			long tuplasInsertadas = sqlRecepcionistaIPS.adicionarRecepcionistaIPS(pm, id, nombre, rol, idIPS, correo);
+			
+			System.out.println(tuplasInsertadas);
+			
+			tx.commit();
+
+			log.trace ("Inserci�n de Recepcionista: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
+
+			return new RecepcionistaIPS(id, nombre, rol, idIPS, correo);
+		}
+		catch (Exception e)
+		{
+			//        	e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			return null;
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
+	}
 
 
 	/* ****************************************************************
@@ -479,7 +522,7 @@ public class PersistenciaEPSAndes {
 		}
 	}
 	
-	public UsuarioIPS registrarUsuarioIPS(String nombre, String estado, long numDocumento, int tipoDocumento, String fechaNacimiento, long idEPS, String esAfiliado, String correo) {
+	public UsuarioIPS registrarUsuarioIPS(String nombre, String estado, long numDocumento, int tipoDocumento, String fechaNacimiento, long idEPS, String esAfiliado, String correo, String genero, int edad) {
 
 		PersistenceManager pm = pmf.getPersistenceManager();
 
@@ -489,12 +532,12 @@ public class PersistenciaEPSAndes {
 		try
 		{
 			tx.begin();
-			long tuplasInsertadas = sqlUsuarioIPS.adicionarUsuarioIPS(pm, id, nombre, estado, numDocumento, tipoDocumento, fechaNacimiento, idEPS, esAfiliado, correo);
+			long tuplasInsertadas = sqlUsuarioIPS.adicionarUsuarioIPS(pm, id, nombre, estado, numDocumento, tipoDocumento, fechaNacimiento, idEPS, esAfiliado, correo, genero, edad);
 			tx.commit();
 
 			log.trace ("Inserci�n de UsuarioEPS: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
 
-			return new UsuarioIPS(id, nombre, estado, numDocumento, tipoDocumento, fechaNacimiento, idEPS, esAfiliado, correo);
+			return new UsuarioIPS(nombre, estado, numDocumento, tipoDocumento, fechaNacimiento, idEPS, esAfiliado, correo, edad, genero);
 		}
 		catch (Exception e)
 		{
@@ -534,12 +577,48 @@ public class PersistenciaEPSAndes {
 		try
 		{
 			tx.begin();
-			long tuplasInsertadas = sqlMedico.adicionarMedico(pm, id, nombre, especialidad, numRegMedico);
+			long tuplasInsertadas = sqlMedico.adicionarMedico(pm, id, especialidad, numRegMedico, nombre);
 			tx.commit();
 
 			log.trace ("Inserci�n de medico: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
 
 			return new Medico(id, nombre, especialidad, numRegMedico);
+		}
+		catch (Exception e)
+		{
+			//        	e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			return null;
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
+	}
+	
+	
+	
+	
+	public IPSMedico registrarMedicoIPS(long idMedico, long idIPS)
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+		
+		long id = nextval ();
+		
+		Transaction tx=pm.currentTransaction();
+		try
+		{
+			tx.begin();
+			long tuplasInsertadas = sqlIpsMedico.adicionarIPSMedico(pm, idMedico, idIPS);
+			tx.commit();
+
+			log.trace ("Asociacion de medico: " + idMedico + ": " + tuplasInsertadas + " tuplas insertadas");
+
+			return new IPSMedico(idMedico, idIPS);
 		}
 		catch (Exception e)
 		{
@@ -563,7 +642,8 @@ public class PersistenciaEPSAndes {
 	 * 			M�todos para manejar los SERVICIOS DE SALUD
 	 *****************************************************************/
 	
-	public Consulta registarConsulta(String esAfiliado, String ordenPrevia, long idIPS, int capacidad, String horarioSemanal)
+	public Consulta registarConsulta(String esAfiliado, String ordenPrevia, long idIPS, int capacidad, String horaInicio,
+			String horaFin, String fechaInicio, String fechaFin, String diaInicio, String diaFin, long idRecepcionista)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
 		
@@ -573,12 +653,12 @@ public class PersistenciaEPSAndes {
 		try
 		{
 			tx.begin();
-			long tuplasInsertadas = sqlConsulta.adicionarConsulta(pm, id, ordenPrevia, esAfiliado, idIPS, capacidad, horarioSemanal);
+			long tuplasInsertadas = sqlConsulta.adicionarConsulta(pm, id, ordenPrevia, esAfiliado, idIPS, capacidad, horaInicio, horaFin, fechaInicio, fechaFin, diaInicio, diaFin, idRecepcionista);
 			tx.commit();
 
 			log.trace ("Inserci�n de consulta afiliada a la ips: " + idIPS + ": " + tuplasInsertadas + " tuplas insertadas");
 
-			return new Consulta(id, esAfiliado, ordenPrevia, idIPS, capacidad, horarioSemanal);
+			return new Consulta(id, esAfiliado, ordenPrevia, idIPS, capacidad, horaInicio, horaFin, fechaInicio, fechaFin, diaInicio, diaFin, idRecepcionista);
 		}
 		catch (Exception e)
 		{
@@ -598,7 +678,8 @@ public class PersistenciaEPSAndes {
 	
 	
 	
-	public Terapia registrarTerapia(String esAfiliado, String ordenPrevia, int numSesiones, String tipoTerapia, long idIPS, int capacidad, String horarioSemanal)
+	public Terapia registrarTerapia(String esAfiliado, String ordenPrevia, String numSesiones, String tipoTerapia, long idIPS, int capacidad,
+			String horaInicio, String horaFin, String fechaInicio, String fechaFin, String diaInicio, String diaFin, long idRecepcionista)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
 		
@@ -608,12 +689,12 @@ public class PersistenciaEPSAndes {
 		try
 		{
 			tx.begin();
-			long tuplasInsertadas = sqlTerapia.adicionarTerapia(pm, id, ordenPrevia, esAfiliado, numSesiones, tipoTerapia, idIPS, capacidad, horarioSemanal);
+			long tuplasInsertadas = sqlTerapia.adicionarTerapia(pm, id, ordenPrevia, esAfiliado, numSesiones, tipoTerapia, idIPS, capacidad, horaInicio, horaFin, fechaInicio, fechaFin, diaInicio, diaFin, idRecepcionista);
 			tx.commit();
 
 			log.trace ("Inserci�n de terapia afiliada a la ips: " + idIPS + ": " + tuplasInsertadas + " tuplas insertadas");
 
-			return new Terapia(id, ordenPrevia, esAfiliado, numSesiones, tipoTerapia, idIPS, capacidad, horarioSemanal);
+			return new Terapia(id, ordenPrevia, esAfiliado, numSesiones, tipoTerapia, idIPS, capacidad, horaInicio, horaFin, fechaInicio, fechaFin, diaInicio, diaFin, idRecepcionista);
 		}
 		catch (Exception e)
 		{
@@ -632,7 +713,8 @@ public class PersistenciaEPSAndes {
 	}
 	
 	
-	public ProcedimientoEsp registrarProcedimientoEsp(String esAfiliado, String ordenPrevia, String conocimiento, String equipo, long idIPS, int capacidad, String horarioSemanal)
+	public ProcedimientoEsp registrarProcedimientoEsp(String esAfiliado, String ordenPrevia, String conocimiento, String equipo, long idIPS, int capacidad, 
+			String horaInicio, String horaFin, String fechaInicio, String fechaFin, String diaInicio, String diaFin, long idRecepcionista)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
 		
@@ -642,12 +724,12 @@ public class PersistenciaEPSAndes {
 		try
 		{
 			tx.begin();
-			long tuplasInsertadas = sqlProcedimientoEsp.adicionarProcedimientoEsp(pm, id, ordenPrevia, esAfiliado, conocimiento, equipo, idIPS, capacidad, horarioSemanal);
+			long tuplasInsertadas = sqlProcedimientoEsp.adicionarProcedimientoEsp(pm, id, ordenPrevia, esAfiliado, conocimiento, equipo, idIPS, capacidad, horaInicio, horaFin, fechaInicio, fechaFin, diaInicio, diaFin, idRecepcionista);
 			tx.commit();
 
 			log.trace ("Inserci�n de procedimiento especial afiliada a la ips: " + idIPS + ": " + tuplasInsertadas + " tuplas insertadas");
 
-			return new ProcedimientoEsp(id, esAfiliado, ordenPrevia, conocimiento, equipo, idIPS, capacidad, horarioSemanal);
+			return new ProcedimientoEsp(id, esAfiliado, ordenPrevia, conocimiento, equipo, idIPS, capacidad, horaInicio, horaFin, fechaInicio, fechaFin, diaInicio, diaFin, idRecepcionista);
 		}
 		catch (Exception e)
 		{
@@ -667,7 +749,8 @@ public class PersistenciaEPSAndes {
 	
 	
 	
-	public Hospitalizacion registarHospitalizacion(String ordenPrevia, String esAfiliado, int numVisitas, long idIPS, int capacidad, String horarioSemanal)
+	public Hospitalizacion registarHospitalizacion(String ordenPrevia, String esAfiliado, int numVisitas, long idIPS, int capacidad, 
+			String horaInicio, String horaFin, String fechaInicio, String fechaFin, String diaInicio, String diaFin, long idRecepcionista)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
 		
@@ -677,12 +760,12 @@ public class PersistenciaEPSAndes {
 		try
 		{
 			tx.begin();
-			long tuplasInsertadas = sqlHospitalizacion.adicionarHospitalizacion(pm, id, ordenPrevia, esAfiliado, numVisitas, idIPS, capacidad, horarioSemanal);
+			long tuplasInsertadas = sqlHospitalizacion.adicionarHospitalizacion(pm, id, ordenPrevia, esAfiliado, numVisitas, idIPS, capacidad, horaInicio, horaFin, fechaInicio, fechaFin, diaInicio, diaFin, idRecepcionista);
 			tx.commit();
 
 			log.trace ("Inserci�n de hospitalizacion afiliada a la ips: " + idIPS + ": " + tuplasInsertadas + " tuplas insertadas");
 
-			return new Hospitalizacion(id, ordenPrevia, esAfiliado, numVisitas, idIPS, capacidad, horarioSemanal);
+			return new Hospitalizacion(id, ordenPrevia, esAfiliado, numVisitas, idIPS, capacidad, horaInicio, horaFin, fechaInicio, fechaFin, diaInicio, diaFin, idRecepcionista);
 		}
 		catch (Exception e)
 		{

@@ -70,10 +70,10 @@ class SQLUsuarioIPS
 	 * @param sedes - El número de sedes del bar
 	 * @return El número de tuplas insertadas
 	 */
-	public long adicionarUsuarioIPS (PersistenceManager pm, long id, String nombre, int rol, long idEPS, String correo) 
+	public long adicionarUsuarioIPS (PersistenceManager pm, long id, String nombre, String estado, long numDocumento, int tipoDocumento, String fechaNacimiento, long idEPS, String esAfiliado, String correo, String genero, int edad) 
 	{
-        Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaUsuarioIPS () + "(id, nombre, rol, idEPS, correo) values (?, ?, ?, ?, ?, ?)");
-        q.setParameters(id, nombre, rol, idEPS, correo);
+        Query q = pm.newQuery(SQL, "INSERT INTO " + "Usuario_IPS" + "(nombre, estado, numdocumento, tipodocumento, fechanacimiento, ideps, esafiliado, correo, genero, edad) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        q.setParameters(nombre, estado, numDocumento, tipoDocumento, fechaNacimiento, idEPS, esAfiliado, correo, genero, edad);
         return (long) q.executeUnique();
 	}
 

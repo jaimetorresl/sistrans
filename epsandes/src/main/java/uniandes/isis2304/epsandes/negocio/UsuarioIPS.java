@@ -47,7 +47,7 @@ public class UsuarioIPS implements VOUsuarioIPS
 	/**
 	 * Constructor con valores de un usuario de IPS
 	 */
-    public UsuarioIPS(String nombre, String estado, Long numDocumento, int tipoDocumento, String fechaNacimiento, Long idEPS, String esAfiliado, String correo, int edad, String genero) 
+    public UsuarioIPS(String nombre, String estado, Long numDocumento, int tipoDocumento, String fechaNacimiento, long idEPS, String esAfiliado, String correo, int edad, String genero) 
     {
     	
     	this.nombre = nombre;

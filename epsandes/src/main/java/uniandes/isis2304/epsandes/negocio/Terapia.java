@@ -8,7 +8,7 @@ public class Terapia implements VOTerapia{
 	
 	private String esAfiliado;
 	
-	private int numSesiones;
+	private String numSesiones;
 	
 	private String tipoTerapia;
 	
@@ -35,7 +35,7 @@ public class Terapia implements VOTerapia{
 		id = 0;
 		ordenPrevia = "";
 		esAfiliado = "";
-		numSesiones = 0;
+		numSesiones = "";
 		tipoTerapia = "";
 		idIPS = 0;
 		capacidad = 0;
@@ -49,8 +49,8 @@ public class Terapia implements VOTerapia{
 		
 	}
 	
-	public Terapia(long id, String ordenPrevia, String esAfiliado, int numSesiones, String tipoTerapia, 
-			long idIPS, int capacidad, String horarioSemanal, String horaInicio, String horaFin, 
+	public Terapia(long id, String ordenPrevia, String esAfiliado, String numSesiones, String tipoTerapia, 
+			long idIPS, int capacidad, String horaInicio, String horaFin, 
 			String fechaInicio, String fechaFin, String diaInicio, String diaFin, long idRecepcionista) {
 		
 		this.id = id;
@@ -90,7 +90,7 @@ public class Terapia implements VOTerapia{
 	}
 
 	@Override
-	public int getNumSesiones() {
+	public String getNumSesiones() {
 		// TODO Auto-generated method stub
 		return numSesiones;
 	}
