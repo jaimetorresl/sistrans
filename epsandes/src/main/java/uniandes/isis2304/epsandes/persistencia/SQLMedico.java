@@ -65,10 +65,10 @@ class SQLMedico
 	 * @param sedes - El número de sedes del bar
 	 * @return El número de tuplas insertadas
 	 */
-	public long adicionarMedico (PersistenceManager pm, long id, String especialidad, int numRegMedico, String tipo, String nombre) 
+	public long adicionarMedico (PersistenceManager pm, long id, String especialidad, long numRegMedico, String nombre) 
 	{
-        Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaMedico () + "(id, especialidad, numRegMedico, tipo, nombre) values (?, ?, ?, ?, ?)");
-        q.setParameters(id, especialidad, numRegMedico, tipo, nombre);
+        Query q = pm.newQuery(SQL, "INSERT INTO " + "Medico" + "(id, especialidad, numRegMedico, nombre) values (?, ?, ?, ?)");
+        q.setParameters(id, especialidad, numRegMedico, nombre);
         return (long) q.executeUnique();
 	}
 

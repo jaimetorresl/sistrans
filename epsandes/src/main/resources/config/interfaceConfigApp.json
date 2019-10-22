@@ -1,5 +1,5 @@
 {
-	"title": "Aplicación transaccional de Parranderos Uniandes",
+	"title": "Aplicación transaccional de EPS Uniandes",
 	"frameH": 600,
 	"frameW": 800,
 	"bannerPath": "./src/main/resources/config/logo.png",
@@ -21,24 +21,92 @@
 				{
 					"label": "Adicionar",
 					"event": "adicionarIPS"
+				},
+				
+				{
+					"label": "Adicionar Recepcionista",
+					"event": "adicionarRecepcionistaIPS"
+				}
+				
+			]
+		},
+		
+		{ "menuTitle": "USUARIOEPS",
+		  "options":
+			[
+				{
+					"label": "Adicionar",
+					"event": "adicionarUsuarioEPS"
 				}
 			]
 		},
+		
+		{ "menuTitle": "USUARIOIPS",
+		  "options":
+			[
+				{
+					"label": "Adicionar",
+					"event": "adicionarUsuarioIPS"
+				}
+			]
+		},
+		
+		{ "menuTitle": "MEDICO",
+		  "options":
+			[
+				{
+					"label": "Adicionar",
+					"event": "adicionarMedico"
+				},
+				
+				{
+					"label": "AsociarMedicoIPS",
+					"event": "adicionarMedicoIPS"
+				}
+			]
+		},
+		
+		
+		{ "menuTitle": "SERVICIO SALUD",
+		  "options":
+			[
+				{
+					"label": "Adicionar Consulta",
+					"event": "adicionarConsulta"
+				},
+				
+				{
+					"label": "Adicionar Terapia",
+					"event": "adicionarTerapia"
+				},
+				
+				{
+					"label": "Adicionar Procedimiento Especial",
+					"event": "adicionarProcedimientoEsp"
+				},
+				
+				{
+					"label": "Adicionar Hospitalizacion",
+					"event": "adicionarHospitalizacion"
+				}
+			]
+		},
+		
 		
 		{ "menuTitle": "Mantenimiento",
 		  "options":
 			[
 				{
-					"label": "Mostrar log Parranderos",
-					"event": "mostrarLogParranderos"
+					"label": "Mostrar log EpsAndes",
+					"event": "mostrarLogEpsAndes"
 				},
 				{
 					"label": "Mostrar log datanucleus",
 					"event": "mostrarLogDatanuecleus"
 				},
 				{
-					"label": "Limpiar log de parranderos",
-					"event": "limpiarLogParranderos"
+					"label": "Limpiar log de epsandes",
+					"event": "limpiarLogEpsAndes"
 				},
 				{
 					"label": "Limpiar log de datanucleus",

@@ -76,6 +76,7 @@ class SQLProcedimientoEsp
 	{
         Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaProcedimientoEsp () + "(id,esAfiliado, ordenPrevia,  conocimiento, equipo, idIPS, capacidad, horaInicio, horaFin, fechaInicio, fechaFin, diaInicio, diaFin, idRecepcionista) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         q.setParameters(id,  esAfiliado, ordenPrevia, conocimiento, equipo, idIPS, capacidad,horaInicio, horaFin, fechaInicio, fechaFin, diaInicio, diaFin, idRecepcionista );
+
         return (long) q.executeUnique();
 	}
 

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /META-INF/
 /config/
 /hbase-site.xml
@@ -11,4 +12,7 @@
 /package-mysql.orm
 /package-neo4j.orm
 /package-odf.orm
+=======
+/config/
+>>>>>>> 9cdc735cd62574f0a3d9ef6a36c50acba5f89f05
 /uniandes/

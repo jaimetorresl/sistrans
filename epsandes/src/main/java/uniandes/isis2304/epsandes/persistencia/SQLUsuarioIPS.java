@@ -75,6 +75,7 @@ class SQLUsuarioIPS
 	{
         Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaUsuarioIPS () + "(nombre, estado, numDocumento , tipodocumento, fechaNacimiento, idEPS, esAfiliado, correo, genero, edad) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         q.setParameters(nombre, estado, numDocumento , tipodocumento, fechaNacimiento, idEPS, esAfiliado, correo, genero, edad);
+
         return (long) q.executeUnique();
 	}
 

@@ -8,7 +8,7 @@ public interface VOTerapia {
 
 	public String getEsAfiliado();
 
-	public int getNumSesiones();
+	public String getNumSesiones();
 
 	public String getTipoTerapia();
 

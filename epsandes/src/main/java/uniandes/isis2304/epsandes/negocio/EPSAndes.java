@@ -103,17 +103,33 @@ public class EPSAndes {
 		return ips;
 
 	}
+	
+	
+	public RecepcionistaIPS registrarRecepcionistaIPS(String nombre, int rol, long idIPS, String correo) {
+
+
+
+		RecepcionistaIPS recepcionista;
+		log.info("Registrando recepcionista: " + nombre);
+
+		recepcionista = pp.registrarRecepcionistaIPS(nombre, rol, idIPS, correo);
+
+		log.info ("Recepcionista registrado: " + nombre);
+
+		return recepcionista;
+
+	}
 
 
 	/* ****************************************************************
 	 * 			M�todos para manejar los USUARIOS
 	 *****************************************************************/
-	public UsuarioIPS registrarUsuarioIPS (String nombre, String estado, long numDocumento, int tipoDocumento, String fechaNacimiento, long idEPS, String esAfiliado, String correo)
+	public UsuarioIPS registrarUsuarioIPS (String nombre, String estado, long numDocumento, int tipoDocumento, String fechaNacimiento, long idEPS, String esAfiliado, String correo, String genero, int edad)
 	{	
 		UsuarioIPS usuarioIPS;
 
 		log.info ("Adicionando usuarioIPS: " + nombre);
-		usuarioIPS = pp.registrarUsuarioIPS (nombre, estado, numDocumento, tipoDocumento, fechaNacimiento, idEPS, esAfiliado, correo);
+		usuarioIPS = pp.registrarUsuarioIPS (nombre, estado, numDocumento, tipoDocumento, fechaNacimiento, idEPS, esAfiliado, correo, genero, edad);
 		log.info ("Adicionando usuarioIPS: " + usuarioIPS);
 		return usuarioIPS;
 
@@ -152,6 +168,19 @@ public class EPSAndes {
 		return medico;
 
 	}
+	
+	
+	
+	public IPSMedico registrarMedicoIPS(long idMedico, long idIPS)
+	{	
+		IPSMedico ipsMedico;
+
+		log.info ("Asociando medico: " + idMedico);
+		ipsMedico = pp.registrarMedicoIPS(idMedico, idIPS);
+		log.info ("Asociando medico: " + idMedico);
+		return ipsMedico;
+
+	}
 
 
 //	/**
@@ -176,46 +205,51 @@ public class EPSAndes {
 	 * 			M�todos para manejar los Servicios de salud
 	 *****************************************************************/
 
-	public Consulta registrarConsulta(String esAfiliado, String ordenPrevia, long idIPS, int capacidad, String horarioSemanal)
+	public Consulta registrarConsulta(String esAfiliado, String ordenPrevia, long idIPS, int capacidad, String horaInicio,
+			String horaFin, String fechaInicio, String fechaFin, String diaInicio, String diaFin, long idRecepcionista)
 	{	
 		Consulta consulta;
 
 		log.info ("Adicionando consulta de la IPS: " + idIPS);
-		consulta = pp.registarConsulta(esAfiliado, ordenPrevia, idIPS, capacidad, horarioSemanal);
+		consulta = pp.registarConsulta(esAfiliado, ordenPrevia, idIPS, capacidad, horaInicio, horaFin, fechaInicio, fechaFin, diaInicio, diaFin, idRecepcionista);
 		log.info ("Adicionando consulta: " + consulta);
 		return consulta;
 
 	}
 	
 	
-	public Terapia registrarTerapia(String ordenPrevia, String esAfiliado, int numSesiones, String tipoTerapia, long idIPS, int capacidad, String horarioSemanal)
+	public Terapia registrarTerapia(String ordenPrevia, String esAfiliado, String numSesiones, String tipoTerapia, long idIPS, int capacidad,
+			String horaInicio, String horaFin, String fechaInicio, String fechaFin, String diaInicio, String diaFin, long idRecepcionista)
 	{	
 		Terapia terapia;
 
 		log.info ("Adicionando terapia tipo: " + tipoTerapia);
-		terapia = pp.registrarTerapia(ordenPrevia, esAfiliado, numSesiones, tipoTerapia, idIPS, capacidad, horarioSemanal);
+		terapia = pp.registrarTerapia(esAfiliado, ordenPrevia, numSesiones, tipoTerapia, idIPS, capacidad, horaInicio, horaFin, fechaInicio, fechaFin, diaInicio, diaFin, idRecepcionista);
 		log.info ("Adicionando terapia: " + terapia);
 		return terapia;
 
 	}
 	
-	public ProcedimientoEsp registraProcedimientoEsp(String ordenPrevia, String esAfiliado, String conocimiento, String equipo, long idIPS, int capacidad, String horarioSemanal)
+	public ProcedimientoEsp registraProcedimientoEsp(String ordenPrevia, String esAfiliado, String conocimiento, String equipo, long idIPS, int capacidad,
+			String horaInicio, String horaFin, String fechaInicio, String fechaFin, String diaInicio, String diaFin, long idRecepcionista)
 	{	
 		ProcedimientoEsp procedimiento;
 
 		log.info ("Adicionando procedimiento cono conocimiento en: " + conocimiento);
-		procedimiento = pp.registrarProcedimientoEsp(ordenPrevia, esAfiliado, conocimiento, equipo, idIPS, capacidad, horarioSemanal);
+		procedimiento = pp.registrarProcedimientoEsp(esAfiliado, ordenPrevia, conocimiento, equipo, idIPS, capacidad, horaInicio, horaFin, fechaInicio, fechaFin, diaInicio, diaFin, idRecepcionista);
+				
 		log.info ("Adicionando procedimiento: " + procedimiento);
 		return procedimiento;
 
 	}
 	
-	public Hospitalizacion registrarHospitalizacion(String ordenPrevia, String esAfiliado, int numVisitas, long idIPS, int capacidad, String horarioSemanal)
+	public Hospitalizacion registrarHospitalizacion(String ordenPrevia, String esAfiliado, int numVisitas, long idIPS, int capacidad,
+			String horaInicio, String horaFin, String fechaInicio, String fechaFin, String diaInicio, String diaFin, long idRecepcionista)
 	{	
 		Hospitalizacion hospitalizacion;
 
 		log.info ("Adicionando una hospitalizacion a la IPS: " + idIPS);
-		hospitalizacion = pp.registarHospitalizacion(ordenPrevia, esAfiliado, numVisitas, idIPS, capacidad, horarioSemanal);
+		hospitalizacion = pp.registarHospitalizacion(ordenPrevia, esAfiliado, numVisitas, idIPS, capacidad, horaInicio, horaFin, fechaInicio, fechaFin, diaInicio, diaFin, idRecepcionista);
 		log.info ("Adicionando hospitalizacion: " + hospitalizacion);
 		return hospitalizacion;
 

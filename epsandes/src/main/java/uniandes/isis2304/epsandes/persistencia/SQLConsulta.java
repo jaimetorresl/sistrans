@@ -69,10 +69,11 @@ class SQLConsulta
 	 * @param sedes - El número de sedes del bar
 	 * @return El número de tuplas insertadas
 	 */
-	public long adicionarConsulta (PersistenceManager pm, long id, String ordenPrevia, String esAfiliado, long IdIPS, int capacidad, String horarioSemanal ) 
+	public long adicionarConsulta (PersistenceManager pm, long id, String ordenPrevia, String esAfiliado, long IdIPS, int capacidad,
+			String horaInicio, String horaFin, String fechaInicio, String fechaFin, String diaInicio, String diaFin, long idRecepcionista) 
 	{
-        Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaConsulta () + "(id, ordenPrevia, esAfiliado, IdIPS, capacidad, horarioSemanal) values (?, ?, ?, ?, ?, ?)");
-        q.setParameters(id, ordenPrevia, esAfiliado, IdIPS, capacidad, horarioSemanal);
+        Query q = pm.newQuery(SQL, "INSERT INTO " + "CONSULTA" + "(id, ordenPrevia, esAfiliado, IdIPS, capacidad, horaInicio, horaFin, fechaInicio, fechaFin, diaInicio, diaFin, idRecepcionista) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        q.setParameters(id, ordenPrevia, esAfiliado, IdIPS, capacidad, horaInicio, horaFin, fechaInicio, fechaFin, diaInicio, diaFin, idRecepcionista);
         return (long) q.executeUnique();
 	}
 
