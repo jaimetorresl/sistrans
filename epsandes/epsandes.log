@@ -21,3 +21,15 @@
 12:29:24,737 (main) INFO  [uniandes.isis2304.epsandes.interfazApp.InterfazEpsAndesApp] - Se encontr� un archivo de configuraci�n v�lido: Tablas BD
 12:30:34,760 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Adicionando consulta de la IPS: 27
 12:30:34,954 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Adicionando consulta: Consulta [id=84, esAfiliado=SI, ordenPrevia=NO, idIPS=27, capacidad=15, horaInicio=8:00:00, horaFin=15:00:00, fechaInicio=2019/10/21, fechaFin=2019/10/31, diaInicio=LUNES, diaFin=VIERNES, idRecepcionista=53]
+16:56:06,803 (main) INFO  [uniandes.isis2304.epsandes.interfazApp.InterfazEpsAndesApp] - Se encontr� un archivo de configuraci�n v�lido: Interfaz
+16:56:06,803 (main) INFO  [uniandes.isis2304.epsandes.interfazApp.InterfazEpsAndesApp] - Se aplica configuraci�n indicada en el archivo de configuraci�n
+16:56:06,814 (main) INFO  [uniandes.isis2304.epsandes.interfazApp.InterfazEpsAndesApp] - Se encontr� un archivo de configuraci�n v�lido: Tablas BD
+17:54:11,641 (main) INFO  [uniandes.isis2304.epsandes.interfazApp.InterfazEpsAndesApp] - Se encontr� un archivo de configuraci�n v�lido: Interfaz
+17:54:11,642 (main) INFO  [uniandes.isis2304.epsandes.interfazApp.InterfazEpsAndesApp] - Se aplica configuraci�n indicada en el archivo de configuraci�n
+17:54:11,653 (main) INFO  [uniandes.isis2304.epsandes.interfazApp.InterfazEpsAndesApp] - Se encontr� un archivo de configuraci�n v�lido: Tablas BD
+17:54:19,549 (main) INFO  [uniandes.isis2304.epsandes.interfazApp.InterfazEpsAndesApp] - Se encontr� un archivo de configuraci�n v�lido: Interfaz
+17:54:19,550 (main) INFO  [uniandes.isis2304.epsandes.interfazApp.InterfazEpsAndesApp] - Se aplica configuraci�n indicada en el archivo de configuraci�n
+17:54:19,561 (main) INFO  [uniandes.isis2304.epsandes.interfazApp.InterfazEpsAndesApp] - Se encontr� un archivo de configuraci�n v�lido: Tablas BD
+17:54:36,706 (main) INFO  [uniandes.isis2304.epsandes.interfazApp.InterfazEpsAndesApp] - Se encontr� un archivo de configuraci�n v�lido: Interfaz
+17:54:36,706 (main) INFO  [uniandes.isis2304.epsandes.interfazApp.InterfazEpsAndesApp] - Se aplica configuraci�n indicada en el archivo de configuraci�n
+17:54:36,717 (main) INFO  [uniandes.isis2304.epsandes.interfazApp.InterfazEpsAndesApp] - Se encontr� un archivo de configuraci�n v�lido: Tablas BD

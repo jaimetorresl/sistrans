@@ -72,7 +72,7 @@ class SQLUsuarioEPS
 	 */
 	public long adicionarUsuarioEPS (PersistenceManager pm, long id, String nombre, int rol, long idEPS, String correo) 
 	{
-        Query q = pm.newQuery(SQL, "INSERT INTO " + "Usuario_EPS" + "(id, nombre, rol, idEPS, correo) values (?, ?, ?, ?, ?)");
+        Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaUsuarioEPS() + "(id, nombre, rol, idEPS, correo) values (?, ?, ?, ?, ?)");
         q.setParameters(id, nombre, rol, idEPS, correo);
         return (long) q.executeUnique();
 	}

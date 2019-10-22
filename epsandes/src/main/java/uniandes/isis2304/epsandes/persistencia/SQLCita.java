@@ -74,7 +74,7 @@ class SQLCita
 	public long adicionarCita (PersistenceManager pm, long id, String horaInicio, String horaFin, long idMedico, long idConsulta, long idTerapia, long idProcedimientoEsp, long idHospitalizacion, long idUsuarioIPS) 
 	{
         Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaCita () + "(id, horaInincio, horaIniciFin, idMedico, idConsulta, idTerapia, idProcedimientoEsp, idHospitalizacion, idUsuarioIPS) values (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        q.setParameters(id, horaInicio, horaFin, idMedico, idConsulta, idTerapia, idProcedimientoEsp, idHospitalizacion);
+        q.setParameters(id, horaInicio, horaFin, idMedico, idConsulta, idTerapia, idProcedimientoEsp, idHospitalizacion, idUsuarioIPS);
         return (long) q.executeUnique();
 	}
 

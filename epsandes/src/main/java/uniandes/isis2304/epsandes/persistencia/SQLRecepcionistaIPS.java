@@ -1,4 +1,5 @@
-package uniandes.isis2304.epsandes.persistencia;
+
++-+package uniandes.isis2304.epsandes.persistencia;
 
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
