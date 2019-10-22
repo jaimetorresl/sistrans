@@ -71,10 +71,10 @@ class SQLReceta
 	 * @param sedes - El número de sedes del bar
 	 * @return El número de tuplas insertadas
 	 */
-	public long adicionarReceta (PersistenceManager pm, long id, String diagnostico, String medicamentos, long idConsulta, long idTerapia, long idProcedimientosEsp, long idHospitalizacion, long idCita) 
+	public long adicionarReceta (PersistenceManager pm, long id, String diagnostico, String medicamentos, long idCita) 
 	{
-        Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaReceta () + "(id, diagnostico, medicamentos, idConsulta, idTerapia, idProcedimientosEsp, idHospitalizacion, idCita) values (?, ?, ?, ?, ?, ?)");
-        q.setParameters(id, diagnostico, medicamentos, idConsulta, idTerapia, idProcedimientosEsp, idHospitalizacion, idCita);
+        Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaReceta () + "(id, diagnostico, medicamentos, idCita) values (?, ?, ?, ?)");
+        q.setParameters(id, diagnostico, medicamentos, idCita);
         return (long) q.executeUnique();
 	}
 
