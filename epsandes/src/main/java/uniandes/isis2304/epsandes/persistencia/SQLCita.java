@@ -15,6 +15,7 @@
 
 package uniandes.isis2304.epsandes.persistencia;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.jdo.PersistenceManager;
@@ -60,7 +61,7 @@ class SQLCita
 	{
 		this.pp = pp;
 	}
-	
+
 	/**
 	 * Crea y ejecuta la sentencia SQL para adicionar un BAR a la base de datos de Parranderos
 	 * @param pm - El manejador de persistencia
@@ -72,10 +73,120 @@ class SQLCita
 	 * @return El número de tuplas insertadas
 	 */
 	public long adicionarCita (PersistenceManager pm, long id, String horaInicio, String horaFin, long idMedico, long idConsulta, long idTerapia, long idProcedimientoEsp, long idHospitalizacion, long idUsuarioIPS) 
-	{
-        Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaCita () + "(id, horaInincio, horaIniciFin, idMedico, idConsulta, idTerapia, idProcedimientoEsp, idHospitalizacion, idUsuarioIPS) values (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        q.setParameters(id, horaInicio, horaFin, idMedico, idConsulta, idTerapia, idProcedimientoEsp, idHospitalizacion);
-        return (long) q.executeUnique();
+			throws Exception{
+
+
+		String tabla = "";
+
+		if(idConsulta != 0) {
+
+			tabla = "CONSULTA";
+
+		} else if(idTerapia != 0) {
+
+			tabla = "TERAPIA";
+
+		} else if(idProcedimientoEsp != 0) {
+
+			tabla = "PROCEDIMIENTO_ESP";
+
+		} else if(idHospitalizacion != 0) {
+
+			tabla = "HOSPITALIZACION";
+
+		} 
+
+
+
+
+
+		//Verifica que el medico trabaja en la IPS que presta ese servicio de salud        
+		Query darIPSSS = pm.newQuery(SQL, "SELECT idips FROM " + tabla + " WHERE id = ?");
+		darIPSSS.setParameters(idConsulta);
+
+		Query darIPSMedico = pm.newQuery(SQL, "SELECT idips FROM " + "IPS_MEDICO" + " WHERE idmedico = ?");
+		darIPSMedico.setParameters(idMedico);
+
+
+		BigDecimal result = (BigDecimal) darIPSSS.executeUnique();
+		BigDecimal result2 = (BigDecimal) darIPSMedico.executeUnique();
+
+
+		long resultIPSSS = result.longValue();
+		long resultIPSMedico = result2.longValue();
+
+
+		if(resultIPSSS != resultIPSMedico) {
+
+			throw new Exception("El medico no pertenece a la ips que ofrece ese servicio de salud");
+
+		}
+
+
+		//Verifica que el usuario pertenezca a una EPS que tenga esa IPS que presta ese servicio de salud
+
+		Query darEPSUsuario = pm.newQuery(SQL, "SELECT ideps FROM " + "USUARIO_IPS" + " WHERE numdocumento = ?");
+		darEPSUsuario.setParameters(idUsuarioIPS);
+
+		BigDecimal idEPSUsuario = (BigDecimal) darEPSUsuario.executeUnique();
+		long idEPSUsuario2 = idEPSUsuario.longValue();
+
+		Query darEPSCita = pm.newQuery(SQL, "SELECT ideps FROM " + "IPS" + " WHERE id = ?");
+		darEPSCita.setParameters(resultIPSSS);
+
+		BigDecimal idEPSCita = (BigDecimal) darEPSCita.executeUnique();
+		long idEPSCita2 = idEPSCita.longValue();
+
+
+
+		if(idEPSUsuario2 != idEPSCita2) {
+
+			throw new Exception("El usuario no pertenece a la IPS que contiene este servicio de salud");
+
+		}
+
+
+		//Verificar que la hora de la cita este en los rangos de horas del ss
+
+		Query darHora = pm.newQuery(SQL, "SELECT id FROM " + tabla + " WHERE id = ? AND TO_DATE(?,'DD-MM-YY HH24:MI:SS') BETWEEN TO_DATE(horainicio,'DD-MM-YY HH24:MI:SS') AND TO_DATE(horafin,'DD-MM-YY HH24:MI:SS') "
+				+ "AND TO_DATE(?,'DD-MM-YY HH24:MI:SS') BETWEEN TO_DATE(horainicio,'DD-MM-YY HH24:MI:SS') AND TO_DATE(horafin,'DD-MM-YY HH24:MI:SS')");
+
+		darHora.setParameters(idConsulta, horaInicio, horaFin);
+
+		BigDecimal idHoraSS = (BigDecimal)darHora.executeUnique(); 
+		long idHoraSS2 = idHoraSS.longValue();
+
+		if(idHoraSS2 != idConsulta) {
+
+			throw new Exception("El rango horario de la cita no coincide con el del servicio de salud");
+
+		}
+
+
+		//Verifica que el Usuario de la IPS puede acceder a este servicio de salud (afiliado o no)
+
+		Query darAfiliadoUsuario = pm.newQuery(SQL, "SELECT esafiliado FROM USUARIO_IPS WHERE id = ?");
+		darAfiliadoUsuario.setParameters(idUsuarioIPS);
+		
+		String resultAfiliado = (String) darAfiliadoUsuario.executeUnique();
+		
+		Query darAfiliadoSS = pm.newQuery(SQL, "SELECT esafiliado FROM " + tabla +  " WHERE id = ?");
+		darAfiliadoSS.setParameters(idUsuarioIPS);
+		
+		String resultAfiliadoSS = (String) darAfiliadoSS.executeUnique();
+		
+		if(resultAfiliadoSS.equals("SI") && resultAfiliado.equals("NO")) {
+			
+			throw new Exception("El usuario no puede hacer uso del ss ya que no es afiliado");
+			
+		}
+		
+
+
+		Query q = pm.newQuery(SQL, "INSERT INTO " + "CITA" + "(id, horainicio, horafin, idmedico, idconsulta, idterapia, idprocedimientoesp, idhospitalizacion, idusuarioips) values (?,?,?,?,?,?,?,?,?)");
+		q.setParameters(id, horaInicio, horaFin, idMedico, idConsulta, null, null, null, idUsuarioIPS);
+
+		return (long) q.executeUnique();
 	}
 
 	/**
@@ -86,9 +197,9 @@ class SQLCita
 	 */
 	public long eliminarCitaPorNombre (PersistenceManager pm, String nombre)
 	{
-        Query q = pm.newQuery(SQL, "DELETE FROM " + pp.darTablaCita () + " WHERE nombre = ?");
-        q.setParameters(nombre);
-        return (long) q.executeUnique();
+		Query q = pm.newQuery(SQL, "DELETE FROM " + pp.darTablaCita () + " WHERE nombre = ?");
+		q.setParameters(nombre);
+		return (long) q.executeUnique();
 	}
 
 	/**
@@ -99,9 +210,9 @@ class SQLCita
 	 */
 	public long eliminarCitaPorId (PersistenceManager pm, long id)
 	{
-        Query q = pm.newQuery(SQL, "DELETE FROM " + pp.darTablaCita () + " WHERE id = ?");
-        q.setParameters(id);
-        return (long) q.executeUnique();
+		Query q = pm.newQuery(SQL, "DELETE FROM " + pp.darTablaCita () + " WHERE id = ?");
+		q.setParameters(id);
+		return (long) q.executeUnique();
 	}
 
 	/**

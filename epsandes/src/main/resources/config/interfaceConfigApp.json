@@ -93,6 +93,27 @@
 		},
 		
 		
+		{ "menuTitle": "CITA",
+		  "options":
+			[
+				{
+					"label": "Adicionar",
+					"event": "adicionarCita"
+				}
+			]
+		},
+		
+		{ "menuTitle": "RECETA",
+		  "options":
+			[
+				{
+					"label": "Adicionar",
+					"event": "adicionarReceta"
+				}
+			]
+		},
+		
+		
 		{ "menuTitle": "Mantenimiento",
 		  "options":
 			[

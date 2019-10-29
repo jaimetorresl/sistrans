@@ -3,6 +3,9 @@ package uniandes.isis2304.epsandes.persistencia;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
+import uniandes.isis2304.epsandes.negocio.Medico;
+import uniandes.isis2304.epsandes.negocio.RecepcionistaIPS;
+
 public class SQLRecepcionistaIPS {
 	
 	/* ****************************************************************
@@ -41,6 +44,15 @@ public class SQLRecepcionistaIPS {
 		Query q = pm.newQuery(SQL, "INSERT INTO " + "RECEPCIONISTA_IPS" + "(id, nombre, rol, idIPS, correo) values (?, ?, ?, ?, ?)");
         q.setParameters(id, nombre, rol, idIPS, correo);
         return (long) q.executeUnique();
+	}
+	
+	
+	public RecepcionistaIPS darRecepcionistaPorId (PersistenceManager pm, long id) 
+	{
+		Query q = pm.newQuery(SQL, "SELECT * FROM " + "RECEPCIONISTA_IPS" + " WHERE id = ?");
+		q.setResultClass(RecepcionistaIPS.class);
+		q.setParameters(id);
+		return (RecepcionistaIPS) q.executeUnique();
 	}
 
 }

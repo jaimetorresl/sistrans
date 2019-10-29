@@ -3,15 +3,15 @@ package uniandes.isis2304.epsandes.negocio;
 public class UsuarioEPS implements VOUsuarioEPS{
 	
 	
-	private long id;
+	public long id;
 	
-	private String nombre;
+	public String nombre;
 	
-	private int rol;
+	public int rol;
 	
-	private long idEPS;
+	public long idEPS;
 	
-	private String correo;
+	public String correo;
 	
 	public UsuarioEPS() {
 		

@@ -119,6 +119,22 @@ public class EPSAndes {
 		return recepcionista;
 
 	}
+	
+	
+	public RecepcionistaIPS darRecepcionistaIPS(long id) {
+
+
+
+		RecepcionistaIPS recepcionista;
+		log.info("Encontrando recepcionista: " + id);
+
+		recepcionista = pp.darRecepcionistaIPS(id);
+
+		log.info ("Recepcionista encontrado: " + id);
+
+		return recepcionista;
+
+	}
 
 
 	/* ****************************************************************
@@ -144,6 +160,23 @@ public class EPSAndes {
 		usuarioEPS = pp.registrarUsuarioEPS(nombre, rol, idEPS, correo);
 		log.info ("Adicionando usuarioEPS: " + usuarioEPS);
 		return usuarioEPS;
+
+	}
+	
+	
+	
+	public UsuarioEPS darUsuarioEPS(long id) {
+
+
+
+		UsuarioEPS usuario;
+		log.info("Encontrando usuario: " + id);
+		
+		usuario = pp.darUsuarioEPS(id);
+
+		log.info ("Usuario encontrado: " + id);
+
+		return usuario;
 
 	}
 
@@ -269,6 +302,22 @@ public class EPSAndes {
 		cita = pp.registrarCita(horaInicio, horaFin, idMedico, idConsulta, idTerapia, idProcedimientoEsp, idHospitalizacion, idUsuarioIPS);
 		log.info ("Adicionando cita: " + cita);
 		return cita;
+		
+	}
+	
+	
+	/* ****************************************************************
+	 * 			M�todos para manejar las Recetas
+	 *****************************************************************/
+	
+	public Receta registrarReceta(String diagnostico, String medicamentos, long idCita) {
+		
+		Receta receta;
+
+		log.info ("Adicionando receta que tiene la cita asignada: " + idCita);
+		receta = pp.registrarReceta(diagnostico, medicamentos, idCita);
+		log.info ("Adicionando receta: " + receta);
+		return receta;
 		
 	}
 

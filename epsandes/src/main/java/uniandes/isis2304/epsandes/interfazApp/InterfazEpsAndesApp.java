@@ -10,6 +10,9 @@ import com.google.gson.stream.JsonReader;
 
 import uniandes.isis2304.epsandes.negocio.EPSAndes;
 import uniandes.isis2304.epsandes.negocio.IPS;
+import uniandes.isis2304.epsandes.negocio.RecepcionistaIPS;
+import uniandes.isis2304.epsandes.negocio.UsuarioEPS;
+import uniandes.isis2304.epsandes.negocio.VOCita;
 import uniandes.isis2304.epsandes.negocio.VOConsulta;
 import uniandes.isis2304.epsandes.negocio.VOEPS;
 import uniandes.isis2304.epsandes.negocio.VOHospitalizacion;
@@ -18,6 +21,7 @@ import uniandes.isis2304.epsandes.negocio.VOIPSMedico;
 import uniandes.isis2304.epsandes.negocio.VOMedico;
 import uniandes.isis2304.epsandes.negocio.VOProcedimientoEsp;
 import uniandes.isis2304.epsandes.negocio.VORecepcionistaIPS;
+import uniandes.isis2304.epsandes.negocio.VOReceta;
 import uniandes.isis2304.epsandes.negocio.VOTerapia;
 import uniandes.isis2304.epsandes.negocio.VOUsuarioEPS;
 import uniandes.isis2304.epsandes.negocio.VOUsuarioIPS;
@@ -255,31 +259,43 @@ public class InterfazEpsAndesApp extends JFrame implements ActionListener {
   				
   				
   				String idAdminDatos = JOptionPane.showInputDialog("Escriba su identificacion");
+  				long idAdminDatos2 = Long.parseLong(idAdminDatos);
   				
+  				UsuarioEPS usuario = epsandes.darUsuarioEPS(idAdminDatos2);
+   				
   				
+  				if(usuario != null) {
+  					
+  					
+  					String nombreEPS = JOptionPane.showInputDialog(this, "Nombre de EPS?", "Adicionar EPS", JOptionPane.QUESTION_MESSAGE);
 
-  				String nombreEPS = JOptionPane.showInputDialog(this, "Nombre de EPS?", "Adicionar EPS", JOptionPane.QUESTION_MESSAGE);
-
-  				if (nombreEPS != null)
-  				{
+  	  				if (nombreEPS != null)
+  	  				{
 
 
-  					VOEPS eps = epsandes.registrarEPS(nombreEPS);
+  	  					VOEPS eps = epsandes.registrarEPS(nombreEPS);
 
-  					if (eps == null)
-  					{
-  						throw new Exception ("No se pudo crear una EPS con nombre: " + nombreEPS);
-  					}
-  					String resultado = "En adicionarEPS\n\n";
-  					resultado += "EPS adicionado exitosamente: " + eps;
-  					resultado += "\n Operaci�n terminada";
-  					panelDatos.actualizarInterfaz(resultado);
+  	  					if (eps == null)
+  	  					{
+  	  						throw new Exception ("No se pudo crear una EPS con nombre: " + nombreEPS);
+  	  					}
+  	  					String resultado = "En adicionarEPS\n\n";
+  	  					resultado += "EPS adicionado exitosamente: " + eps;
+  	  					resultado += "\n Operaci�n terminada";
+  	  					panelDatos.actualizarInterfaz(resultado);
+  	  				}
+  	  				else
+  	  				{
+  	  					panelDatos.actualizarInterfaz("Operaci�n cancelada por el usuario");
+  	  				}  					
+  					
+  					
+  				} else {
+  					
+  					JOptionPane.showMessageDialog(this, "Identificacion invalida");
+  					
   				}
-  				else
-  				{
-  					panelDatos.actualizarInterfaz("Operaci�n cancelada por el usuario");
-  				}
-
+  				
 
   			} 
   			catch (Exception e) 
@@ -575,7 +591,139 @@ public class InterfazEpsAndesApp extends JFrame implements ActionListener {
 			panelDatos.actualizarInterfaz(resultado);
 		}
 	}
+	
+	
+	
+	//Adicionar cita 
+	
+	public void adicionarCita()
+	{
+		try 
+		{
 
+
+			String horaInicio = JOptionPane.showInputDialog("Dar hora inicio de la cita (DD-MM-AA HH24:MI:SS)");	
+			String horaFin = JOptionPane.showInputDialog("Dar hora fin de la cita (DD-MM-AA HH24:MI:SS)");
+			String idMedico = JOptionPane.showInputDialog("Dar id del medico responsable de la cita");
+			
+			long idMedico2 = Long.parseLong(idMedico);
+			
+			int opcionSS = Integer.parseInt(JOptionPane.showInputDialog("Que tipo de ss es? 1-consulta, 2-terapia, 3-procedimiento especial, 4-hospitalizacion"));	
+			
+			
+			String ss = "";
+			
+			long idConsulta2 = 0;
+			long idTerapia2 = 0;
+			long idProcedimiento2 = 0;
+			long idHospitalizacion2 = 0;
+			
+			if(opcionSS == 1) {
+				
+				String idConsulta = JOptionPane.showInputDialog("Id de la consulta?");
+				 idConsulta2 = Long.parseLong(idConsulta);
+			
+				 
+			} else if (opcionSS == 2) {
+				
+				String idTerapia = JOptionPane.showInputDialog("Id de la terapia?");
+				 idTerapia2 = Long.parseLong(idTerapia);
+				
+			} else if (opcionSS == 3) {
+				
+				String idProcedimiento = JOptionPane.showInputDialog("Id de la procedimiento?");
+				 idProcedimiento2 = Long.parseLong(idProcedimiento);
+				
+			} else if (opcionSS == 4) {
+				
+				String idHospitalizacion = JOptionPane.showInputDialog("Id de la hospitalizacion?");
+				 idHospitalizacion2 = Long.parseLong(idHospitalizacion);
+				
+			} 
+			
+			
+			String idUsuarioIPS = JOptionPane.showInputDialog("Id del paciente?");
+			long idUsuarioIPS2 = Long.parseLong(idUsuarioIPS);
+			
+			
+			
+			
+			if (idUsuarioIPS != null && idMedico != null)
+			{
+
+
+				VOCita cita = epsandes.registrarCita(horaInicio, horaFin, idMedico2, idConsulta2, idTerapia2, idProcedimiento2, idHospitalizacion2, idUsuarioIPS2);
+
+				if (cita == null)
+				{
+					throw new Exception ("No se pudo crear la cita");
+				}
+				String resultado = "En adicionarCita\n\n";
+				resultado += "Cita creada exitosamente";
+				resultado += "\n Operaci�n terminada";
+				panelDatos.actualizarInterfaz(resultado);
+			}
+			else
+			{
+				panelDatos.actualizarInterfaz("Operaci�n cancelada por el usuario");
+			}
+
+
+		} 
+		catch (Exception e) 
+		{
+			//			e.printStackTrace();
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
+	}
+
+	
+	
+	//Adicionar receta
+	
+	public void adicionarReceta()
+	{
+		try 
+		{
+
+			String diagnostico = JOptionPane.showInputDialog("Dar diagnostico");	
+			String medicamentos = JOptionPane.showInputDialog("Dar medicamentos para tratar al paciente");
+			String idCita = JOptionPane.showInputDialog("Dar id de la cita correspondiente");
+			
+			long idCita2 = Long.parseLong(idCita);
+			
+			
+			
+			if (idCita != null)
+			{
+
+
+				VOReceta receta = epsandes.registrarReceta(diagnostico, medicamentos, idCita2);
+
+				if (receta == null)
+				{
+					throw new Exception ("No se pudo crear la receta");
+				}
+				String resultado = "En adicionarReceta\n\n";
+				resultado += "Receta creada exitosamente";
+				resultado += "\n Operaci�n terminada";
+				panelDatos.actualizarInterfaz(resultado);
+			}
+			else
+			{
+				panelDatos.actualizarInterfaz("Operaci�n cancelada por el usuario");
+			}
+
+
+		} 
+		catch (Exception e) 
+		{
+			//			e.printStackTrace();
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
+	}
 
 
 	//SERVICIOS DE SALUD

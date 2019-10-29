@@ -99,9 +99,9 @@ class SQLUsuarioEPS
 	 */
 	public UsuarioEPS darUsuarioEPSPorId (PersistenceManager pm, long id) 
 	{
-		Query q = pm.newQuery(SQL, "SELECT * FROM " + pp.darTablaUsuarioEPS () + " WHERE id = ?");
+		Query q = pm.newQuery(SQL, "SELECT * FROM " + "USUARIO_EPS"  + " WHERE id = ? AND rol = ?");
 		q.setResultClass(UsuarioEPS.class);
-		q.setParameters(id);
+		q.setParameters(id, 2);
 		return (UsuarioEPS) q.executeUnique();
 	}
 

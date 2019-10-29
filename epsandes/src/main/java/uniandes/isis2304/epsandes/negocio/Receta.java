@@ -31,7 +31,7 @@ public class Receta implements VOReceta {
 	 * @param receta - La serie de medicamentos recomendados para darle al paciente por su situacion
 	 * @param tratamiento - Serie de actividades que debe realizar el paciente por cierto tiempo
 	 */
-    public Receta(String diagnostico, String medicamentos, long id, long idConsulta, long idTerapia, long idProcedimientoEsp, long idHospitalizacion, long idCita) 
+    public Receta(String diagnostico, String medicamentos, long id, long idCita) 
     {
     	this.diagnostico = diagnostico;
     	this.medicamentos = medicamentos;

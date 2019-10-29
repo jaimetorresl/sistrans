@@ -459,13 +459,49 @@ public class PersistenciaEPSAndes {
 			tx.begin();
 			long tuplasInsertadas = sqlRecepcionistaIPS.adicionarRecepcionistaIPS(pm, id, nombre, rol, idIPS, correo);
 			
-			System.out.println(tuplasInsertadas);
 			
 			tx.commit();
 
 			log.trace ("Inserci�n de Recepcionista: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
 
 			return new RecepcionistaIPS(id, nombre, rol, idIPS, correo);
+		}
+		catch (Exception e)
+		{
+			//        	e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			return null;
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
+	}
+	
+	
+	
+	
+	public RecepcionistaIPS darRecepcionistaIPS(long id)
+	{
+		
+		PersistenceManager pm = pmf.getPersistenceManager();
+
+		Transaction tx=pm.currentTransaction();
+		try
+		{
+			tx.begin();
+			
+			RecepcionistaIPS recepcionista = sqlRecepcionistaIPS.darRecepcionistaPorId(pm, id);
+			
+			tx.commit();
+
+			log.trace ("Dar Recepcionista: " + id + ": tuplas insertadas");
+
+			return recepcionista;
 		}
 		catch (Exception e)
 		{
@@ -505,6 +541,41 @@ public class PersistenciaEPSAndes {
 			log.trace ("Inserci�n de UsuarioEPS: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
 
 			return new UsuarioEPS(id, nombre, rol, idEPS, correo);
+		}
+		catch (Exception e)
+		{
+			//        	e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			return null;
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
+	}
+	
+	
+	public UsuarioEPS darUsuarioEPS(long id)
+	{
+		
+		PersistenceManager pm = pmf.getPersistenceManager();
+
+		Transaction tx=pm.currentTransaction();
+		try
+		{
+			tx.begin();
+			
+			UsuarioEPS usuario = sqlUsuarioEPS.darUsuarioEPSPorId(pm, id);
+			
+			tx.commit();
+
+			log.trace ("Dar usuario: " + id + ": tuplas insertadas");
+
+			return usuario;
 		}
 		catch (Exception e)
 		{
@@ -829,7 +900,7 @@ public class PersistenciaEPSAndes {
 	 *****************************************************************/
 	
 	
-	public Receta registrarReceta(String diagnostico, String medicamentos, long idConsulta, long idTerapia, long idProcedimientoEsp, long idHospitalizacion, long idCita)
+	public Receta registrarReceta(String diagnostico, String medicamentos, long idCita)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
 		
@@ -839,12 +910,12 @@ public class PersistenciaEPSAndes {
 		try
 		{
 			tx.begin();
-			long tuplasInsertadas = sqlReceta.adicionarReceta(pm, id, diagnostico, medicamentos, idConsulta, idTerapia, idProcedimientoEsp, idHospitalizacion, idCita);
+			long tuplasInsertadas = sqlReceta.adicionarReceta(pm, id, diagnostico, medicamentos, idCita);
 			tx.commit();
 
 			log.trace ("Inserci�n de receta asociada a la cita: " + idCita + ": " + tuplasInsertadas + " tuplas insertadas");
 
-			return new Receta(diagnostico, medicamentos, id, idConsulta, idTerapia, idProcedimientoEsp, idHospitalizacion);
+			return new Receta(diagnostico, medicamentos, id, idCita);
 		}
 		catch (Exception e)
 		{
