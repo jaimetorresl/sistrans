@@ -421,7 +421,7 @@ public class PersistenciaEPSAndes {
 		try
 		{
 			tx.begin();
-			long tuplasInsertadas = sqlIPS.adicionarIPS(pm, id, nombre, tipo, localizacion, idEPS);
+			long tuplasInsertadas = sqlIPS.adicionarIPS(pm, id, nombre, localizacion, idEPS, tipo);
 			tx.commit();
 
 			log.trace ("Inserci�n de IPS: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
@@ -603,7 +603,7 @@ public class PersistenciaEPSAndes {
 		try
 		{
 			tx.begin();
-			long tuplasInsertadas = sqlUsuarioIPS.adicionarUsuarioIPS(pm, id, nombre, estado, numDocumento, tipoDocumento, fechaNacimiento, idEPS, esAfiliado, correo, genero, edad);
+			long tuplasInsertadas = sqlUsuarioIPS.adicionarUsuarioIPS(pm, nombre, estado, numDocumento, tipoDocumento, fechaNacimiento, idEPS, esAfiliado, correo, genero, edad);
 			tx.commit();
 
 			log.trace ("Inserci�n de UsuarioEPS: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");

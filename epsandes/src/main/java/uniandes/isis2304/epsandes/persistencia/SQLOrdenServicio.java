@@ -3,7 +3,7 @@ package uniandes.isis2304.epsandes.persistencia;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
-public class SQLIPSMedico {
+public class SQLOrdenServicio {
 	
 	/* ****************************************************************
 	 * 			Constantes
@@ -30,7 +30,7 @@ public class SQLIPSMedico {
 	 * Constructor
 	 * @param pp - El Manejador de persistencia de la aplicación
 	 */
-	public SQLIPSMedico(PersistenciaEPSAndes pp)
+	public SQLOrdenServicio(PersistenciaEPSAndes pp)
 	{
 		this.pp = pp;
 	}
@@ -38,10 +38,10 @@ public class SQLIPSMedico {
 	/**
 	 * Crea y ejecuta la sentencia SQL
 	 */
-	public long adicionarIPSMedico (PersistenceManager pm, long idMedico, long idIPS) 
+	public long adicionarOrdenTerapia(PersistenceManager pm, long idOrden, long idTerapia) 
 	{
-        Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaMedico() + "(idMedico, idIPS) values (?, ?)");
-        q.setParameters(idMedico, idIPS);
+        Query q = pm.newQuery(SQL, "INSERT INTO " + "ORDEN_TERAPIA" + "(idOrden, idTerapia) values (?, ?)");
+        q.setParameters(idOrden, idTerapia);
         return (long) q.executeUnique();
 	}
 

@@ -71,10 +71,10 @@ class SQLTerapia
 	 * @param sedes - El número de sedes del bar
 	 * @return El número de tuplas insertadas
 	 */
-	public long adicionarTerapia (PersistenceManager pm, long id, String ordenPrevia, String esAfiliado, String numSesiones, String tipoTerapia, long idIPS, int capacidad, 
-			String horaInicio, String horaFin, String fechaInicio, String fechaFin, String diaInicio, String diaFin, long idRecepcionista) 
+	public long adicionarTerapia (PersistenceManager pm, long id, String ordenPrevia, String esAfiliado, String numSesiones, String tipoTerapia, long idIPS, int capacidad, String horaInicio, String horaFin, String fechaInicio, String fechaFin, String diaInicio, String diaFin, long idRecepcionista) 
 	{
-        Query q = pm.newQuery(SQL, "INSERT INTO " + "TERAPIA" + "(id, ordenPrevia, esAfiliado, numseries, tipoTerapia, idIPS, capacidad, horaInicio, horaFin, fechaInicio, fechaFin, diaInicio, diaFin, idRecepcionista) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaTerapia () + "(id, ordenPrevia, esAfiliado, numSesiones, tipoTerapia, idIPS, capacidad, horaInicio, horaFin, fechaInicio, fechaFin, diaInicio, diaFin, idRecepcionista) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
         q.setParameters(id, ordenPrevia, esAfiliado, numSesiones, tipoTerapia, idIPS, capacidad, horaInicio, horaFin, fechaInicio, fechaFin, diaInicio, diaFin, idRecepcionista);
         return (long) q.executeUnique();
 	}

@@ -72,11 +72,11 @@ class SQLProcedimientoEsp
 	 * @param sedes - El número de sedes del bar
 	 * @return El número de tuplas insertadas
 	 */
-	public long adicionarProcedimientoEsp (PersistenceManager pm, long id, String ordenPrevia, String esAfiliado, String  conocimiento, String equipo, long IdIPS, int capacidad,
-			String horaInicio, String horaFin, String fechaInicio, String fechaFin, String diaInicio, String diaFin, long idRecepcionista) 
+	public long adicionarProcedimientoEsp (PersistenceManager pm, long id, String esAfiliado,  String ordenPrevia,  String  conocimiento, String equipo, long idIPS, int capacidad, String horaInicio, String horaFin, String fechaInicio, String fechaFin, String diaInicio, String diaFin, long idRecepcionista) 
 	{
-        Query q = pm.newQuery(SQL, "INSERT INTO " + "PROCEDIMIENTO_ESP" + "(id, ordenPrevia, esAfiliado, conocimiento, equipo, IdIPS, capacidad, horaInicio, horaFin, fechaInicio, fechaFin, diaInicio, diaFin, idRecepcionista) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        q.setParameters(id, ordenPrevia, esAfiliado, conocimiento, equipo, IdIPS, capacidad, horaInicio, horaFin, fechaInicio, fechaFin, diaInicio, diaFin, idRecepcionista);
+        Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaProcedimientoEsp () + "(id,esAfiliado, ordenPrevia,  conocimiento, equipo, idIPS, capacidad, horaInicio, horaFin, fechaInicio, fechaFin, diaInicio, diaFin, idRecepcionista) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        q.setParameters(id,  esAfiliado, ordenPrevia, conocimiento, equipo, idIPS, capacidad,horaInicio, horaFin, fechaInicio, fechaFin, diaInicio, diaFin, idRecepcionista );
+
         return (long) q.executeUnique();
 	}
 
