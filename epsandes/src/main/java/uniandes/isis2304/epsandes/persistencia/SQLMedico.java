@@ -67,7 +67,7 @@ class SQLMedico
 	 */
 	public long adicionarMedico (PersistenceManager pm, long id, String especialidad, long numRegMedico, String nombre) 
 	{
-        Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaMedico() + "(id, especialidad, numRegMedico, nombre) values (?, ?, ?, ?)");
+        Query q = pm.newQuery(SQL, "INSERT INTO " + "MEDICO" + "(id, especialidad, numRegMedico, nombre) values (?, ?, ?, ?)");
         q.setParameters(id, especialidad, numRegMedico, nombre);
         return (long) q.executeUnique();
 	}

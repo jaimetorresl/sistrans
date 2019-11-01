@@ -73,7 +73,7 @@ class SQLUsuarioIPS
 	public long adicionarUsuarioIPS (PersistenceManager pm,  String nombre, String estado, long numDocumento , int tipodocumento, String fechaNacimiento, 
 								long idEPS, String esAfiliado, String correo, String genero, int edad) 
 	{
-        Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaUsuarioIPS () + "(nombre, estado, numDocumento , tipodocumento, fechaNacimiento, idEPS, esAfiliado, correo, genero, edad) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        Query q = pm.newQuery(SQL, "INSERT INTO " + "USUARIO_IPS" + "(nombre, estado, numDocumento , tipodocumento, fechaNacimiento, idEPS, esAfiliado, correo, genero, edad) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         q.setParameters(nombre, estado, numDocumento , tipodocumento, fechaNacimiento, idEPS, esAfiliado, correo, genero, edad);
 
         return (long) q.executeUnique();

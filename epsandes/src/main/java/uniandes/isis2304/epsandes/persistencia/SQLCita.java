@@ -77,22 +77,28 @@ class SQLCita
 
 
 		String tabla = "";
+		
+		long idSS = 0;
 
 		if(idConsulta != 0) {
 
 			tabla = "CONSULTA";
+			idSS = idConsulta;
 
 		} else if(idTerapia != 0) {
-
+			
 			tabla = "TERAPIA";
+			idSS = idTerapia;
 
 		} else if(idProcedimientoEsp != 0) {
 
 			tabla = "PROCEDIMIENTO_ESP";
+			idSS = idProcedimientoEsp;
 
 		} else if(idHospitalizacion != 0) {
 
 			tabla = "HOSPITALIZACION";
+			idSS = idHospitalizacion;
 
 		} 
 
@@ -102,7 +108,7 @@ class SQLCita
 
 		//Verifica que el medico trabaja en la IPS que presta ese servicio de salud        
 		Query darIPSSS = pm.newQuery(SQL, "SELECT idips FROM " + tabla + " WHERE id = ?");
-		darIPSSS.setParameters(idConsulta);
+		darIPSSS.setParameters(idSS);
 
 		Query darIPSMedico = pm.newQuery(SQL, "SELECT idips FROM " + "IPS_MEDICO" + " WHERE idmedico = ?");
 		darIPSMedico.setParameters(idMedico);
@@ -148,15 +154,16 @@ class SQLCita
 
 		//Verificar que la hora de la cita este en los rangos de horas del ss
 
-		Query darHora = pm.newQuery(SQL, "SELECT id FROM " + tabla + " WHERE id = ? AND TO_DATE(?,'DD-MM-YY HH24:MI:SS') BETWEEN TO_DATE(horainicio,'DD-MM-YY HH24:MI:SS') AND TO_DATE(horafin,'DD-MM-YY HH24:MI:SS') "
-				+ "AND TO_DATE(?,'DD-MM-YY HH24:MI:SS') BETWEEN TO_DATE(horainicio,'DD-MM-YY HH24:MI:SS') AND TO_DATE(horafin,'DD-MM-YY HH24:MI:SS')");
+		Query darHora = pm.newQuery(SQL, "SELECT id FROM " + tabla + " WHERE id = ? AND (TO_DATE(?,'DD-MM-YY HH24:MI:SS') BETWEEN TO_DATE(horainicio,'DD-MM-YY HH24:MI:SS') AND TO_DATE(horafin,'DD-MM-YY HH24:MI:SS')) "
+				+ "AND (TO_DATE(?,'DD-MM-YY HH24:MI:SS') BETWEEN TO_DATE(horainicio,'DD-MM-YY HH24:MI:SS') AND TO_DATE(horafin,'DD-MM-YY HH24:MI:SS'))");
 
-		darHora.setParameters(idConsulta, horaInicio, horaFin);
+		darHora.setParameters(idSS, horaInicio, horaFin);
 
 		BigDecimal idHoraSS = (BigDecimal)darHora.executeUnique(); 
 		long idHoraSS2 = idHoraSS.longValue();
+		
 
-		if(idHoraSS2 != idConsulta) {
+		if(idHoraSS2 != idSS) {
 
 			throw new Exception("El rango horario de la cita no coincide con el del servicio de salud");
 
@@ -165,13 +172,15 @@ class SQLCita
 
 		//Verifica que el Usuario de la IPS puede acceder a este servicio de salud (afiliado o no)
 
-		Query darAfiliadoUsuario = pm.newQuery(SQL, "SELECT esafiliado FROM USUARIO_IPS WHERE id = ?");
+		Query darAfiliadoUsuario = pm.newQuery(SQL, "SELECT esafiliado FROM USUARIO_IPS WHERE numdocumento = ?");
 		darAfiliadoUsuario.setParameters(idUsuarioIPS);
 		
 		String resultAfiliado = (String) darAfiliadoUsuario.executeUnique();
 		
+		
 		Query darAfiliadoSS = pm.newQuery(SQL, "SELECT esafiliado FROM " + tabla +  " WHERE id = ?");
-		darAfiliadoSS.setParameters(idUsuarioIPS);
+		darAfiliadoSS.setParameters(idSS);
+		
 		
 		String resultAfiliadoSS = (String) darAfiliadoSS.executeUnique();
 		
@@ -184,7 +193,27 @@ class SQLCita
 
 
 		Query q = pm.newQuery(SQL, "INSERT INTO " + "CITA" + "(id, horainicio, horafin, idmedico, idconsulta, idterapia, idprocedimientoesp, idhospitalizacion, idusuarioips) values (?,?,?,?,?,?,?,?,?)");
-		q.setParameters(id, horaInicio, horaFin, idMedico, idConsulta, null, null, null, idUsuarioIPS);
+		q.setParameters(id, horaInicio, horaFin, idMedico, null, idTerapia, null, null, idUsuarioIPS);
+		
+		
+		
+		if(idConsulta != 0) {
+
+			q.setParameters(id, horaInicio, horaFin, idMedico, idConsulta, null, null, null, idUsuarioIPS);
+
+		} else if(idTerapia != 0) {
+			
+			q.setParameters(id, horaInicio, horaFin, idMedico, null, idTerapia, null, null, idUsuarioIPS);
+			
+		} else if(idProcedimientoEsp != 0) {
+
+			q.setParameters(id, horaInicio, horaFin, idMedico, null, null, idProcedimientoEsp, null, idUsuarioIPS);
+
+		} else if(idHospitalizacion != 0) {
+
+			q.setParameters(id, horaInicio, horaFin, idMedico, null, null, null, idHospitalizacion, idUsuarioIPS);
+
+		} 
 
 		return (long) q.executeUnique();
 	}

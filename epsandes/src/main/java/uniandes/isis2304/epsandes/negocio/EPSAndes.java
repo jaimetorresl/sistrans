@@ -53,10 +53,10 @@ public class EPSAndes {
 	 * El constructor qye recibe los nombres de las tablas en tableConfig
 	 * @param tableConfig - Objeto Json con los nombres de las tablas y de la unidad de persistencia
 	 */
-	public EPSAndes (JsonObject tableConfig)
-	{
-		pp = PersistenciaEPSAndes.getInstance (tableConfig);
-	}
+//	public EPSAndes (JsonObject tableConfig)
+//	{
+//		pp = PersistenciaEPSAndes.getInstance (tableConfig);
+//	}
 
 	/**
 	 * Cierra la conexi�n con la base de datos (Unidad de persistencia)
@@ -103,8 +103,8 @@ public class EPSAndes {
 		return ips;
 
 	}
-	
-	
+
+
 	public RecepcionistaIPS registrarRecepcionistaIPS(String nombre, int rol, long idIPS, String correo) {
 
 
@@ -119,8 +119,8 @@ public class EPSAndes {
 		return recepcionista;
 
 	}
-	
-	
+
+
 	public RecepcionistaIPS darRecepcionistaIPS(long id) {
 
 
@@ -162,16 +162,16 @@ public class EPSAndes {
 		return usuarioEPS;
 
 	}
-	
-	
-	
+
+
+
 	public UsuarioEPS darUsuarioEPS(long id) {
 
 
 
 		UsuarioEPS usuario;
 		log.info("Encontrando usuario: " + id);
-		
+
 		usuario = pp.darUsuarioEPS(id);
 
 		log.info ("Usuario encontrado: " + id);
@@ -201,9 +201,9 @@ public class EPSAndes {
 		return medico;
 
 	}
-	
-	
-	
+
+
+
 	public IPSMedico registrarMedicoIPS(long idMedico, long idIPS)
 	{	
 		IPSMedico ipsMedico;
@@ -215,23 +215,6 @@ public class EPSAndes {
 
 	}
 
-
-//	/**
-//	 * Se busca un medico dentro de la lista de medicos existentes (por su id).
-//	 * @param id del medico a buscar
-//	 * @return medico o null por si no se encontro
-//	 */
-//	public Medico buscarMedicoPorId(long id) {
-//
-//		Medico medicoId;
-//		log.info("Buscando medico");
-//
-//		medicoId = pp.buscarMedicoPorId(id);
-//		log.info ("Medico encontrado: " + medicoId);
-//
-//		return medicoId;
-//
-//	}
 
 
 	/* ****************************************************************
@@ -249,8 +232,8 @@ public class EPSAndes {
 		return consulta;
 
 	}
-	
-	
+
+
 	public Terapia registrarTerapia(String ordenPrevia, String esAfiliado, String numSesiones, String tipoTerapia, long idIPS, int capacidad,
 			String horaInicio, String horaFin, String fechaInicio, String fechaFin, String diaInicio, String diaFin, long idRecepcionista)
 	{	
@@ -262,7 +245,7 @@ public class EPSAndes {
 		return terapia;
 
 	}
-	
+
 	public ProcedimientoEsp registraProcedimientoEsp(String ordenPrevia, String esAfiliado, String conocimiento, String equipo, long idIPS, int capacidad,
 			String horaInicio, String horaFin, String fechaInicio, String fechaFin, String diaInicio, String diaFin, long idRecepcionista)
 	{	
@@ -270,12 +253,12 @@ public class EPSAndes {
 
 		log.info ("Adicionando procedimiento cono conocimiento en: " + conocimiento);
 		procedimiento = pp.registrarProcedimientoEsp(esAfiliado, ordenPrevia, conocimiento, equipo, idIPS, capacidad, horaInicio, horaFin, fechaInicio, fechaFin, diaInicio, diaFin, idRecepcionista);
-				
+
 		log.info ("Adicionando procedimiento: " + procedimiento);
 		return procedimiento;
 
 	}
-	
+
 	public Hospitalizacion registrarHospitalizacion(String ordenPrevia, String esAfiliado, int numVisitas, long idIPS, int capacidad,
 			String horaInicio, String horaFin, String fechaInicio, String fechaFin, String diaInicio, String diaFin, long idRecepcionista)
 	{	
@@ -287,39 +270,128 @@ public class EPSAndes {
 		return hospitalizacion;
 
 	}
-	
-	
-	
+
+
+
 	/* ****************************************************************
 	 * 			M�todos para manejar los Servicios de cita
 	 *****************************************************************/
-	
+
 	public Cita registrarCita(String horaInicio, String horaFin, long idMedico, long idConsulta, long idTerapia, long idProcedimientoEsp, long idHospitalizacion, long idUsuarioIPS) {
-		
+
 		Cita cita;
 
 		log.info ("Adicionando cita que empieza a las: " + horaInicio + " y termina a las: " + horaFin);
 		cita = pp.registrarCita(horaInicio, horaFin, idMedico, idConsulta, idTerapia, idProcedimientoEsp, idHospitalizacion, idUsuarioIPS);
 		log.info ("Adicionando cita: " + cita);
 		return cita;
-		
+
 	}
-	
-	
+
+
 	/* ****************************************************************
 	 * 			M�todos para manejar las Recetas
 	 *****************************************************************/
-	
+
 	public Receta registrarReceta(String diagnostico, String medicamentos, long idCita) {
-		
+
 		Receta receta;
 
 		log.info ("Adicionando receta que tiene la cita asignada: " + idCita);
 		receta = pp.registrarReceta(diagnostico, medicamentos, idCita);
 		log.info ("Adicionando receta: " + receta);
 		return receta;
+
+	}
+
+
+	/* ****************************************************************
+	 * 			M�todos para manejar las Ordenes de SS
+	 *****************************************************************/
+
+
+	public OrdenServicio registrarOrdenServicio(long idReceta) {
+
+		OrdenServicio ordenServicio;
+
+		log.info ("Adicionando orden de servicio que tiene asociada la receta: " + idReceta);
+		ordenServicio = pp.registrarOrdenServicio(idReceta);
+		log.info ("Adicionando orden de servicio: " + ordenServicio);
+		return ordenServicio;
+
+	}
+
+
+	public OrdenConsulta registrarOrdenConsulta(long idOrdenSS, long idConsulta) {
+
+		OrdenConsulta ordenConsulta;
+
+		log.info ("Adicionando orden de ss: consulta con la consulta asociada: " + idConsulta);
+		ordenConsulta = pp.registrarOrdenConsulta(idOrdenSS, idConsulta);
+		log.info ("Adicionando orden consulta: " + ordenConsulta);
+		return ordenConsulta;
+
+	}
+	
+	
+	public OrdenTerapia registrarOrdenTerapia(long idOrdenSS, long idTerapia) {
+
+		OrdenTerapia ordenTerapia;
+
+		log.info ("Adicionando orden de ss: terapia con la terapia asociada: " + idTerapia);
+		ordenTerapia = pp.registrarOrdenTerapia(idOrdenSS, idTerapia);
+		log.info ("Adicionando orden terapia: " + ordenTerapia);
+		return ordenTerapia;
+
+	}
+	
+	public OrdenProcedimientoEsp registrarOrdenProcedimientoEsp(long idOrdenSS, long idProcedimiento) {
+
+		OrdenProcedimientoEsp ordenProcedimiento;
+
+		log.info ("Adicionando orden de ss: procedimiento especial con el procedimiento asociado: " + idProcedimiento);
+		ordenProcedimiento = pp.registrarOrdenProcedimientoEsp(idOrdenSS, idProcedimiento);
+		log.info ("Adicionando orden procedimiento: " + ordenProcedimiento);
+		return ordenProcedimiento;
+
+	}
+	
+	
+	public OrdenHospitalizacion registrarOrdenHospitalizacion(long idOrdenSS, long idHospitalizacion) {
+
+		OrdenHospitalizacion ordenHospitalizacion;
+
+		log.info ("Adicionando orden de ss: hospitalizacion con la hospitalizacion asociado: " + idHospitalizacion);
+		ordenHospitalizacion = pp.registrarOrdenHospitalizacion(idOrdenSS, idHospitalizacion);
+		log.info ("Adicionando orden hospitalizacion: " + ordenHospitalizacion);
+		return ordenHospitalizacion;
+
+	}
+	
+	
+	/**--------------------------------------------------------------------------------
+	----------------------------------Iteracion 2 -------------------------------------
+	----------------------------------------------------------------------------------*/
+	
+	
+	
+	public List<Consulta> darConsultas() {
+		
+		return pp.darConsultas();
 		
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 
 	/* ****************************************************************

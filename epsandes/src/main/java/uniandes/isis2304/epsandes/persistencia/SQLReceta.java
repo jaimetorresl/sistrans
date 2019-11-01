@@ -73,7 +73,7 @@ class SQLReceta
 	 */
 	public long adicionarReceta (PersistenceManager pm, long id, String diagnostico, String medicamentos, long idCita) 
 	{
-        Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaReceta () + "(id, diagnostico, medicamentos, idCita) values (?, ?, ?, ?)");
+        Query q = pm.newQuery(SQL, "INSERT INTO " + "RECETA" + "(id, diagnostico, medicamentos, idCita) values (?, ?, ?, ?)");
         q.setParameters(id, diagnostico, medicamentos, idCita);
         return (long) q.executeUnique();
 	}

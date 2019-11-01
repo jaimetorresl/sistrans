@@ -8,6 +8,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
 
+import uniandes.isis2304.epsandes.negocio.Consulta;
 import uniandes.isis2304.epsandes.negocio.EPSAndes;
 import uniandes.isis2304.epsandes.negocio.IPS;
 import uniandes.isis2304.epsandes.negocio.RecepcionistaIPS;
@@ -19,6 +20,11 @@ import uniandes.isis2304.epsandes.negocio.VOHospitalizacion;
 import uniandes.isis2304.epsandes.negocio.VOIPS;
 import uniandes.isis2304.epsandes.negocio.VOIPSMedico;
 import uniandes.isis2304.epsandes.negocio.VOMedico;
+import uniandes.isis2304.epsandes.negocio.VOOrdenConsulta;
+import uniandes.isis2304.epsandes.negocio.VOOrdenHospitalizacion;
+import uniandes.isis2304.epsandes.negocio.VOOrdenProcedimientoEsp;
+import uniandes.isis2304.epsandes.negocio.VOOrdenServicio;
+import uniandes.isis2304.epsandes.negocio.VOOrdenTerapia;
 import uniandes.isis2304.epsandes.negocio.VOProcedimientoEsp;
 import uniandes.isis2304.epsandes.negocio.VORecepcionistaIPS;
 import uniandes.isis2304.epsandes.negocio.VOReceta;
@@ -127,8 +133,8 @@ public class InterfazEpsAndesApp extends JFrame implements ActionListener {
 			crearMenu( guiConfig.getAsJsonArray("menuBar") );
 		}
 
-		tableConfig = openConfig ("Tablas BD", CONFIG_TABLAS);
-		epsandes = new EPSAndes (tableConfig);
+		//tableConfig = openConfig ("Tablas BD", CONFIG_TABLAS);
+		epsandes = new EPSAndes ();
 
 		String path = guiConfig.get("bannerPath").getAsString();
 		panelDatos = new PanelDatos ( );
@@ -182,7 +188,7 @@ public class InterfazEpsAndesApp extends JFrame implements ActionListener {
 			log.info ( "Se aplica configuraci�n por defecto" );			
 			titulo = "EPSAndes APP Default";
 			alto = 300;
-			ancho = 500;
+			ancho = 600;
 		}
 		else
 		{
@@ -246,74 +252,74 @@ public class InterfazEpsAndesApp extends JFrame implements ActionListener {
 	public void adicionarEPS()
 	{	
 
-		
-  		int acepto  = JOptionPane.showConfirmDialog(this, "Es un administrador de datos de la EPS?");
-  		
-  		
-  		if(acepto == 0) {
-  			
-  			
-  			try 
-  			{
-  				
-  				
-  				
-  				String idAdminDatos = JOptionPane.showInputDialog("Escriba su identificacion");
-  				long idAdminDatos2 = Long.parseLong(idAdminDatos);
-  				
-  				UsuarioEPS usuario = epsandes.darUsuarioEPS(idAdminDatos2);
-   				
-  				
-  				if(usuario != null) {
-  					
-  					
-  					String nombreEPS = JOptionPane.showInputDialog(this, "Nombre de EPS?", "Adicionar EPS", JOptionPane.QUESTION_MESSAGE);
 
-  	  				if (nombreEPS != null)
-  	  				{
+		int acepto  = JOptionPane.showConfirmDialog(this, "Es un administrador de datos de la EPS?");
 
 
-  	  					VOEPS eps = epsandes.registrarEPS(nombreEPS);
+		if(acepto == 0) {
 
-  	  					if (eps == null)
-  	  					{
-  	  						throw new Exception ("No se pudo crear una EPS con nombre: " + nombreEPS);
-  	  					}
-  	  					String resultado = "En adicionarEPS\n\n";
-  	  					resultado += "EPS adicionado exitosamente: " + eps;
-  	  					resultado += "\n Operaci�n terminada";
-  	  					panelDatos.actualizarInterfaz(resultado);
-  	  				}
-  	  				else
-  	  				{
-  	  					panelDatos.actualizarInterfaz("Operaci�n cancelada por el usuario");
-  	  				}  					
-  					
-  					
-  				} else {
-  					
-  					JOptionPane.showMessageDialog(this, "Identificacion invalida");
-  					
-  				}
-  				
 
-  			} 
-  			catch (Exception e) 
-  			{
-  				//			e.printStackTrace();
-  				String resultado = generarMensajeError(e);
-  				panelDatos.actualizarInterfaz(resultado);
-  			}
-  			
-  			
-  		} else {
-  			
-  			JOptionPane.showMessageDialog(this, "Debe ser un administrador de datos para acceder a esta seccion");
-  			
-  			
-  		}
-  		
-  	
+			try 
+			{
+
+
+
+				String idAdminDatos = JOptionPane.showInputDialog("Escriba su identificacion");
+				long idAdminDatos2 = Long.parseLong(idAdminDatos);
+
+				UsuarioEPS usuario = epsandes.darUsuarioEPS(idAdminDatos2);
+
+
+				if(usuario != null) {
+
+
+					String nombreEPS = JOptionPane.showInputDialog(this, "Nombre de EPS?", "Adicionar EPS", JOptionPane.QUESTION_MESSAGE);
+
+					if (nombreEPS != null)
+					{
+
+
+						VOEPS eps = epsandes.registrarEPS(nombreEPS);
+
+						if (eps == null)
+						{
+							throw new Exception ("No se pudo crear una EPS con nombre: " + nombreEPS);
+						}
+						String resultado = "En adicionarEPS\n\n";
+						resultado += "EPS adicionado exitosamente: " + eps;
+						resultado += "\n Operaci�n terminada";
+						panelDatos.actualizarInterfaz(resultado);
+					}
+					else
+					{
+						panelDatos.actualizarInterfaz("Operaci�n cancelada por el usuario");
+					}  					
+
+
+				} else {
+
+					JOptionPane.showMessageDialog(this, "Identificacion invalida");
+
+				}
+
+
+			} 
+			catch (Exception e) 
+			{
+				//			e.printStackTrace();
+				String resultado = generarMensajeError(e);
+				panelDatos.actualizarInterfaz(resultado);
+			}
+
+
+		} else {
+
+			JOptionPane.showMessageDialog(this, "Debe ser un administrador de datos para acceder a esta seccion");
+
+
+		}
+
+
 	}
 
 
@@ -591,11 +597,11 @@ public class InterfazEpsAndesApp extends JFrame implements ActionListener {
 			panelDatos.actualizarInterfaz(resultado);
 		}
 	}
-	
-	
-	
+
+
+
 	//Adicionar cita 
-	
+
 	public void adicionarCita()
 	{
 		try 
@@ -605,49 +611,49 @@ public class InterfazEpsAndesApp extends JFrame implements ActionListener {
 			String horaInicio = JOptionPane.showInputDialog("Dar hora inicio de la cita (DD-MM-AA HH24:MI:SS)");	
 			String horaFin = JOptionPane.showInputDialog("Dar hora fin de la cita (DD-MM-AA HH24:MI:SS)");
 			String idMedico = JOptionPane.showInputDialog("Dar id del medico responsable de la cita");
-			
+
 			long idMedico2 = Long.parseLong(idMedico);
-			
+
 			int opcionSS = Integer.parseInt(JOptionPane.showInputDialog("Que tipo de ss es? 1-consulta, 2-terapia, 3-procedimiento especial, 4-hospitalizacion"));	
-			
-			
+
+
 			String ss = "";
-			
+
 			long idConsulta2 = 0;
 			long idTerapia2 = 0;
 			long idProcedimiento2 = 0;
 			long idHospitalizacion2 = 0;
-			
+
 			if(opcionSS == 1) {
-				
+
 				String idConsulta = JOptionPane.showInputDialog("Id de la consulta?");
-				 idConsulta2 = Long.parseLong(idConsulta);
-			
-				 
+				idConsulta2 = Long.parseLong(idConsulta);
+
+
 			} else if (opcionSS == 2) {
-				
+
 				String idTerapia = JOptionPane.showInputDialog("Id de la terapia?");
-				 idTerapia2 = Long.parseLong(idTerapia);
-				
+				idTerapia2 = Long.parseLong(idTerapia);
+
 			} else if (opcionSS == 3) {
-				
+
 				String idProcedimiento = JOptionPane.showInputDialog("Id de la procedimiento?");
-				 idProcedimiento2 = Long.parseLong(idProcedimiento);
-				
+				idProcedimiento2 = Long.parseLong(idProcedimiento);
+
 			} else if (opcionSS == 4) {
-				
+
 				String idHospitalizacion = JOptionPane.showInputDialog("Id de la hospitalizacion?");
-				 idHospitalizacion2 = Long.parseLong(idHospitalizacion);
-				
+				idHospitalizacion2 = Long.parseLong(idHospitalizacion);
+
 			} 
-			
-			
+
+
 			String idUsuarioIPS = JOptionPane.showInputDialog("Id del paciente?");
 			long idUsuarioIPS2 = Long.parseLong(idUsuarioIPS);
-			
-			
-			
-			
+
+
+
+
 			if (idUsuarioIPS != null && idMedico != null)
 			{
 
@@ -678,10 +684,10 @@ public class InterfazEpsAndesApp extends JFrame implements ActionListener {
 		}
 	}
 
-	
-	
+
+
 	//Adicionar receta
-	
+
 	public void adicionarReceta()
 	{
 		try 
@@ -690,11 +696,11 @@ public class InterfazEpsAndesApp extends JFrame implements ActionListener {
 			String diagnostico = JOptionPane.showInputDialog("Dar diagnostico");	
 			String medicamentos = JOptionPane.showInputDialog("Dar medicamentos para tratar al paciente");
 			String idCita = JOptionPane.showInputDialog("Dar id de la cita correspondiente");
-			
+
 			long idCita2 = Long.parseLong(idCita);
-			
-			
-			
+
+
+
 			if (idCita != null)
 			{
 
@@ -978,6 +984,222 @@ public class InterfazEpsAndesApp extends JFrame implements ActionListener {
 		}
 	}
 
+
+	public void adicionarOrdenConsulta()
+	{
+		try 
+		{
+
+			String idReceta = JOptionPane.showInputDialog(this, "Id de la receta asociada a la orden de ss?", "Adicionar Orden de SS: Consulta", JOptionPane.QUESTION_MESSAGE);
+			long idReceta2 = Long.parseLong(idReceta);
+
+
+			String idConsulta = JOptionPane.showInputDialog(this, "Id del ss: Consulta?", "Adicionar Orden de SS: Consulta", JOptionPane.QUESTION_MESSAGE);
+			long idConsulta2 = Long.parseLong(idConsulta);
+
+
+			if (idConsulta != null && idReceta != null)
+			{
+
+				VOOrdenServicio ordenServicio = epsandes.registrarOrdenServicio(idReceta2);
+
+				VOOrdenConsulta ordenConsulta = epsandes.registrarOrdenConsulta(ordenServicio.getId(), idConsulta2);
+
+				if (ordenConsulta == null)
+				{
+					throw new Exception ("No se pudo registrar la orden de ss asociado a una consulta");
+				}
+				String resultado = "En adicionarOrdenConsulta\n\n";
+				resultado += "Orden consulta registrada exitosamente";
+				resultado += "\n Operaci�n terminada";
+				panelDatos.actualizarInterfaz(resultado);
+			}
+			else
+			{
+				panelDatos.actualizarInterfaz("Operaci�n cancelada por el usuario");
+			}
+
+
+		} 
+		catch (Exception e) 
+		{
+			//			e.printStackTrace();
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
+	}
+
+
+
+
+	public void adicionarOrdenTerapia()
+	{
+		try 
+		{
+
+			String idReceta = JOptionPane.showInputDialog(this, "Id de la receta asociada a la orden de ss?", "Adicionar Orden de SS: Terapia", JOptionPane.QUESTION_MESSAGE);
+			long idReceta2 = Long.parseLong(idReceta);
+
+
+			String idTerapia = JOptionPane.showInputDialog(this, "Id del ss: Terapia?", "Adicionar Orden de SS: Terapia", JOptionPane.QUESTION_MESSAGE);
+			long idTerapia2 = Long.parseLong(idTerapia);
+
+
+			if (idTerapia != null && idReceta != null)
+			{
+
+				VOOrdenServicio ordenServicio = epsandes.registrarOrdenServicio(idReceta2);
+
+				VOOrdenTerapia ordenTerapia = epsandes.registrarOrdenTerapia(ordenServicio.getId(), idTerapia2);
+
+				if (ordenTerapia == null)
+				{
+					throw new Exception ("No se pudo registrar la orden de ss asociado a una terapia");
+				}
+				String resultado = "En adicionarOrdenTerapia\n\n";
+				resultado += "Orden terapia registrada exitosamente";
+				resultado += "\n Operaci�n terminada";
+				panelDatos.actualizarInterfaz(resultado);
+			}
+			else
+			{
+				panelDatos.actualizarInterfaz("Operaci�n cancelada por el usuario");
+			}
+
+
+		} 
+		catch (Exception e) 
+		{
+			//			e.printStackTrace();
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
+	}
+
+
+
+	public void adicionarOrdenProcedimientoEsp()
+	{
+		try 
+		{
+
+			String idReceta = JOptionPane.showInputDialog(this, "Id de la receta asociada a la orden de ss?", "Adicionar Orden de SS: Procedimiento Especial", JOptionPane.QUESTION_MESSAGE);
+			long idReceta2 = Long.parseLong(idReceta);
+
+
+			String idProcedimiento = JOptionPane.showInputDialog(this, "Id del ss: Procedimiento Especial?", "Adicionar Orden de SS: Procedimiento Especial", JOptionPane.QUESTION_MESSAGE);
+			long idProcedimiento2 = Long.parseLong(idProcedimiento);
+
+
+			if (idProcedimiento != null && idReceta != null)
+			{
+
+				VOOrdenServicio ordenServicio = epsandes.registrarOrdenServicio(idReceta2);
+
+				VOOrdenProcedimientoEsp ordenProcedimiento = epsandes.registrarOrdenProcedimientoEsp(ordenServicio.getId(), idProcedimiento2);
+
+				if (ordenProcedimiento == null)
+				{
+					throw new Exception ("No se pudo registrar la orden de ss asociado a un procedimiento especial");
+				}
+				String resultado = "En adicionarOrdenProcedimientoEspecial\n\n";
+				resultado += "Orden procedimiento especial registrada exitosamente";
+				resultado += "\n Operaci�n terminada";
+				panelDatos.actualizarInterfaz(resultado);
+			}
+			else
+			{
+				panelDatos.actualizarInterfaz("Operaci�n cancelada por el usuario");
+			}
+
+
+		} 
+		catch (Exception e) 
+		{
+			//			e.printStackTrace();
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
+	}
+
+
+
+	public void adicionarOrdenHospitalizacion()
+	{
+		try 
+		{
+
+			String idReceta = JOptionPane.showInputDialog(this, "Id de la receta asociada a la orden de ss?", "Adicionar Orden de SS: Hospitalizacion", JOptionPane.QUESTION_MESSAGE);
+			long idReceta2 = Long.parseLong(idReceta);
+
+
+			String idHospitalizacion = JOptionPane.showInputDialog(this, "Id del ss: Hospitalizacion?", "Adicionar Orden de SS: Hospitalizacion", JOptionPane.QUESTION_MESSAGE);
+			long idHospitalizacion2 = Long.parseLong(idHospitalizacion);
+
+
+			if (idHospitalizacion != null && idReceta != null)
+			{
+
+				VOOrdenServicio ordenServicio = epsandes.registrarOrdenServicio(idReceta2);
+
+				VOOrdenHospitalizacion ordenHospitalizacion = epsandes.registrarOrdenHospitalizacion(ordenServicio.getId(), idHospitalizacion2);
+
+				if (ordenHospitalizacion == null)
+				{
+					throw new Exception ("No se pudo registrar la orden de ss asociado a una hospitalizacion");
+				}
+				String resultado = "En adicionarOrdenHospitalizacion\n\n";
+				resultado += "Orden hospitalizacion registrada exitosamente";
+				resultado += "\n Operaci�n terminada";
+				panelDatos.actualizarInterfaz(resultado);
+			}
+			else
+			{
+				panelDatos.actualizarInterfaz("Operaci�n cancelada por el usuario");
+			}
+
+
+		} 
+		catch (Exception e) 
+		{
+			//			e.printStackTrace();
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
+	}
+
+
+
+
+	public void adicionarCampaniaPrevencion()
+	{	
+		//Se elige el tipo de ss que se quiere mostrar en lista (0-3)
+		Object[] options1 = {"Consulta", "Terapia", "Procedimiento Especial", "Hospitalizacion"};
+		int opcion = JOptionPane.showOptionDialog(null,
+				"Elige el tipo de servicio",
+				"Adicionar Campania Prevencion",
+				JOptionPane.YES_NO_CANCEL_OPTION,
+				JOptionPane.PLAIN_MESSAGE,
+				null,
+				options1,
+				null);
+
+
+		if(opcion == 0) {
+			
+			
+			List<Consulta> listConsulta = epsandes.darConsultas();
+			
+			for (int i = 0; i < listConsulta.size(); i++) {
+				
+				System.out.println(listConsulta.get(i).getId());
+				
+			}
+			
+		}
+
+
+	}
 
 
 	/* ****************************************************************

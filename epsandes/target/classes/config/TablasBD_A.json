@@ -10,12 +10,13 @@
 		"UsuarioIPS",
 		"Consulta",
 		"Terapia",
-		"ProcedimientoEsp",
+		"Procedimiento_Esp",
 		"Hospitalizacion",
 		"Medico",
 		"IPSMedico",
 		"Cita",
-		"Receta"
+		"Receta",
+		"OrdenConsulta"
 		
 	]
 }

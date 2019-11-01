@@ -107,8 +107,39 @@
 		  "options":
 			[
 				{
-					"label": "Adicionar",
+					"label": "Adicionar Receta",
 					"event": "adicionarReceta"
+				}, 
+				
+				{
+					"label": "Adicionar Orden de SS: Consulta",
+					"event": "adicionarOrdenConsulta"
+				},
+				
+				{
+					"label": "Adicionar Orden de SS: Terapia",
+					"event": "adicionarOrdenTerapia"
+				},
+				
+				{
+					"label": "Adicionar Orden de SS: Procedimiento Especial",
+					"event": "adicionarOrdenProcedimientoEsp"
+				},
+				
+				{
+					"label": "Adicionar Orden de SS: Hospitalizacion",
+					"event": "adicionarOrdenHospitalizacion"
+				}
+			]
+		},
+		
+		
+		{ "menuTitle": "CAMPANIA",
+		  "options":
+			[
+				{
+					"label": "Adicionar",
+					"event": "adicionarCampaniaPrevencion"
 				}
 			]
 		},

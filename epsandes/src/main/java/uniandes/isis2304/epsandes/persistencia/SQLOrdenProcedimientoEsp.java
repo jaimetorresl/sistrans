@@ -38,10 +38,10 @@ public class SQLOrdenProcedimientoEsp {
 	/**
 	 * Crea y ejecuta la sentencia SQL
 	 */
-	public long adicionarOrdenProcedimientoEsp(PersistenceManager pm, long idOrden, long idReceta) 
+	public long adicionarOrdenProcedimientoEsp(PersistenceManager pm, long idOrden, long idProcedimiento) 
 	{
-        Query q = pm.newQuery(SQL, "INSERT INTO " + "ORDEN_SERVICIO" + "(idOrden, idReceta) values (?, ?)");
-        q.setParameters(idOrden, idReceta);
+        Query q = pm.newQuery(SQL, "INSERT INTO " + "ORDEN_PROCEDIMIENTO_ESP" + "(idOrden, idprocedimientoesp) values (?, ?)");
+        q.setParameters(idOrden, idProcedimiento);
         return (long) q.executeUnique();
 	}
 

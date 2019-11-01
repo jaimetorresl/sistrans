@@ -38,8 +38,9 @@ public class SQLOrdenConsulta {
 	/**
 	 * Crea y ejecuta la sentencia SQL
 	 */
-	public long adicionarOderConsulta (PersistenceManager pm, long idOrden, long idconsulta) 
+	public long adicionarOrdenConsulta (PersistenceManager pm, long idOrden, long idconsulta) 
 	{
+		
         Query q = pm.newQuery(SQL, "INSERT INTO " + "ORDEN_CONSULTA" + "(idOrden, idconsulta) values (?, ?)");
         q.setParameters(idOrden, idconsulta);
         return (long) q.executeUnique();

@@ -74,7 +74,7 @@ class SQLProcedimientoEsp
 	 */
 	public long adicionarProcedimientoEsp (PersistenceManager pm, long id, String esAfiliado,  String ordenPrevia,  String  conocimiento, String equipo, long idIPS, int capacidad, String horaInicio, String horaFin, String fechaInicio, String fechaFin, String diaInicio, String diaFin, long idRecepcionista) 
 	{
-        Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaProcedimientoEsp () + "(id,esAfiliado, ordenPrevia,  conocimiento, equipo, idIPS, capacidad, horaInicio, horaFin, fechaInicio, fechaFin, diaInicio, diaFin, idRecepcionista) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        Query q = pm.newQuery(SQL, "INSERT INTO " + "PROCEDIMIENTO_ESP" + "(id,esAfiliado, ordenPrevia,  conocimiento, equipo, idIPS, capacidad, horaInicio, horaFin, fechaInicio, fechaFin, diaInicio, diaFin, idRecepcionista) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         q.setParameters(id,  esAfiliado, ordenPrevia, conocimiento, equipo, idIPS, capacidad,horaInicio, horaFin, fechaInicio, fechaFin, diaInicio, diaFin, idRecepcionista );
 
         return (long) q.executeUnique();

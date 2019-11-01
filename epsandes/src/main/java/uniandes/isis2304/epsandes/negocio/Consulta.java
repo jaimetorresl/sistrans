@@ -4,29 +4,29 @@ package uniandes.isis2304.epsandes.negocio;
 public class Consulta implements VOConsulta{
 	
 	
-	private long id;
+	public long id;
 	
-	private String esAfiliado;
+	public String esAfiliado;
 	
-	private String ordenPrevia;
+	public String ordenPrevia;
 	
-	private long idIPS;
+	public long idIPS;
 	
-	private int capacidad;
+	public int capacidad;
 	
-	private String horaInicio;
+	public String horaInicio;
 	
-	private String horaFin;
+	public String horaFin;
 	
-	private String fechaInicio;
+	public String fechaInicio;
 	
-	private String fechaFin;
+	public String fechaFin;
 	
-	private String diaInicio;
+	public String diaInicio;
 	
-	private String diaFin;
+	public String diaFin;
 	
-	private long idRecepcionista;
+	public long idRecepcionista;
 	
 	/**
      * Constructor por defecto
