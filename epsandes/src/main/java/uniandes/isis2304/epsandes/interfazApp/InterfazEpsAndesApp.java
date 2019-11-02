@@ -43,6 +43,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.jdo.JDODataStoreException;
@@ -1175,6 +1176,10 @@ public class InterfazEpsAndesApp extends JFrame implements ActionListener {
 	{	
 		
 		
+		//Se elige las fechas de inicio y fin de la campania
+		String fechaInicio = JOptionPane.showInputDialog(this, "Fecha y hora de inicio de la campania (DD-MM-AA HH:MM:SS) (formato 24hrs)?", "Adicionar Campania Prevencion", JOptionPane.QUESTION_MESSAGE);
+		String fechaFin = JOptionPane.showInputDialog(this, "Fecha y hora de fin de la campania (DD-MM-AA HH:MM:SS) (formato 24hrs)?", "Adicionar Campania Prevencion", JOptionPane.QUESTION_MESSAGE);
+		
 		
 		//Se elige el tipo de ss que se quiere mostrar en lista (0-3)
 		Object[] options1 = {"Consulta", "Terapia", "Procedimiento Especial", "Hospitalizacion"};
@@ -1192,9 +1197,20 @@ public class InterfazEpsAndesApp extends JFrame implements ActionListener {
 
 		if(opcion == 0) {
 			
+			//Fechas de inicio y fin del ss dentro de la campania
+			String fechaInicioConsulta = JOptionPane.showInputDialog(this, "Fecha y hora de inicio del servicio consulta (DD-MM-AA HH:MM:SS) (formato 24hrs)?", "Adicionar Campania Prevencion", JOptionPane.QUESTION_MESSAGE);
+			String fechaFinConsulta = JOptionPane.showInputDialog(this, "Fecha y hora de fin del servicio consulta (DD-MM-AA HH:MM:SS) (formato 24hrs)?", "Adicionar Campania Prevencion", JOptionPane.QUESTION_MESSAGE);
+			
+			//Cantidad de dias que dura el servicio de salud dentro de la campania
+			String numDias = JOptionPane.showInputDialog(this, "Cantidad de dias que dura la campania?", "Adicionar Campania Prevencion", JOptionPane.QUESTION_MESSAGE);
+			int numDias2 = Integer.parseInt(numDias);
+			
+			
 			resultado = "";
 			int contConsultas = 0;
 			
+			
+			//Se pide la lista de consultas que existen
 			List<Consulta> listConsulta = epsandes.darConsultas();
 			
 			for (int i = 0; i < listConsulta.size(); i++) {
@@ -1214,9 +1230,12 @@ public class InterfazEpsAndesApp extends JFrame implements ActionListener {
 			
 			JOptionPane.showMessageDialog(this, "La cantidad de consultas es: " + contConsultas);
 			
-			String cantidadConsulta = JOptionPane.showInputDialog(this, "Cuantas consultas requiere para la campania de prevencion?", "Adicionar Campania Prevencion", JOptionPane.QUESTION_MESSAGE);
+			String cantidadConsulta = JOptionPane.showInputDialog(this, "Cuantas consultas requiere para la campania de prevencion (num de ss diario) ?", "Adicionar Campania Prevencion", JOptionPane.QUESTION_MESSAGE);
 			int cantidadConsulta2 = Integer.parseInt(cantidadConsulta);
 			
+			contConsultas *= numDias2;
+			
+			//Se verifica que la cantidad de consultas solicitadas no supere a la cantidad existente
 			if( contConsultas <= cantidadConsulta2) {
 				
 				JOptionPane.showMessageDialog(this, "No se pueden separar mas o igual cantidad de consultas para la campania de prevencion");
@@ -1224,11 +1243,33 @@ public class InterfazEpsAndesApp extends JFrame implements ActionListener {
 				
 			}
 			
+			//Se elige cada consulta que se desea agregar
 			
-		//int aleatorio = JOptionPane.showConfirmDialog(this, "Desea elegir las consultas de manera aleatoria?");
+			ArrayList<String> listaIdConsultas = new ArrayList<String>();
 			
-			
-			
+			while(cantidadConsulta2 < 0) {
+				
+				String idSS = JOptionPane.showInputDialog(this, "Id del ss que desea agregar a su campania?", "Adicionar Campania Prevencion", JOptionPane.QUESTION_MESSAGE);
+				
+				String cantidadSS = JOptionPane.showInputDialog(this, "Capacidad que desea obtener de este ss (recuerde que se multiplica la capacidad por el numero de dias de su campania) ?", "Adicionar Campania Prevencion", JOptionPane.QUESTION_MESSAGE);
+				int cantidadSS2 = Integer.parseInt(cantidadSS);
+				
+				if( !(cantidadConsulta2 - cantidadSS2 < 0) ) {
+					
+					System.out.println("faltan " + cantidadSS2 + " por agregar");
+					
+					cantidadConsulta2 -= cantidadSS2;
+					listaIdConsultas.add(idSS);
+					
+					
+				} else {
+					
+					JOptionPane.showConfirmDialog(this, "No puede exceder la cantidad que solicito del ss");
+					
+				}
+				
+				
+			}
 			
 			
 		}
