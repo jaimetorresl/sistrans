@@ -134,6 +134,7 @@ public class PersistenciaEPSAndes {
 	private SQLOrdenProcedimientoEsp sqlOrdenProcedimiento;
 
 	private SQLOrdenHospitalizacion sqlOrdenHospitalizacion;
+	
 
 
 	/* ****************************************************************

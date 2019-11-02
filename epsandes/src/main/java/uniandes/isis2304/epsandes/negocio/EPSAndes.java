@@ -384,12 +384,16 @@ public class EPSAndes {
 	
 	
 	
-	
-	
-	
-	
-	
-	
+	public CampaniaPrevencion registrarCampaniaPrevencion(String localizacion, String fechaInicio, String fechaFin, long idEPS) {
+
+		CampaniaPrevencion campaniaPrevencion;
+
+		log.info ("Adicionando campania de prevencion en la localizacion de: " + localizacion);
+		campaniaPrevencion = pp
+		log.info ("Adicionando campania de prevencion: " + campaniaPrevencion);
+		return campaniaPrevencion;
+
+	}
 	
 	
 

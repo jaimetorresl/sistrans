@@ -1176,6 +1176,10 @@ public class InterfazEpsAndesApp extends JFrame implements ActionListener {
 	{	
 		
 		
+		//Se elige la localizacion de la campania de prevencion
+		String localizacion = JOptionPane.showInputDialog(this, "Digite la localizacion de su campania de prevencion?", "Adicionar Campania Prevencion", JOptionPane.QUESTION_MESSAGE);
+		
+		
 		//Se elige las fechas de inicio y fin de la campania
 		String fechaInicio = JOptionPane.showInputDialog(this, "Fecha y hora de inicio de la campania (DD-MM-AA HH:MM:SS) (formato 24hrs)?", "Adicionar Campania Prevencion", JOptionPane.QUESTION_MESSAGE);
 		String fechaFin = JOptionPane.showInputDialog(this, "Fecha y hora de fin de la campania (DD-MM-AA HH:MM:SS) (formato 24hrs)?", "Adicionar Campania Prevencion", JOptionPane.QUESTION_MESSAGE);
@@ -1225,15 +1229,11 @@ public class InterfazEpsAndesApp extends JFrame implements ActionListener {
 			}
 			
 			panelDatos.actualizarInterfaz("Cantidad de consultas: " + contConsultas  + "\n" + resultado);
-			
-			
-			
-			JOptionPane.showMessageDialog(this, "La cantidad de consultas es: " + contConsultas);
+
 			
 			String cantidadConsulta = JOptionPane.showInputDialog(this, "Cuantas consultas requiere para la campania de prevencion (num de ss diario) ?", "Adicionar Campania Prevencion", JOptionPane.QUESTION_MESSAGE);
 			int cantidadConsulta2 = Integer.parseInt(cantidadConsulta);
-			
-			contConsultas *= numDias2;
+		
 			
 			//Se verifica que la cantidad de consultas solicitadas no supere a la cantidad existente
 			if( contConsultas <= cantidadConsulta2) {
@@ -1243,11 +1243,12 @@ public class InterfazEpsAndesApp extends JFrame implements ActionListener {
 				
 			}
 			
+			
 			//Se elige cada consulta que se desea agregar
 			
 			ArrayList<String> listaIdConsultas = new ArrayList<String>();
 			
-			while(cantidadConsulta2 < 0) {
+			while(cantidadConsulta2 > 0) {
 				
 				String idSS = JOptionPane.showInputDialog(this, "Id del ss que desea agregar a su campania?", "Adicionar Campania Prevencion", JOptionPane.QUESTION_MESSAGE);
 				
@@ -1267,6 +1268,19 @@ public class InterfazEpsAndesApp extends JFrame implements ActionListener {
 					JOptionPane.showConfirmDialog(this, "No puede exceder la cantidad que solicito del ss");
 					
 				}
+				
+				
+			}
+			
+			
+			//Se registran la campania de prevencion
+			
+			
+			
+			//Se registra las consultas asociadas a la campania
+			
+			for(int i = 0; i < listaIdConsultas.size(); i++) {
+				
 				
 				
 			}
