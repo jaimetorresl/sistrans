@@ -113,20 +113,10 @@ class SQLConsulta
 	 */
 	public List<Consulta> darConsultas (PersistenceManager pm)
 	{
-		Query q = pm.newQuery(SQL, "SELECT id FROM CONSULTA");
+		Query q = pm.newQuery(SQL, "SELECT * FROM CONSULTA");
 		q.setResultClass(Consulta.class);
 		
 		List<Consulta> lista = (List<Consulta>) q.executeList();
-		
-		
-		System.out.println(lista.size());
-		
-//		for(int i = 0; i < lista.size(); i++) {
-//			
-//			System.out.println(lista.get(i));
-//			
-//		}
-		
 		
 		return lista;
 	}

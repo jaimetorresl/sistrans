@@ -1171,8 +1171,11 @@ public class InterfazEpsAndesApp extends JFrame implements ActionListener {
 
 
 
-	public void adicionarCampaniaPrevencion()
+	public void adicionarCampaniaPrevencion() throws Exception
 	{	
+		
+		
+		
 		//Se elige el tipo de ss que se quiere mostrar en lista (0-3)
 		Object[] options1 = {"Consulta", "Terapia", "Procedimiento Especial", "Hospitalizacion"};
 		int opcion = JOptionPane.showOptionDialog(null,
@@ -1183,18 +1186,50 @@ public class InterfazEpsAndesApp extends JFrame implements ActionListener {
 				null,
 				options1,
 				null);
+		
+		String resultado;
 
 
 		if(opcion == 0) {
 			
+			resultado = "";
+			int contConsultas = 0;
 			
 			List<Consulta> listConsulta = epsandes.darConsultas();
 			
 			for (int i = 0; i < listConsulta.size(); i++) {
 				
-				System.out.println(listConsulta.get(i).getId());
+				contConsultas += listConsulta.get(i).getCapacidad();
+				
+				int count = i;
+				count++;
+				
+				resultado += "\n " + (count) +") " +  listConsulta.get(i).toString();
 				
 			}
+			
+			panelDatos.actualizarInterfaz("Cantidad de consultas: " + contConsultas  + "\n" + resultado);
+			
+			
+			
+			JOptionPane.showMessageDialog(this, "La cantidad de consultas es: " + contConsultas);
+			
+			String cantidadConsulta = JOptionPane.showInputDialog(this, "Cuantas consultas requiere para la campania de prevencion?", "Adicionar Campania Prevencion", JOptionPane.QUESTION_MESSAGE);
+			int cantidadConsulta2 = Integer.parseInt(cantidadConsulta);
+			
+			if( contConsultas <= cantidadConsulta2) {
+				
+				JOptionPane.showMessageDialog(this, "No se pueden separar mas o igual cantidad de consultas para la campania de prevencion");
+				throw new Exception("No se pueden separar mas o igual cantidad de consultas para la campania de prevencion");
+				
+			}
+			
+			
+		//int aleatorio = JOptionPane.showConfirmDialog(this, "Desea elegir las consultas de manera aleatoria?");
+			
+			
+			
+			
 			
 		}
 

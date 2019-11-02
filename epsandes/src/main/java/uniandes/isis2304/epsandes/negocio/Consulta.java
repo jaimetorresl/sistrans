@@ -4,47 +4,47 @@ package uniandes.isis2304.epsandes.negocio;
 public class Consulta implements VOConsulta{
 	
 	
-	public long id;
+	public long ID;
 	
-	public String esAfiliado;
+	public String ESAFILIADO;
 	
-	public String ordenPrevia;
+	public String ORDENPREVIA;
 	
-	public long idIPS;
+	public long IDIPS;
 	
-	public int capacidad;
+	public int CAPACIDAD;
 	
-	public String horaInicio;
+	public String HORAINICIO;
 	
-	public String horaFin;
+	public String HORAFIN;
 	
-	public String fechaInicio;
+	public String FECHAINICIO;
 	
-	public String fechaFin;
+	public String FECHAFIN;
 	
-	public String diaInicio;
+	public String DIAINICIO;
 	
-	public String diaFin;
+	public String DIAFIN;
 	
-	public long idRecepcionista;
+	public long IDRECEPCIONISTA;
 	
 	/**
      * Constructor por defecto
      */
 	public Consulta() {
 		
-		ordenPrevia = "N";
-		id = 0;
-		esAfiliado = "N";
-		idIPS = 0;
-		capacidad = 0;
-		horaInicio = "";
-		horaFin = "";
-		fechaInicio = "";
-		fechaFin = "";
-		diaInicio = "";
-		diaFin = "";
-		idRecepcionista = 0;
+		ORDENPREVIA = "N";
+		ID = 0;
+		ESAFILIADO = "N";
+		IDIPS = 0;
+		CAPACIDAD = 0;
+		HORAINICIO = "";
+		HORAFIN = "";
+		FECHAINICIO = "";
+		FECHAFIN = "";
+		DIAINICIO = "";
+		DIAFIN = "";
+		IDRECEPCIONISTA = 0;
 		
 	}
 	
@@ -59,18 +59,18 @@ public class Consulta implements VOConsulta{
     		String horaInicio, String horaFin, String fechaInicio, String fechaFin, 
     		String diaInicio, String diaFin, long idRecepcionista) 
     {
-    	this.id = id;
-    	this.esAfiliado = esAfiliado;
-    	this.ordenPrevia = ordenPrevia;
-    	this.idIPS = idIPS;
-    	this.capacidad = capacidad;
-    	this.horaInicio = horaInicio;
-    	this.horaFin = horaFin;
-    	this.fechaInicio = fechaInicio;
-    	this.fechaFin = fechaFin;
-    	this.diaInicio = diaInicio;
-    	this.diaFin = diaFin;
-    	this.idRecepcionista = idRecepcionista;
+    	this.ID = id;
+    	this.ESAFILIADO = esAfiliado;
+    	this.ORDENPREVIA = ordenPrevia;
+    	this.IDIPS = idIPS;
+    	this.CAPACIDAD = capacidad;
+    	this.HORAINICIO = horaInicio;
+    	this.HORAFIN = horaFin;
+    	this.FECHAINICIO = fechaInicio;
+    	this.FECHAFIN = fechaFin;
+    	this.DIAINICIO = diaInicio;
+    	this.DIAFIN = diaFin;
+    	this.IDRECEPCIONISTA = idRecepcionista;
 		
 	}
 	
@@ -80,92 +80,92 @@ public class Consulta implements VOConsulta{
 	@Override
 	public long getId() {
 		// TODO Auto-generated method stub
-		return id;
+		return ID;
 	}
 
 	@Override
 	public String getOrdenPrevia() {
 		// TODO Auto-generated method stub
-		return ordenPrevia;
+		return ORDENPREVIA;
 	}
 	
 
 	@Override
 	public String getEsAfiliado() {
 		// TODO Auto-generated method stub
-		return esAfiliado;
+		return ESAFILIADO;
 	}
 
 
 	@Override
 	public long getIdIPS() {
 		// TODO Auto-generated method stub
-		return idIPS;
+		return IDIPS;
 	}
 
 
 	@Override
 	public int getCapacidad() {
 		// TODO Auto-generated method stub
-		return capacidad;
+		return CAPACIDAD;
 	}
 
 	
 	@Override
 	public String getHoraInicio() {
 		// TODO Auto-generated method stub
-		return horaInicio;
+		return HORAINICIO;
 	}
 
 
 	@Override
 	public String getHoraFin() {
 		// TODO Auto-generated method stub
-		return horaFin;
+		return HORAFIN;
 	}
 
 
 	@Override
 	public String getFechaInicio() {
 		// TODO Auto-generated method stub
-		return fechaInicio;
+		return FECHAINICIO;
 	}
 
 
 	@Override
 	public String getFechaFin() {
 		// TODO Auto-generated method stub
-		return fechaFin;
+		return FECHAFIN;
 	}
 
 
 	@Override
 	public String getDiaInicio() {
 		// TODO Auto-generated method stub
-		return diaInicio;
+		return DIAINICIO;
 	}
 
 
 	@Override
 	public String getDiaFin() {
 		// TODO Auto-generated method stub
-		return diaFin;
+		return DIAFIN;
 	}
 
 
 	@Override
 	public long getIdRecepcionistaIPS() {
 		// TODO Auto-generated method stub
-		return idRecepcionista;
+		return IDRECEPCIONISTA;
 	}
 
 
 	@Override
 	public String toString() {
-		return "Consulta [id=" + id + ", esAfiliado=" + esAfiliado + ", ordenPrevia=" + ordenPrevia + ", idIPS=" + idIPS
-				+ ", capacidad=" + capacidad + ", horaInicio=" + horaInicio + ", horaFin=" + horaFin + ", fechaInicio="
-				+ fechaInicio + ", fechaFin=" + fechaFin + ", diaInicio=" + diaInicio + ", diaFin=" + diaFin
-				+ ", idRecepcionista=" + idRecepcionista + "]";
+		return "Consulta [id=" + ID + ", esAfiliado=" + ESAFILIADO + ", ordenPrevia=" + ORDENPREVIA + ", idIPS=" + IDIPS
+				+ ", capacidad=" + CAPACIDAD + ", horaInicio=" + HORAINICIO + ", horaFin=" + HORAFIN + ", fechaInicio="
+				+ FECHAINICIO + ", fechaFin=" + FECHAFIN + ", diaInicio=" + DIAINICIO + ", diaFin=" + DIAFIN
+				+ ", idRecepcionista=" + IDRECEPCIONISTA + "]";
 	}
 
 
