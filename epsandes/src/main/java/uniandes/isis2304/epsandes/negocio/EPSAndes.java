@@ -389,7 +389,7 @@ public class EPSAndes {
 	
 	public List<ProcedimientoEsp> darProcedimientosEsp() {
 		
-		return pp.darProcedimientosEsp;
+		return pp.darProcedimientosEsp();
 		
 	}
 	
@@ -407,13 +407,63 @@ public class EPSAndes {
 		CampaniaPrevencion campaniaPrevencion;
 
 		log.info ("Adicionando campania de prevencion en la localizacion de: " + localizacion);
-		campaniaPrevencion = pp
+		campaniaPrevencion = pp.registrarCampaniaPrevencion(localizacion, fechaInicio, fechaFin, idEPS);
 		log.info ("Adicionando campania de prevencion: " + campaniaPrevencion);
 		return campaniaPrevencion;
 
 	}
 	
 	
+	public CampaniaConsulta registrarCampaniaConsulta(long idCampania, long idConsulta,
+			String fechaInicio, String fechaFin, String disponible) {
+
+		CampaniaConsulta campaniaConsulta;
+
+		log.info ("Adicionando una consulta asociada a la campania de prevencion: " + idCampania);
+		campaniaConsulta = pp.registrarCampaniaConsulta(idCampania, idConsulta, fechaInicio, fechaFin, disponible);
+		log.info ("Adicionando consulta a la campania de prevencion: " + campaniaConsulta);
+		return campaniaConsulta;
+		
+	}
+	
+	
+	public CampaniaTerapia registrarCampaniaTerapia(long idCampania, long idTerapia,
+			String fechaInicio, String fechaFin, String disponible) {
+
+		CampaniaTerapia campaniaTerapia;
+
+		log.info ("Adicionando una terapia asociada a la campania de prevencion: " + idCampania);
+		campaniaTerapia = pp.registrarCampaniaTerapia(idCampania, idTerapia, fechaInicio, fechaFin, disponible);
+		log.info ("Adicionando terapia a la campania de prevencion: " + campaniaTerapia);
+		return campaniaTerapia;
+		
+	}
+	
+	
+	public CampaniaProcedimientoEsp registrarCampaniaProcedimiento(long idCampania, long idProcedimiento,
+			String fechaInicio, String fechaFin, String disponible) {
+
+		CampaniaProcedimientoEsp campaniaProcedimiento;
+
+		log.info ("Adicionando un procedimiento especial asociada a la campania de prevencion: " + idCampania);
+		campaniaProcedimiento = pp.registrarCampaniaProcedimiento(idCampania, idProcedimiento, fechaInicio, fechaFin, disponible);
+		log.info ("Adicionando procedimiento especial a la campania de prevencion: " + campaniaProcedimiento);
+		return campaniaProcedimiento;
+		
+	}
+	
+	
+	public CampaniaHospitalizacion registrarCampaniaHospitalizacion(long idCampania, long idHospitalizacion,
+			String fechaInicio, String fechaFin, String disponible) {
+
+		CampaniaHospitalizacion campaniaHospitalizacion;
+
+		log.info ("Adicionando una hospitalizacion asociada a la campania de prevencion: " + idCampania);
+		campaniaHospitalizacion = pp.registrarCampaniaHospitalizacion(idCampania, idHospitalizacion, fechaInicio, fechaFin, disponible);
+		log.info ("Adicionando hospitalizacion a la campania de prevencion: " + campaniaHospitalizacion);
+		return campaniaHospitalizacion;
+		
+	}
 
 
 	/* ****************************************************************

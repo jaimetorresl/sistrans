@@ -115,9 +115,16 @@ class SQLTerapia
 	 */
 	public List<Terapia> darTerapias (PersistenceManager pm)
 	{
-		Query q = pm.newQuery(SQL, "SELECT * FROM " + pp.darTablaTerapia ());
+		Query q = pm.newQuery(SQL, "SELECT * FROM " + "TERAPIA");
 		q.setResultClass(Terapia.class);
-		return (List<Terapia>) q.executeList();
+		
+		List<Terapia> lista = q.executeList();
+		
+		System.out.println("HOLAAAAAA");
+		
+		System.out.println(lista.size());
+		
+		return lista;
 	}
 
 	

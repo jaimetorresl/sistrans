@@ -16,6 +16,11 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import uniandes.isis2304.epsandes.negocio.CampaniaConsulta;
+import uniandes.isis2304.epsandes.negocio.CampaniaHospitalizacion;
+import uniandes.isis2304.epsandes.negocio.CampaniaPrevencion;
+import uniandes.isis2304.epsandes.negocio.CampaniaProcedimientoEsp;
+import uniandes.isis2304.epsandes.negocio.CampaniaTerapia;
 import uniandes.isis2304.epsandes.negocio.Cita;
 import uniandes.isis2304.epsandes.negocio.Consulta;
 import uniandes.isis2304.epsandes.negocio.EPS;
@@ -135,7 +140,18 @@ public class PersistenciaEPSAndes {
 	private SQLOrdenProcedimientoEsp sqlOrdenProcedimiento;
 
 	private SQLOrdenHospitalizacion sqlOrdenHospitalizacion;
+
+	// ITERACION 2
 	
+	private SQLCampaniaPrevencion sqlCampaniaPrevencion;
+	
+	private SQLCampaniaConsulta sqlCampaniaConsulta;
+	
+	private SQLCampaniaTerapia sqlCampaniaTerapia;
+	
+	private SQLCampaniaProcedimiento sqlCampaniaProcedimiento;
+	
+	private SQLCampaniaHospitalizacion sqlCampaniaHospitalizacion;
 
 
 	/* ****************************************************************
@@ -264,6 +280,11 @@ public class PersistenciaEPSAndes {
 		sqlOrdenProcedimiento = new SQLOrdenProcedimientoEsp(this);
 		sqlOrdenHospitalizacion = new SQLOrdenHospitalizacion(this);
 		sqlOrdenServicio = new SQLOrdenServicio(this);
+		sqlCampaniaPrevencion = new SQLCampaniaPrevencion(this);
+		sqlCampaniaConsulta = new SQLCampaniaConsulta(this);
+		sqlCampaniaTerapia = new SQLCampaniaTerapia(this);
+		sqlCampaniaProcedimiento = new SQLCampaniaProcedimiento(this);
+		sqlCampaniaHospitalizacion = new SQLCampaniaHospitalizacion(this);
 
 	}
 
@@ -983,10 +1004,10 @@ public class PersistenciaEPSAndes {
 				return new OrdenServicio(id, idReceta);
 
 			} else {
-				
+
 				tx.commit();
 				return new OrdenServicio(necServicio, idReceta);
-				
+
 			}
 
 		}
@@ -1039,9 +1060,9 @@ public class PersistenciaEPSAndes {
 			pm.close();
 		}
 	}
-	
-	
-	
+
+
+
 	public OrdenTerapia registrarOrdenTerapia(long idOrdenSS, long idTerapia)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
@@ -1072,9 +1093,9 @@ public class PersistenciaEPSAndes {
 			pm.close();
 		}
 	}
-	
-	
-	
+
+
+
 	public OrdenProcedimientoEsp registrarOrdenProcedimientoEsp(long idOrdenSS, long idProcedimiento)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
@@ -1105,10 +1126,10 @@ public class PersistenciaEPSAndes {
 			pm.close();
 		}
 	}
-	
-	
-	
-	
+
+
+
+
 	public OrdenHospitalizacion registrarOrdenHospitalizacion(long idOrdenSS, long idHospitalizacion)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
@@ -1140,7 +1161,7 @@ public class PersistenciaEPSAndes {
 		}
 	}
 
-	
+
 	//-------------------------------------------------------------------------------
 	//MOSTRAR LA CANTIDAD DE SERVICIOS PRESTADOS POR CADA IPS DURANTE UN PERIODO DE TIEMPO
 	//Y EN EL AÑO CORRIDO
@@ -1151,19 +1172,19 @@ public class PersistenciaEPSAndes {
 	 */
 	public void serviciosPorIPS(String fechaInicio, String fechaFin) {
 		PersistenceManager pm = pmf.getPersistenceManager();
-		
+
 		Transaction tx=pm.currentTransaction();
 		try
 		{
 			List<Object []> respuesta = new LinkedList <Object []> ();
 			List<Object[]> tuplas = sqlIPS.darServicosPrestadosPorIPS(pm, fechaInicio, fechaFin);
 			tx.begin();
-			
+
 			//metodo
-			
+
 			tx.commit();
 
-		
+
 		}
 		catch (Exception e)
 		{
@@ -1179,8 +1200,8 @@ public class PersistenciaEPSAndes {
 			pm.close();
 		}
 	}
-	
-	
+
+
 	//-------------------------------------------------------------------------------
 	//MOSTRAR LOS 20 SERVICIOS MÁS SOLICITADOS.
 	//-------------------------------------------------------------------------------
@@ -1197,10 +1218,10 @@ public class PersistenciaEPSAndes {
 			List<Object[]> tuplas = sqlCita.darCitasMasPedidas(pm, fechaInicio, fechaFin);
 			tx.begin();
 			//metodo
-			
+
 			tx.commit();
 
-			
+
 		}
 		catch (Exception e)
 		{
@@ -1216,11 +1237,11 @@ public class PersistenciaEPSAndes {
 			pm.close();
 		}
 	}
-	
+
 	//-------------------------------------------------------------------------------
 	//MOSTRAR EL ÍNDICE DE USO DE CADA UNO DE LOS SERVICIOS PROVISTOS
 	//-------------------------------------------------------------------------------
-	
+
 	/**
 	 * Mostrar el indice de uso de cada uno de los servicios provistos
 	 */
@@ -1232,14 +1253,14 @@ public class PersistenciaEPSAndes {
 		{
 			tx.begin();
 			//metodo
-			
+
 			tx.commit();
 
 			for (Integer integer : masSolicitados) {
 				log.trace ("servicio" + integer);
 			}
-				
-			
+
+
 		}
 		catch (Exception e)
 		{
@@ -1255,67 +1276,67 @@ public class PersistenciaEPSAndes {
 			pm.close();
 		}
 	}
-	
-	
+
+
 	//-------------------------------------------------------------------------------
 	//MOSTRAR LOS SERVICIOS QUE CUMPLEN CON CIERTA CARACTERÍSTICA
 	//-------------------------------------------------------------------------------
-	
+
 	/**
 	 * Mostrar toda la información del servicio. Las características son, por ejemplo,
 	 * fecha de prestación en un rango de tiempo, registrados por cierto recepcionista,
 	 * son de cierto tipo, han sido solicitados más de X veces en un rango de fechas.
 	 *  Consulte cualquier combinación de características en la consulta
 	 */
-	
+
 	//-------------------------------------------------------------------------------
 	//MOSTRAR LA UTILIZACIÓN DE SERVICIOS DE EPSANDES POR UN AFILIADO DADO, EN UN RANGO DE FECHAS
 	//INDICADO.
 	//-------------------------------------------------------------------------------
-	
+
 	/**
 	 * Recuerde que un afiliado puede solicitar servicios de salud cuantas veces lo requiera. 
 	 * Considere tanto la reserva como el uso efectivo de los servicios de salud.
-	*/
-	
+	 */
+
 	/**--------------------------------------------------------------------------------
 	----------------------------------Iteracion 2 -------------------------------------
 	----------------------------------------------------------------------------------*/
-	
-	
+
+
 	public List<Consulta> darConsultas() {
-		
+
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx=pm.currentTransaction();
-		
+
 		try {
-			
+
 			tx.begin();
 			List<Consulta> lista =  sqlConsulta.darConsultas(pm);
 			tx.commit();
-			
+
 			return lista;
-			
+
 		} catch (Exception e) {
 			// TODO: handle exception
 			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
 			return null;
 		}
 	}
-	
+
 	public List<Terapia> darTerapias() {
-		
+
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx=pm.currentTransaction();
-		
+
 		try {
-			
+
 			tx.begin();
 			List<Terapia> lista =  sqlTerapia.darTerapias(pm);
 			tx.commit();
-			
+
 			return lista;
-			
+
 		} catch (Exception e) {
 			// TODO: handle exception
 			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
@@ -1324,47 +1345,221 @@ public class PersistenciaEPSAndes {
 	}
 
 	public List<ProcedimientoEsp> darProcedimientosEsp() {
-		
+
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx=pm.currentTransaction();
-		
+
 		try {
-			
+
 			tx.begin();
 			List<ProcedimientoEsp> lista =  sqlProcedimientoEsp.darProcedimientoEsps(pm);
 			tx.commit();
-			
+
 			return lista;
-			
+
 		} catch (Exception e) {
 			// TODO: handle exception
 			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
 			return null;
 		}
 	}
-	
+
 	public List<Hospitalizacion> darHospitalizacion() {
-		
+
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx=pm.currentTransaction();
-		
+
 		try {
-			
+
 			tx.begin();
 			List<Hospitalizacion> lista =  sqlHospitalizacion.darHospitalizacions(pm);
 			tx.commit();
-			
+
 			return lista;
-			
+
 		} catch (Exception e) {
 			// TODO: handle exception
 			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
 			return null;
 		}
 	}
-	
-	
 
+
+
+
+	// ------------------------------------ITERACION 2 -------------------------------------------------
+	
+	public CampaniaPrevencion registrarCampaniaPrevencion(String localizacion, String fechaInicio, String fechaFin, long idEPS)
+	{
+		
+		long id = nextval ();
+		PersistenceManager pm = pmf.getPersistenceManager();
+
+		Transaction tx=pm.currentTransaction();
+		try
+		{
+			tx.begin();
+			long tuplasInsertadas = sqlCampaniaPrevencion.adicionarCampaniaPrevencion(pm, id, localizacion, fechaInicio, fechaFin, idEPS);
+			tx.commit();
+
+			log.trace ("Inserci�n de campania de prevencion con localizacion en: " + localizacion + ": " + tuplasInsertadas + " tuplas insertadas");
+
+			return new CampaniaPrevencion(id, localizacion, fechaInicio, fechaFin, idEPS);
+		}
+		catch (Exception e)
+		{
+			//        	e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			return null;
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
+	}
+
+	
+	
+	public CampaniaConsulta registrarCampaniaConsulta(long idCampania, long idConsulta, String fechaInicio,
+			String fechaFin, String disponible)
+	{
+		
+		PersistenceManager pm = pmf.getPersistenceManager();
+
+		Transaction tx=pm.currentTransaction();
+		try
+		{
+			tx.begin();
+			long tuplasInsertadas = sqlCampaniaConsulta.adicionarCampaniaConsulta(pm, idCampania, idConsulta, fechaInicio, fechaFin, disponible);
+			tx.commit();
+
+			log.trace ("Inserci�n de consulta asociada a la campania: " + idCampania + ": " + tuplasInsertadas + " tuplas insertadas");
+
+			return new CampaniaConsulta(idCampania, idConsulta, fechaInicio, fechaFin, disponible);
+		}
+		catch (Exception e)
+		{
+			//        	e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			return null;
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
+	}
+	
+	
+	
+	public CampaniaTerapia registrarCampaniaTerapia(long idCampania, long idTerapia, String fechaInicio,
+			String fechaFin, String disponible)
+	{
+		
+		PersistenceManager pm = pmf.getPersistenceManager();
+
+		Transaction tx=pm.currentTransaction();
+		try
+		{
+			tx.begin();
+			long tuplasInsertadas = sqlCampaniaTerapia.adicionarCampaniaTerapia(pm, idCampania, idTerapia, fechaInicio, fechaFin, disponible);
+			tx.commit();
+
+			log.trace ("Inserci�n de terapia asociada a la campania: " + idCampania + ": " + tuplasInsertadas + " tuplas insertadas");
+
+			return new CampaniaTerapia(idCampania, idTerapia, fechaInicio, fechaFin, disponible);
+		}
+		catch (Exception e)
+		{
+			//        	e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			return null;
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
+	}
+
+	
+	
+	public CampaniaProcedimientoEsp registrarCampaniaProcedimiento(long idCampania, long idProcedimiento, String fechaInicio,
+			String fechaFin, String disponible)
+	{
+		
+		PersistenceManager pm = pmf.getPersistenceManager();
+
+		Transaction tx=pm.currentTransaction();
+		try
+		{
+			tx.begin();
+			long tuplasInsertadas = sqlCampaniaProcedimiento.adicionarCampaniaProcedimientoEsp(pm, idCampania, idProcedimiento, fechaInicio, fechaFin, disponible);
+			tx.commit();
+
+			log.trace ("Inserci�n de procedimiento especial asociada a la campania: " + idCampania + ": " + tuplasInsertadas + " tuplas insertadas");
+
+			return new CampaniaProcedimientoEsp(idCampania, idProcedimiento, fechaInicio, fechaFin, disponible);
+		}
+		catch (Exception e)
+		{
+			//        	e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			return null;
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
+	}
+	
+	
+	public CampaniaHospitalizacion registrarCampaniaHospitalizacion(long idCampania, long idHospitalizacion, String fechaInicio,
+			String fechaFin, String disponible)
+	{
+		
+		PersistenceManager pm = pmf.getPersistenceManager();
+
+		Transaction tx=pm.currentTransaction();
+		try
+		{
+			tx.begin();
+			long tuplasInsertadas = sqlCampaniaHospitalizacion.adicionarCampaniaHospitalizacion(pm, idCampania, idHospitalizacion, fechaInicio, fechaFin, disponible);
+			tx.commit();
+
+			log.trace ("Inserci�n de hospitalizacion asociada a la campania: " + idCampania + ": " + tuplasInsertadas + " tuplas insertadas");
+
+			return new CampaniaHospitalizacion(idCampania, idHospitalizacion, fechaInicio, fechaFin, disponible);
+		}
+		catch (Exception e)
+		{
+			//        	e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			return null;
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
+	}
 
 
 	/**

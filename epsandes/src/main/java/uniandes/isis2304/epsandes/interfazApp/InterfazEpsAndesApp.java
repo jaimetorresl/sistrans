@@ -12,9 +12,11 @@ import uniandes.isis2304.epsandes.negocio.Consulta;
 import uniandes.isis2304.epsandes.negocio.EPSAndes;
 import uniandes.isis2304.epsandes.negocio.Hospitalizacion;
 import uniandes.isis2304.epsandes.negocio.IPS;
+import uniandes.isis2304.epsandes.negocio.ProcedimientoEsp;
 import uniandes.isis2304.epsandes.negocio.RecepcionistaIPS;
 import uniandes.isis2304.epsandes.negocio.Terapia;
 import uniandes.isis2304.epsandes.negocio.UsuarioEPS;
+import uniandes.isis2304.epsandes.negocio.VOCampaniaPrevencion;
 import uniandes.isis2304.epsandes.negocio.VOCita;
 import uniandes.isis2304.epsandes.negocio.VOConsulta;
 import uniandes.isis2304.epsandes.negocio.VOEPS;
@@ -45,6 +47,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -1174,154 +1178,286 @@ public class InterfazEpsAndesApp extends JFrame implements ActionListener {
 
 
 
+	//Atributos para que el metodo adicionarCampania sirva
+	private String fechaInicioSS;
+	private String fechaFinSS;
+	private ArrayList<String> listaIdConsulta = new ArrayList<String>();
+	private ArrayList<String> listaIdTerapia = new ArrayList<String>();
+	private ArrayList<String> listaIdProcedimiento = new ArrayList<String>();
+	private ArrayList<String> listaIdHospitalizacion = new ArrayList<String>();
+
+	private String opcionSS;
+
+
+
 	public void adicionarCampaniaPrevencion() throws Exception
 	{	
-		
-		
+
+		//Id de la EPS a la que esta asociada la campania
+
+		String idEPS = JOptionPane.showInputDialog(this, "Id de la EPS a la que esta asociada la campania?", "Adicionar Campania Prevencion", JOptionPane.QUESTION_MESSAGE);
+		long idEPS2 = Long.parseLong(idEPS);
+
 		//Se elige las fechas de inicio y fin de la campania
 		String fechaInicio = JOptionPane.showInputDialog(this, "Fecha y hora de inicio de la campania (DD-MM-AA HH:MM:SS) (formato 24hrs)?", "Adicionar Campania Prevencion", JOptionPane.QUESTION_MESSAGE);
 		String fechaFin = JOptionPane.showInputDialog(this, "Fecha y hora de fin de la campania (DD-MM-AA HH:MM:SS) (formato 24hrs)?", "Adicionar Campania Prevencion", JOptionPane.QUESTION_MESSAGE);
-		
-		
-		//Se elige el tipo de ss que se quiere mostrar en lista (0-3)
-		Object[] options1 = {"Consulta", "Terapia", "Procedimiento Especial", "Hospitalizacion"};
-		int opcion = JOptionPane.showOptionDialog(null,
-				"Elige el tipo de servicio",
-				"Adicionar Campania Prevencion",
-				JOptionPane.YES_NO_CANCEL_OPTION,
-				JOptionPane.PLAIN_MESSAGE,
-				null,
-				options1,
-				null);
-		
-		String resultado;
-		
-		//Fechas de inicio y fin del ss dentro de la campania
-		String fechaInicioConsulta = JOptionPane.showInputDialog(this, "Fecha y hora de inicio del servicio consulta (DD-MM-AA HH:MM:SS) (formato 24hrs)?", "Adicionar Campania Prevencion", JOptionPane.QUESTION_MESSAGE);
-		String fechaFinConsulta = JOptionPane.showInputDialog(this, "Fecha y hora de fin del servicio consulta (DD-MM-AA HH:MM:SS) (formato 24hrs)?", "Adicionar Campania Prevencion", JOptionPane.QUESTION_MESSAGE);
-		
-		//Cantidad de dias que dura el servicio de salud dentro de la campania
-		String numDias = JOptionPane.showInputDialog(this, "Cantidad de dias que dura la campania?", "Adicionar Campania Prevencion", JOptionPane.QUESTION_MESSAGE);
-		int numDias2 = Integer.parseInt(numDias);
-		
-		
-		resultado = "";
-		int contConsultas = 0;
 
 
-		if(opcion == 0) {	
-			//Se pide la lista de consultas que existen
-			List<Consulta> listConsulta = epsandes.darConsultas();
-			
-			for (int i = 0; i < listConsulta.size(); i++) {
-				
-				contConsultas += listConsulta.get(i).getCapacidad();
-				
-				int count = i;
-				count++;
-			
-				resultado += "\n " + (count) +") " +  listConsulta.get(i).toString();
-				
+		//		Date dateInicio= (Date) new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss").parse(fechaInicio);
+		//		Date dateFin= (Date) new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss").parse(fechaFin);
+
+		//Se elige la localizacion de la campania de prevencion
+
+		String localizacion = JOptionPane.showInputDialog(this, "Localizacion de la campania?", "Adicionar Campania Prevencion", JOptionPane.QUESTION_MESSAGE);
+
+		int respuestaMas = 0;
+		while(respuestaMas == 0) {
+
+
+			//Se elige el tipo de ss que se quiere mostrar en lista (0-3)
+			Object[] options1 = {"Consulta", "Terapia", "Procedimiento Especial", "Hospitalizacion"};
+			int opcion = JOptionPane.showOptionDialog(null,
+					"Elige el tipo de servicio",
+					"Adicionar Campania Prevencion",
+					JOptionPane.YES_NO_CANCEL_OPTION,
+					JOptionPane.PLAIN_MESSAGE,
+					null,
+					options1,
+					null);
+
+			String resultado;
+
+			//Fechas de inicio y fin del ss dentro del ss
+			fechaInicioSS = JOptionPane.showInputDialog(this, "Fecha y hora de inicio del servicio consulta (DD-MM-AA HH:MM:SS) (formato 24hrs)?", "Adicionar Campania Prevencion", JOptionPane.QUESTION_MESSAGE);
+			fechaFinSS = JOptionPane.showInputDialog(this, "Fecha y hora de fin del servicio consulta (DD-MM-AA HH:MM:SS) (formato 24hrs)?", "Adicionar Campania Prevencion", JOptionPane.QUESTION_MESSAGE);
+
+			//VERIFICAR Y CAMBIAR LO DE LAS FECHAS
+
+			//			Date date1= (Date) new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss").parse(fechaInicioSS);  
+			//			Date date2= (Date) new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss").parse(fechaFinSS); 
+
+
+			//			if( !( (dateInicio.before(date1) && date1.before(dateFin)) && (dateInicio.before(date2)) && (date2.before(dateFin)) && (date1.before(date2))) ) {
+			//				
+			//				JOptionPane.showMessageDialog(this, "Las fechas del ss no estan en el rango de fechas de la campania");
+			//				throw new Exception("Las fechas del ss no estan en el rango de fechas de la campania");
+			//				
+			//			}
+
+
+			//Cantidad de dias que dura el servicio de salud dentro de la campania
+			String numDias = JOptionPane.showInputDialog(this, "Cantidad de dias que dura la campania?", "Adicionar Campania Prevencion", JOptionPane.QUESTION_MESSAGE);
+			int numDias2 = Integer.parseInt(numDias);
+
+
+			resultado = "";
+
+			int contSS = 0;
+			opcionSS = "";
+
+			if(opcion == 0) {	
+				//Se pide la lista de consultas que existen
+				opcionSS = "CONSULTA";
+
+				List<Consulta> listConsulta = epsandes.darConsultas();
+
+				for (int i = 0; i < listConsulta.size(); i++) {
+
+					contSS += listConsulta.get(i).getCapacidad();
+
+					int count = i;
+					count++;
+
+					resultado += "\n " + (count) +") " +  listConsulta.get(i).toString();
+
+				}
 			}
-		}
-		
-		if(opcion == 1) {	
-			//Se pide la lista de consultas que existen
-			List<Terapia> listTerapia = epsandes.darTerapias();
-				
-			for (int i = 0; i < listTerapia.size(); i++) {
-					
-				contConsultas += listTerapia.get(i).getCapacidad();
-					
-				int count = i;
-				count++;
-				
-				resultado += "\n " + (count) +") " +  listTerapia.get(i).toString();
+
+			if(opcion == 1) {	
+				//Se pide la lista de terapias que existen
+				opcionSS = "TERAPIA";
+
+				List<Terapia> listTerapia = epsandes.darTerapias();
+
+				for (int i = 0; i < listTerapia.size(); i++) {
+
+					contSS += listTerapia.get(i).getCapacidad();
+
+					int count = i;
+					count++;
+
+					resultado += "\n " + (count) +") " +  listTerapia.get(i).toString();
+				}
+
 			}
-					
-		}
 
 			if(opcion == 2) {	
-				//Se pide la lista de consultas que existen
-				List<Consulta> listProcedimientoEsp = epsandes.darConsultas();
-				
+				//Se pide la lista de procedimientos que existen
+				opcionSS = "PROCEDIMIENTO_ESP";
+
+				List<ProcedimientoEsp> listProcedimientoEsp = epsandes.darProcedimientosEsp();
+
 				for (int i = 0; i < listProcedimientoEsp.size(); i++) {
-						
-					contConsultas += listProcedimientoEsp.get(i).getCapacidad();
-						
+
+					contSS += listProcedimientoEsp.get(i).getCapacidad();
+
 					int count = i;
 					count++;
-						
+
 					resultado += "\n " + (count) +") " +  listProcedimientoEsp.get(i).toString();
 				}
-						
-		}
+
+			}
 
 			if(opcion == 3) {	
-				//Se pide la lista de consultas que existen
+				//Se pide la lista de hospitalizacion que existen
+				opcionSS = "HOSPITALIZACION";
+
 				List<Hospitalizacion> listHospitalizacion = epsandes.darHospitalizaciones();
-						
+
 				for (int i = 0; i < listHospitalizacion.size(); i++) {
-							
-					contConsultas += listHospitalizacion.get(i).getCapacidad();
-							
+
+					contSS += listHospitalizacion.get(i).getCapacidad();
+
 					int count = i;
 					count++;
-							
+
 					resultado += "\n " + (count) +") " +  listHospitalizacion.get(i).toString();
 				}
-							
+
 			}	
-			
-			panelDatos.actualizarInterfaz("Cantidad de consultas: " + contConsultas  + "\n" + resultado);
-			
-			
-			
-			JOptionPane.showMessageDialog(this, "La cantidad de consultas es: " + contConsultas);
-			
-			String cantidadConsulta = JOptionPane.showInputDialog(this, "Cuantas consultas requiere para la campania de prevencion (num de ss diario) ?", "Adicionar Campania Prevencion", JOptionPane.QUESTION_MESSAGE);
-			int cantidadConsulta2 = Integer.parseInt(cantidadConsulta);
-			
-			contConsultas *= numDias2;
-			
-			//Se verifica que la cantidad de consultas solicitadas no supere a la cantidad existente
-			if( contConsultas <= cantidadConsulta2) {
-				
-				JOptionPane.showMessageDialog(this, "No se pueden separar mas o igual cantidad de consultas para la campania de prevencion");
-				throw new Exception("No se pueden separar mas o igual cantidad de consultas para la campania de prevencion");
-				
+
+			panelDatos.actualizarInterfaz("Cantidad del "+ opcionSS +" es : " + contSS  + "\n" + resultado);
+
+
+
+			JOptionPane.showMessageDialog(this, "Cantidad del "+ opcionSS +" es : " + contSS);
+
+			String cantidadSS = JOptionPane.showInputDialog(this, "Cuantas "+ opcionSS +" requiere para la campania de prevencion (num de ss diario) ?", "Adicionar Campania Prevencion", JOptionPane.QUESTION_MESSAGE);
+			int cantidadSS2 = Integer.parseInt(cantidadSS);
+
+			contSS *= numDias2;
+
+			//Se verifica que la cantidad del ss solicitado no supere a la cantidad existente
+			if( contSS <= cantidadSS2) {
+
+				JOptionPane.showMessageDialog(this, "No se pueden separar mas o igual cantidad de "+ opcionSS +" para la campania de prevencion");
+				throw new Exception("No se pueden separar mas o igual cantidad de "+ opcionSS +" para la campania de prevencion");
+
 			}
-			
+
 			//Se elige cada consulta que se desea agregar
-			
-			ArrayList<String> listaIdConsultas = new ArrayList<String>();
-			
-			while(cantidadConsulta2 < 0) {
-				
+
+			while(cantidadSS2 > 0) {
+
 				String idSS = JOptionPane.showInputDialog(this, "Id del ss que desea agregar a su campania?", "Adicionar Campania Prevencion", JOptionPane.QUESTION_MESSAGE);
-				
-				String cantidadSS = JOptionPane.showInputDialog(this, "Capacidad que desea obtener de este ss (recuerde que se multiplica la capacidad por el numero de dias de su campania) ?", "Adicionar Campania Prevencion", JOptionPane.QUESTION_MESSAGE);
-				int cantidadSS2 = Integer.parseInt(cantidadSS);
-				
-				if( !(cantidadConsulta2 - cantidadSS2 < 0) ) {
-					
-					System.out.println("faltan " + cantidadSS2 + " por agregar");
-					
-					cantidadConsulta2 -= cantidadSS2;
-					listaIdConsultas.add(idSS);
-					
-					
+
+				String capacidadSS = JOptionPane.showInputDialog(this, "Capacidad que desea obtener de este ss (recuerde que esta capacidad sera por dia) ?", "Adicionar Campania Prevencion", JOptionPane.QUESTION_MESSAGE);
+				int capacidadSS2 = Integer.parseInt(capacidadSS);
+
+				if( !(cantidadSS2 - capacidadSS2 < 0) ) {
+
+					System.out.println("faltan " + capacidadSS2 + " por agregar");
+
+					cantidadSS2 -= capacidadSS2;
+
+					if(opcionSS.equals("CONSULTA")) {
+
+						listaIdConsulta.add(idSS);
+
+					} else if(opcionSS.equals("TERAPIA")) {
+
+						listaIdTerapia.add(idSS);
+
+					} else if(opcionSS.equals("PROCEDIMIENTO_ESP")) {
+
+						listaIdProcedimiento.add(idSS);
+
+					} else if(opcionSS.equals("HOSPITALIZACION")) {
+
+						listaIdHospitalizacion.add(idSS);
+
+					}
+
+
 				} else {
-					
+
 					JOptionPane.showConfirmDialog(this, "No puede exceder la cantidad que solicito del ss");
-					
+
 				}
-				
-				
+
+
 			}
-			
-			
-			
+
+			respuestaMas = JOptionPane.showConfirmDialog(this, "Se va a agregar mas servicios de salud a la campania? ");
+
+		}
+
+
+		//Se agrega la campania de prevencion
+
+		try {
+
+			VOCampaniaPrevencion campania = epsandes.registrarCampaniaPrevencion(localizacion, fechaInicio, fechaFin, idEPS2);
+
+
+
+			//Se agrega a la tabla campania ss los ss asociadas a la campania
+
+			if(listaIdConsulta.size() != 0) {
+
+				for(int i = 0; i < listaIdConsulta.size(); i++) {
+
+					epsandes.registrarCampaniaConsulta(campania.getId(), Long.parseLong(listaIdConsulta.get(i)), fechaInicioSS, fechaFinSS, "SI");
+
+				}
+
+			}  
+
+			if(listaIdTerapia.size() != 0) {
+
+				for(int i = 0; i < listaIdTerapia.size(); i++) {
+
+					epsandes.registrarCampaniaTerapia(campania.getId(), Long.parseLong(listaIdTerapia.get(i)), fechaInicioSS, fechaFinSS, "SI");
+
+				}
+
+			} 
+
+			if(listaIdProcedimiento.size() != 0) {
+
+				for(int i = 0; i < listaIdProcedimiento.size(); i++) {
+
+					epsandes.registrarCampaniaProcedimiento(campania.getId(), Long.parseLong(listaIdProcedimiento.get(i)), fechaInicio, fechaFin, "SI");
+
+				}
+
+			} 
+			if(listaIdHospitalizacion.size() != 0) {
+
+				for(int i = 0; i < listaIdHospitalizacion.size(); i++) {
+
+					epsandes.registrarCampaniaHospitalizacion(campania.getId(), Long.parseLong(listaIdHospitalizacion.get(i)), fechaInicio, fechaFin, "SI");
+
+				}
+
+			}
+
+			//Se registra en consola
+			String result = "En adicionarCampaniaPrevencion\n\n";
+			result += "Campania prevencion registrada exitosamente";
+			result += "\n Operaci�n terminada";
+			panelDatos.actualizarInterfaz(result);
+
+
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			//				e.printStackTrace();
+			String res = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(res);
+
+		}
 
 
 	}

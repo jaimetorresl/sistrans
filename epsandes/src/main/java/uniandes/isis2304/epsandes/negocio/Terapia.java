@@ -2,40 +2,40 @@ package uniandes.isis2304.epsandes.negocio;
 
 public class Terapia implements VOTerapia{
 	
-	private long id;
+	public long id;
 	
-	private String ordenPrevia;
+	public String ordenPrevia;
 	
-	private String esAfiliado;
+	public String esAfiliado;
 	
-	private String numSesiones;
+	public String numSeries;
 	
-	private String tipoTerapia;
+	public String tipoTerapia;
 	
-	private long idIPS;
+	public long idIPS;
 	
-	private int capacidad;
+	public int capacidad;
 	
-	private String horaInicio;
+	public String horaInicio;
 	
-	private String horaFin;
+	public String horaFin;
 	
-	private String fechaInicio;
+	public String fechaInicio;
 	
-	private String fechaFin;
+	public String fechaFin;
 	
-	private String diaInicio;
+	public String diaInicio;
 	
-	private String diaFin;
+	public String diaFin;
 	
-	private long idRecepcionista;
+	public long idRecepcionista;
 	
 	public Terapia() {
 		
 		id = 0;
 		ordenPrevia = "";
 		esAfiliado = "";
-		numSesiones = "";
+		numSeries = "";
 		tipoTerapia = "";
 		idIPS = 0;
 		capacidad = 0;
@@ -56,7 +56,7 @@ public class Terapia implements VOTerapia{
 		this.id = id;
 		this.ordenPrevia = ordenPrevia;
 		this.esAfiliado = esAfiliado;
-		this.numSesiones = numSesiones;
+		this.numSeries = numSesiones;
 		this.tipoTerapia = tipoTerapia;
 		this.idIPS = idIPS;
 		this.capacidad = capacidad;
@@ -92,7 +92,7 @@ public class Terapia implements VOTerapia{
 	@Override
 	public String getNumSesiones() {
 		// TODO Auto-generated method stub
-		return numSesiones;
+		return numSeries;
 	}
 
 	@Override
@@ -163,8 +163,8 @@ public class Terapia implements VOTerapia{
 
 	@Override
 	public String toString() {
-		return "Terapia [id=" + id + ", ordenPrevia=" + ordenPrevia + ", esAfiliado=" + esAfiliado + ", numSesiones="
-				+ numSesiones + ", tipoTerapia=" + tipoTerapia + ", idIPS=" + idIPS + ", capacidad=" + capacidad
+		return "Terapia [id=" + id + ", ordenPrevia=" + ordenPrevia + ", esAfiliado=" + esAfiliado + ", numSeries="
+				+ numSeries + ", tipoTerapia=" + tipoTerapia + ", idIPS=" + idIPS + ", capacidad=" + capacidad
 				+ ", horaInicio=" + horaInicio + ", horaFin=" + horaFin + ", fechaInicio=" + fechaInicio + ", fechaFin="
 				+ fechaFin + ", diaInicio=" + diaInicio + ", diaFin=" + diaFin + ", idRecepcionista=" + idRecepcionista
 				+ "]";

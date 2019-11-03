@@ -38,11 +38,11 @@ public class SQLCampaniaConsulta {
 	 * @param sedes - El número de sedes del bar
 	 * @return El número de tuplas insertadas
 	 */
-	public long adicionarCompaniaConsulta(PersistenceManager pm, long idCampania, 
+	public long adicionarCampaniaConsulta(PersistenceManager pm, long idCampania, 
 			long idConsulta, String fechaInicio, String fechaFin, String disponible) 
 	{
 		
-        Query q = pm.newQuery(SQL, "INSERT INTO " + "CAMPANIACONSULTA" + "(idcampania, idconsulta, fechainicio, fechafin, disponible) values (?, ?, ?, ?, ?)");
+        Query q = pm.newQuery(SQL, "INSERT INTO " + "CAMPANIA_CONSULTA" + "(id, idconsulta, fechainicio, fechafin, disponible) values (?, ?, ?, ?, ?)");
         q.setParameters(idCampania, idConsulta, fechaInicio, fechaFin, disponible);
         
         
