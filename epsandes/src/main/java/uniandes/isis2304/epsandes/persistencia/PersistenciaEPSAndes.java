@@ -1,5 +1,6 @@
 package uniandes.isis2304.epsandes.persistencia;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -1140,7 +1141,142 @@ public class PersistenciaEPSAndes {
 	}
 
 	
+	//-------------------------------------------------------------------------------
+	//MOSTRAR LA CANTIDAD DE SERVICIOS PRESTADOS POR CADA IPS DURANTE UN PERIODO DE TIEMPO
+	//Y EN EL AÑO CORRIDO
+	//-------------------------------------------------------------------------------
+	/**
+	 * mostrar la cantidad de servicios prestados por cada IPS durante un periodo de tiempo 
+	 * y en el año corrido
+	 */
+	public void serviciosPorIPS(String fechaInicio, String fechaFin) {
+		PersistenceManager pm = pmf.getPersistenceManager();
+		
+		Transaction tx=pm.currentTransaction();
+		try
+		{
+			List<Object []> respuesta = new LinkedList <Object []> ();
+			List<Object[]> tuplas = sqlIPS.darServicosPrestadosPorIPS(pm, fechaInicio, fechaFin);
+			tx.begin();
+			
+			//metodo
+			
+			tx.commit();
+
+		
+		}
+		catch (Exception e)
+		{
+			//        	e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
+	}
 	
+	
+	//-------------------------------------------------------------------------------
+	//MOSTRAR LOS 20 SERVICIOS MÁS SOLICITADOS.
+	//-------------------------------------------------------------------------------
+	/**
+	 *Mostrar los servicios que fueron más solicitados en un período de tiempo dado 
+	 */
+	public void serviciosMasSolicitados(String fechaInicio, String fechaFin) {
+		PersistenceManager pm = pmf.getPersistenceManager();
+		String[] masSolicitados = new String[20]; 
+		Transaction tx=pm.currentTransaction();
+		try
+		{
+			List<Object []> respuesta = new LinkedList <Object []> ();
+			List<Object[]> tuplas = sqlCita.darCitasMasPedidas(pm, fechaInicio, fechaFin);
+			tx.begin();
+			//metodo
+			
+			tx.commit();
+
+			
+		}
+		catch (Exception e)
+		{
+			//        	e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
+	}
+	
+	//-------------------------------------------------------------------------------
+	//MOSTRAR EL ÍNDICE DE USO DE CADA UNO DE LOS SERVICIOS PROVISTOS
+	//-------------------------------------------------------------------------------
+	
+	/**
+	 * Mostrar el indice de uso de cada uno de los servicios provistos
+	 */
+	public void indiceUso() {
+		PersistenceManager pm = pmf.getPersistenceManager();
+		ArrayList<Integer> masSolicitados = new ArrayList<>(); 
+		Transaction tx=pm.currentTransaction();
+		try
+		{
+			tx.begin();
+			//metodo
+			
+			tx.commit();
+
+			for (Integer integer : masSolicitados) {
+				log.trace ("servicio" + integer);
+			}
+				
+			
+		}
+		catch (Exception e)
+		{
+			//        	e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
+	}
+	
+	
+	//-------------------------------------------------------------------------------
+	//MOSTRAR LOS SERVICIOS QUE CUMPLEN CON CIERTA CARACTERÍSTICA
+	//-------------------------------------------------------------------------------
+	
+	/**
+	 * Mostrar toda la información del servicio. Las características son, por ejemplo,
+	 * fecha de prestación en un rango de tiempo, registrados por cierto recepcionista,
+	 * son de cierto tipo, han sido solicitados más de X veces en un rango de fechas.
+	 *  Consulte cualquier combinación de características en la consulta
+	 */
+	
+	//-------------------------------------------------------------------------------
+	//MOSTRAR LA UTILIZACIÓN DE SERVICIOS DE EPSANDES POR UN AFILIADO DADO, EN UN RANGO DE FECHAS
+	//INDICADO.
+	//-------------------------------------------------------------------------------
+	
+	/**
+	 * Recuerde que un afiliado puede solicitar servicios de salud cuantas veces lo requiera. 
+	 * Considere tanto la reserva como el uso efectivo de los servicios de salud.
+	*/
 	
 	/**--------------------------------------------------------------------------------
 	----------------------------------Iteracion 2 -------------------------------------
@@ -1156,6 +1292,66 @@ public class PersistenciaEPSAndes {
 			
 			tx.begin();
 			List<Consulta> lista =  sqlConsulta.darConsultas(pm);
+			tx.commit();
+			
+			return lista;
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			return null;
+		}
+	}
+	
+	public List<Terapia> darTerapias() {
+		
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx=pm.currentTransaction();
+		
+		try {
+			
+			tx.begin();
+			List<Terapia> lista =  sqlTerapia.darTerapias(pm);
+			tx.commit();
+			
+			return lista;
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			return null;
+		}
+	}
+
+	public List<ProcedimientoEsp> darProcedimientosEsp() {
+		
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx=pm.currentTransaction();
+		
+		try {
+			
+			tx.begin();
+			List<ProcedimientoEsp> lista =  sqlProcedimientoEsp.darProcedimientoEsps(pm);
+			tx.commit();
+			
+			return lista;
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			return null;
+		}
+	}
+	
+	public List<Hospitalizacion> darHospitalizacion() {
+		
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx=pm.currentTransaction();
+		
+		try {
+			
+			tx.begin();
+			List<Hospitalizacion> lista =  sqlHospitalizacion.darHospitalizacions(pm);
 			tx.commit();
 			
 			return lista;

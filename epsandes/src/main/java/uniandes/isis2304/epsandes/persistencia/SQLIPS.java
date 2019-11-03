@@ -146,6 +146,23 @@ class SQLIPS
 		q.setResultClass(IPS.class);
 		return (List<IPS>) q.executeList();
 	}
+	public List<Object []> darServicosPrestadosPorIPS(PersistenceManager pm, String fechaInicio, String fechaFin){
+		String sql = "SELECT IPS.nombre, COUNT(DISTINCT(IPS.ID) AS CUANTOS)";
+		sql += "FROM";
+		sql += "receta, ";
+		sql += "INNER JOIN cita ON receta.idCita = cita.id";
+		sql += "INNER JOIN  ips ON cita.idIPS = ips.id";
+		sql	+= "WHERE TO_DATE('cita.fechaInicio', 'YYYY-MM-DD')>= TO_DATE('"+fechaInicio+",'YYYY-MM-DD')";
+		sql	+= "AND TO_DATE('cita.fechaFin', 'YYYY-MM-DD')<= TO_DATE('"+fechaFin+",'YYYY-MM-DD')";
+	  	sql	+= "GROUP BY ips.id";
+	  	sql	+= "ORDER BY CUANTOS DESC";
+	  	
+	  	
+		
+		Query q = pm.newQuery(SQL, sql);
+		
+		return q.executeList();
+	}
 
 	/**
 	 * Crea y ejecuta la sentencia SQL para aumentar en uno el número de sedes de los bares de la 

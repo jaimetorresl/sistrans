@@ -381,6 +381,24 @@ public class EPSAndes {
 		
 	}
 	
+	public List<Terapia> darTerapias() {
+		
+		return pp.darTerapias();
+		
+	}
+	
+	public List<ProcedimientoEsp> darProcedimientosEsp() {
+		
+		return pp.darProcedimientosEsp;
+		
+	}
+	
+	public List<Hospitalizacion> darHospitalizaciones() {
+		
+		return pp.darHospitalizacion();
+		
+	}
+	
 	
 	
 	
