@@ -1573,7 +1573,15 @@ public class InterfazEpsAndesApp extends JFrame implements ActionListener {
 				epsandes.reaperturaCampaniaConsulta(idCampania2, idConsulta2);
 				
 				
-			} 
+			} else if(opcion == 1) {
+				
+				
+				String idTerapia = JOptionPane.showInputDialog(this, "Id de la terapia reapertura?", "Reapertura ss", JOptionPane.QUESTION_MESSAGE);
+				long idTerapia2 = Long.parseLong(idTerapia);
+				
+				epsandes.reaperturaCampaniaTerapia(idCampania2, idTerapia2);
+				
+			}
 			
 			
 			

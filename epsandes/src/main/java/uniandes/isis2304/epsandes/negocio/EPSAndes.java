@@ -549,6 +549,15 @@ public class EPSAndes {
 		log.info ("Reapertura: " + idConsulta);
 
 	}
+	
+	
+	public void reaperturaCampaniaTerapia(long idCampania, long idTerapia) {
+
+		log.info ("Realizando reapertura: " + idTerapia);
+		pp.reaperturaCampaniaTerapia(idCampania, idTerapia);
+		log.info ("Reapertura: " + idTerapia);
+
+	}
 
 
 	/* ****************************************************************

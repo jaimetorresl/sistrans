@@ -76,6 +76,23 @@ public class SQLCampaniaTerapia {
 		
 		return 1;
 	}
+	
+	
+	public void reapertura(PersistenceManager pm, long idCampania, long idTerapia) {
+		
+		
+
+		Query q;
+
+
+		q = pm.newQuery(SQL, "UPDATE CAMPANIA_TERAPIA SET DISPONIBLE = 'SI'  WHERE idTerapia = ? AND id = ?");
+
+		q.setParameters(idTerapia, idCampania);
+		
+		q.executeUnique();
+		
+		
+	}
 
 
 }

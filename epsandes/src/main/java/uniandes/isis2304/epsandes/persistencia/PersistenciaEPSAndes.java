@@ -1846,6 +1846,38 @@ public class PersistenciaEPSAndes {
 		}
 	}
 	
+	
+	public void reaperturaCampaniaTerapia(long idCampania, long idTerapia)
+	{
+		
+		PersistenceManager pm = pmf.getPersistenceManager();
+
+		Transaction tx=pm.currentTransaction();
+		try
+		{
+			tx.begin();
+		
+			sqlCampaniaTerapia.reapertura(pm, idCampania, idTerapia);
+			
+			tx.commit();
+			
+			log.trace ("Cambio reapertura: " + idTerapia);
+		}
+		catch (Exception e)
+		{
+			//        	e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
+	}
+	
 	/**
 	 * Extrae el mensaje de la exception JDODataStoreException embebido en la Exception e, que da el detalle espec�fico del problema encontrado
 	 * @param e - La excepci�n que ocurrio
