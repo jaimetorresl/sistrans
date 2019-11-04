@@ -291,7 +291,7 @@ public class InterfazEpsAndesApp extends JFrame implements ActionListener {
 	 */
 	private String listarRCF1 (List<Object[]> lista) 
 	{
-		String resp = "Los bebedores y el número visitas realizadas son:\n";
+		String resp = "La cantidad de servicios prestados por IPS sonrealizadas son:\n";
 		int i = 1;
 		for (Object [] tupla : lista)
 		{
@@ -313,6 +313,9 @@ public class InterfazEpsAndesApp extends JFrame implements ActionListener {
 
 			if(!fechaInicio.equals("") && !fechaFin.equals("")) {
 
+				List<Object[]> servicios = epsandes.rfc2(fechaInicio, fechaFin);
+				String resp = listarRCF2(servicios);
+				panelDatos.actualizarInterfaz(resp);
 			}
 		}
 
@@ -330,16 +333,28 @@ public class InterfazEpsAndesApp extends JFrame implements ActionListener {
 	 */
 	private String listarRCF2 (List<Object[]> lista) 
 	{
-		String resp = "Los servicios que fueron mas olictados son:\n";
-		int i = 1;
+		String resp = "Los servicios que fueron mas solictados son:\n";
 		for (Object [] tupla : lista)
 		{
-			VOBebedor bdor = (VOBebedor) tupla [0];
-			int numVisitas = (int) tupla [1];
-			String resp1 = i++ + ". " + "[";
-			resp1 += bdor + ", ";
-			resp1 += "numVisitas: " + numVisitas;
-			resp1 += "]";
+			String resp1 = "";
+			if(!tupla[0].equals("")) {
+				resp1 ="consulta: " +tupla[1] + ", ";	
+				
+			}
+			if(!tupla[1].equals("")) {
+				resp1 ="terapia : " +tupla[1] + ", ";	
+				
+			}
+			if(!tupla[2].equals("")) {
+				resp1 ="procedimiento especial : " +tupla[1] + ", ";	
+				
+			}
+			if(!tupla[3].equals("")) {
+				resp1 ="hospitalizacion: " +tupla[1] + ", ";	
+				
+			}
+			
+			resp1 += "cantidad servicios prestados: " + tupla[4];
 			resp += resp1 + "\n";
 		}
 		return resp;

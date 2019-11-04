@@ -1202,34 +1202,29 @@ public class PersistenciaEPSAndes {
 	/**
 	 *Mostrar los servicios que fueron más solicitados en un período de tiempo dado 
 	 */
-	public void serviciosMasSolicitados(String fechaInicio, String fechaFin) {
-		PersistenceManager pm = pmf.getPersistenceManager();
-		String[] masSolicitados = new String[20]; 
-		Transaction tx=pm.currentTransaction();
-		try
-		{
-			List<Object []> respuesta = new LinkedList <Object []> ();
-			List<Object[]> tuplas = sqlCita.darCitasMasPedidas(pm, fechaInicio, fechaFin);
-			tx.begin();
-			//metodo
+	public List<Object []> rfc2(String fechaInicio, String fechaFin) {
+		List<Object []> respuesta = new LinkedList <Object []> ();
+		List<Object> tuplas = sqlIPS.darRFC1 (pmf.getPersistenceManager(), fechaInicio, fechaFin);
+        for ( Object tupla : tuplas)
+        {
+        	Object [] datos = (Object []) tupla;
+			String nombreConsulta = (String) datos [0];
+			String nombreTerapia = (String) datos [1];
+			String nombreProcedimiento = (String) datos [2];
+			String nombreHospitalizacion = (String) datos [3];
+			int cantidadServiciosPrestados = ((BigDecimal) datos [0]).intValue ();
+			
+			Object [] servicio = new Object [5];
+			servicio [0] = nombreConsulta;
+			servicio [1] = nombreTerapia;
+			servicio [2] = nombreProcedimiento;
+			servicio [3] = nombreHospitalizacion;
+			servicio [4] = nombreProcedimiento;
+			
+			respuesta.add(servicio);
+        }
 
-			tx.commit();
-
-
-		}
-		catch (Exception e)
-		{
-			//        	e.printStackTrace();
-			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
-		}
-		finally
-		{
-			if (tx.isActive())
-			{
-				tx.rollback();
-			}
-			pm.close();
-		}
+		return respuesta;
 	}
 
 	//-------------------------------------------------------------------------------

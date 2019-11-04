@@ -69,10 +69,10 @@ public class EPSAndes {
 	/**
 	 * Los servicios que fueron más solicitados en un período de tiempo dado.
 	 */
-	public void rfc2(String fechaInicio, String fechaFin) {
+	public List<Object []> rfc2(String fechaInicio, String fechaFin) {
 
 		log.info ("Listando servicios que fueron más solicitados");
-		List<Object []> tuplas = pp.dar;
+		List<Object []> tuplas = pp.rfc2(fechaInicio, fechaFin);
 		log.info ("Listando servicios que fueron más solicitados: Listo!");
 		return tuplas;
 	}

@@ -146,16 +146,18 @@ class SQLIPS
 		q.setResultClass(IPS.class);
 		return (List<IPS>) q.executeList();
 	}
+	
+	
+	
 	public List<Object> darRFC1(PersistenceManager pm, String fechaInicio, String fechaFin){
-		String sql = "SELECT ips.id, ips.nombre, COUNT(IPS.ID) AS CUANTOS";
-		sql += "FROM";
-		sql += "receta ";
-		sql += "INNER JOIN cita ON receta.idCita = cita.id";
-		sql += "INNER JOIN  ips ON cita.idIPS = ips.id";
-		sql	+= "WHERE TO_DATE('cita.fechaInicio', 'YYYY-MM-DD')>= TO_DATE('"+fechaInicio+",'YYYY-MM-DD')";
-		sql	+= "AND TO_DATE('cita.fechaFin', 'YYYY-MM-DD')<= TO_DATE('"+fechaFin+",'YYYY-MM-DD')";
-	  	sql	+= "GROUP BY ips.id";
-	  	sql	+= "ORDER BY CUANTOS DESC";
+		String sql = "SELECT ips.id, ips.nombre, COUNT(IPS.ID) CUANTOS \n";
+		sql += "FROM receta \n";
+		sql += "INNER JOIN cita ON receta.idCita = cita.id \n";
+		sql += "INNER JOIN  ips ON cita.idIPS = ips.id \n";
+		sql	+= "WHERE TO_DATE(cita.fechaInicio, 'YYYY-MM-DD')>= TO_DATE('"+fechaInicio+"' ,'YYYY-MM-DD') \n";
+		sql	+= "AND TO_DATE(cita.fechaFin, 'YYYY-MM-DD')<= TO_DATE('"+fechaFin+"' ,'YYYY-MM-DD') \n";
+	  	sql	+= "GROUP BY ips.id, ips.nombre \n";
+	  	sql	+= "ORDER BY CUANTOS DESC \n";
 	  	
 	  	
 		
