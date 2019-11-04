@@ -373,6 +373,12 @@ public class InterfazEpsAndesApp extends JFrame implements ActionListener {
 			String servicio = JOptionPane.showInputDialog("Indique el tipo de servicio, 0 pra consulta, 1 para terapia, 2 para procedimiento especial"
 					+ "y 3 para hospitalizacion");
 
+			if(unidadTiempo<=3 && unidadTiempo>=0) {
+
+				List<Object[]> servicios = epsandes.rfc6( cadena, servicio);
+				String resp = listarRCF2(servicios);
+				panelDatos.actualizarInterfaz(resp);
+			}
 
 		}
 
@@ -394,11 +400,11 @@ public class InterfazEpsAndesApp extends JFrame implements ActionListener {
 		int i = 1;
 		for (Object [] tupla : lista)
 		{
-			VOBebedor bdor = (VOBebedor) tupla [0];
-			int numVisitas = (int) tupla [1];
-			String resp1 = i++ + ". " + "[";
-			resp1 += bdor + ", ";
-			resp1 += "numVisitas: " + numVisitas;
+			
+			
+			String resp1 = "";
+			resp1 ="fecha: " +tupla[0] + ", ";	
+			resp1 ="cantidad : " +tupla[1] + ", ";	
 			resp1 += "]";
 			resp += resp1 + "\n";
 		}

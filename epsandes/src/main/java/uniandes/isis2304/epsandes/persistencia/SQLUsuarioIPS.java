@@ -120,4 +120,23 @@ class SQLUsuarioIPS
 		return (List<UsuarioIPS>) q.executeList();
 	}
 	
+	public List<UsuarioIPS> AfiliadoExigente(PersistenceManager pm, String fechaInicio, String fechaFin){
+		String sql ="SELECT usuario_ips.* FROM";
+		sql +="(cita.idUsuarioIPS idUsuario, COUNT(cita.idConsulta) AS numConsultas, COUNT(cita.idTerapia) AS numTerapias, "
+				+ "COUNT(cita.idProcedimientoEsp) AS numProcedimieto, COUNT(cita.idHospitalizacion) AS numHospitalizaciones";
+		sql += "FROM cita INNER JOIN";
+		sql += "receta ON  cita.id = receta.idCita";
+		sql	+= "WHERE TO_DATE('cita.fechaInicio', 'YYYY-MM-DD')>= TO_DATE('"+fechaInicio+",'YYYY-MM-DD')";
+		sql	+= "AND TO_DATE('cita.fechaFin', 'YYYY-MM-DD')<= TO_DATE('"+fechaFin+",'YYYY-MM-DD')";
+	  	sql	+= "GROUP BY cita.idUsuarioIPS";
+	  	sql	+= "HAVING  (COUNT(cita.idConsulta)+ COUNT(cita.idTerapia)+ COUNT(cita.idProcedimientoEsp)+COUNT(cita.idHospitalizacion)>12)";
+	  	sql	+= "AND";
+	  	
+	    Query q = pm.newQuery(SQL, sql);
+		
+			return q.executeList();
+			
+	
+	  	
+	}
 }

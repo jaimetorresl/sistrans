@@ -307,6 +307,22 @@ class SQLCita
 		
 		return q.executeList();
 	}
+	
+	public List<Object> darRFC6(PersistenceManager pm, String unidadTiempo, String servicio){
+		
+		String sql = "SELECT* FROM";
+		sql +="(SELECT cita.fechaInicio, COUNT(cita.fechaInicio) AS numcitas";
+		sql	+= "FROM cita";
+		sql	+= "cita.id"+servicio+" IS NOT NULL";
+		sql += "GROUP BY cita.fechaInicio";
+	  	sql	+= "ORDER BY CUANTOS DESC)t";
+		sql	+="WHERE ROWNUM BETWEN 1 AND 2";
+		
+	    Query q = pm.newQuery(SQL, sql);
+		
+		return q.executeList();
+		
+	}
 
 
 }

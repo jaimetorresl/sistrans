@@ -83,9 +83,9 @@ public class EPSAndes {
 	 *solicitados), las de mayor actividad (mayor cantidad de servicios efectivamente prestados) y también las fechas
 	 *de menor demanda.
 	 */
-	public void rfc6(String unidadTiempo, String servicio ) {
+	public  List<Object []> rfc6(String unidadTiempo, String servicio) {
 		log.info ("Listando fechas de mayor y menor demanda");
-		List<Object []> tuplas = pp.dar();
+		List<Object []> tuplas = pp.rfc6(unidadTiempo, servicio);
 		log.info ("Listando Bebedores y cuántas visitas ha realizado: Listo!");
 		return tuplas;
 	}
@@ -96,9 +96,9 @@ public class EPSAndes {
 	 *menos tres (3) tipos de servicio diferentes11. La información en el resultado debe evidenciar el hecho de ser
 	 *afiliado exigente.
 	 */
-	public void rfc7(String fechaInicio, String fechaFin) {
+	public  List<Object []> rfc7(String fechaInicio, String fechaFin) {
 		log.info ("Listando afiliados exigentes");
-		List<Object []> tuplas = pp.dar();
+		List<Object []> tuplas = pp.rfc6(fechaInicio, fechaFin);
 		log.info ("Listando afiliados exigentes: Listo!");
 		return tuplas;
 	}

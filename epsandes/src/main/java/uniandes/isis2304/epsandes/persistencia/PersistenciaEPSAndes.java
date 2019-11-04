@@ -41,8 +41,7 @@ import uniandes.isis2304.epsandes.negocio.Receta;
 import uniandes.isis2304.epsandes.negocio.Terapia;
 import uniandes.isis2304.epsandes.negocio.UsuarioEPS;
 import uniandes.isis2304.epsandes.negocio.UsuarioIPS;
-import uniandes.isis2304.parranderos.negocio.Bar;
-import uniandes.isis2304.parranderos.negocio.Bebedor;
+
 
 public class PersistenciaEPSAndes {
 
@@ -1222,6 +1221,33 @@ public class PersistenciaEPSAndes {
 			servicio [4] = nombreProcedimiento;
 			
 			respuesta.add(servicio);
+        }
+
+		return respuesta;
+	}
+	
+	//-------------------------------------------------------------------------------
+	//ANALIZAR LA OPERACIÓN DE EPSANDES.
+	//-------------------------------------------------------------------------------
+	/**
+	 *Dada una unidad de tiempo (por ejemplo, semana o mes) y un servicio de salud10, considerando todo el tiempo
+	 *de operación de EPSAndes, indicar cuáles fueron las fechas de mayor demanda (mayor cantidad de servicios
+ 	 *solicitados), las de mayor actividad (mayor cantidad de servicios efectivamente prestados) y también las fechas
+     *de menor demanda.
+	 */
+	public List<Object []> rfc6(String unidadTiempo, String servicio) {
+		List<Object []> respuesta = new LinkedList <Object []> ();
+		List<Object> tuplas = sqlCita.darRFC6 (pmf.getPersistenceManager(), unidadTiempo, servicio);
+        for ( Object tupla : tuplas)
+        {
+        	Object [] datos = (Object []) tupla;
+			String fecha = (String) datos [0];
+			int cantidadServiciosPrestados = ((BigDecimal) datos [0]).intValue ();
+			
+			Object [] mayorDemanda = new Object [2];
+			mayorDemanda [0] = fecha;
+			mayorDemanda [1] = cantidadServiciosPrestados;
+			respuesta.add(mayorDemanda);
         }
 
 		return respuesta;
