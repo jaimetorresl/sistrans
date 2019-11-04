@@ -1,5 +1,6 @@
 package uniandes.isis2304.epsandes.persistencia;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -40,6 +41,7 @@ import uniandes.isis2304.epsandes.negocio.Receta;
 import uniandes.isis2304.epsandes.negocio.Terapia;
 import uniandes.isis2304.epsandes.negocio.UsuarioEPS;
 import uniandes.isis2304.epsandes.negocio.UsuarioIPS;
+
 
 public class PersistenciaEPSAndes {
 
@@ -1170,35 +1172,26 @@ public class PersistenciaEPSAndes {
 	 * mostrar la cantidad de servicios prestados por cada IPS durante un periodo de tiempo 
 	 * y en el año corrido
 	 */
-	public void serviciosPorIPS(String fechaInicio, String fechaFin) {
-		PersistenceManager pm = pmf.getPersistenceManager();
+	public List<Object []> rfc1 (String fechaInicio, String fechaFin)
+	{
+		List<Object []> respuesta = new LinkedList <Object []> ();
+		List<Object> tuplas = sqlIPS.darRFC1 (pmf.getPersistenceManager(), fechaInicio, fechaFin);
+        for ( Object tupla : tuplas)
+        {
+			Object [] datos = (Object []) tupla;
+			int idIPS = ((BigDecimal) datos [0]).intValue ();
+			String nombreIPS = (String) datos [1];
+			int cantidadServiciosPrestados = ((BigDecimal) datos [0]).intValue ();
+			
+			Object [] servicio = new Object [3];
+			servicio [0] = idIPS;
+			servicio [1] = nombreIPS;
+			servicio [2] = cantidadServiciosPrestados;
+			
+			respuesta.add(servicio);
+        }
 
-		Transaction tx=pm.currentTransaction();
-		try
-		{
-			List<Object []> respuesta = new LinkedList <Object []> ();
-			List<Object[]> tuplas = sqlIPS.darServicosPrestadosPorIPS(pm, fechaInicio, fechaFin);
-			tx.begin();
-
-			//metodo
-
-			tx.commit();
-
-
-		}
-		catch (Exception e)
-		{
-			//        	e.printStackTrace();
-			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
-		}
-		finally
-		{
-			if (tx.isActive())
-			{
-				tx.rollback();
-			}
-			pm.close();
-		}
+		return respuesta;
 	}
 
 
@@ -1208,34 +1201,56 @@ public class PersistenciaEPSAndes {
 	/**
 	 *Mostrar los servicios que fueron más solicitados en un período de tiempo dado 
 	 */
-	public void serviciosMasSolicitados(String fechaInicio, String fechaFin) {
-		PersistenceManager pm = pmf.getPersistenceManager();
-		String[] masSolicitados = new String[20]; 
-		Transaction tx=pm.currentTransaction();
-		try
-		{
-			List<Object []> respuesta = new LinkedList <Object []> ();
-			List<Object[]> tuplas = sqlCita.darCitasMasPedidas(pm, fechaInicio, fechaFin);
-			tx.begin();
-			//metodo
+	public List<Object []> rfc2(String fechaInicio, String fechaFin) {
+		List<Object []> respuesta = new LinkedList <Object []> ();
+		List<Object> tuplas = sqlIPS.darRFC1 (pmf.getPersistenceManager(), fechaInicio, fechaFin);
+        for ( Object tupla : tuplas)
+        {
+        	Object [] datos = (Object []) tupla;
+			String nombreConsulta = (String) datos [0];
+			String nombreTerapia = (String) datos [1];
+			String nombreProcedimiento = (String) datos [2];
+			String nombreHospitalizacion = (String) datos [3];
+			int cantidadServiciosPrestados = ((BigDecimal) datos [0]).intValue ();
+			
+			Object [] servicio = new Object [5];
+			servicio [0] = nombreConsulta;
+			servicio [1] = nombreTerapia;
+			servicio [2] = nombreProcedimiento;
+			servicio [3] = nombreHospitalizacion;
+			servicio [4] = nombreProcedimiento;
+			
+			respuesta.add(servicio);
+        }
 
-			tx.commit();
+		return respuesta;
+	}
+	
+	//-------------------------------------------------------------------------------
+	//ANALIZAR LA OPERACIÓN DE EPSANDES.
+	//-------------------------------------------------------------------------------
+	/**
+	 *Dada una unidad de tiempo (por ejemplo, semana o mes) y un servicio de salud10, considerando todo el tiempo
+	 *de operación de EPSAndes, indicar cuáles fueron las fechas de mayor demanda (mayor cantidad de servicios
+ 	 *solicitados), las de mayor actividad (mayor cantidad de servicios efectivamente prestados) y también las fechas
+     *de menor demanda.
+	 */
+	public List<Object []> rfc6(String unidadTiempo, String servicio) {
+		List<Object []> respuesta = new LinkedList <Object []> ();
+		List<Object> tuplas = sqlCita.darRFC6 (pmf.getPersistenceManager(), unidadTiempo, servicio);
+        for ( Object tupla : tuplas)
+        {
+        	Object [] datos = (Object []) tupla;
+			String fecha = (String) datos [0];
+			int cantidadServiciosPrestados = ((BigDecimal) datos [0]).intValue ();
+			
+			Object [] mayorDemanda = new Object [2];
+			mayorDemanda [0] = fecha;
+			mayorDemanda [1] = cantidadServiciosPrestados;
+			respuesta.add(mayorDemanda);
+        }
 
-
-		}
-		catch (Exception e)
-		{
-			//        	e.printStackTrace();
-			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
-		}
-		finally
-		{
-			if (tx.isActive())
-			{
-				tx.rollback();
-			}
-			pm.close();
-		}
+		return respuesta;
 	}
 
 	//-------------------------------------------------------------------------------

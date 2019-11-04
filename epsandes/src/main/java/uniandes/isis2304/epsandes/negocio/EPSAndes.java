@@ -49,6 +49,60 @@ public class EPSAndes {
 		pp = PersistenciaEPSAndes.getInstance ();
 	}
 
+	//--------------------------------------------------------------------------------------------------------------
+	//						METODOS DE CONSULTA
+	//--------------------------------------------------------------------------------------------------------------
+
+
+	/**
+	 * MOSTRAR LA CANTIDAD DE SERVICIOS PRESTADOS POR CADA IPS DURANTE UN PERIODO DE TIEMPO Y EN
+	 *EL AÑO CORRIDO
+	 */
+	public List<Object []> rfc1(String fechaInicio, String fechaFin) {
+		log.info ("Listado servicios prestados por una IPS en un tiempo dado");
+		List<Object []> tuplas = pp.rfc1(fechaInicio, fechaFin);
+		log.info ("Listado servicios prestados por una IPS en un tiempo dado: Listo!");
+		return tuplas;
+
+	}
+
+	/**
+	 * Los servicios que fueron más solicitados en un período de tiempo dado.
+	 */
+	public List<Object []> rfc2(String fechaInicio, String fechaFin) {
+
+		log.info ("Listando servicios que fueron más solicitados");
+		List<Object []> tuplas = pp.rfc2(fechaInicio, fechaFin);
+		log.info ("Listando servicios que fueron más solicitados: Listo!");
+		return tuplas;
+	}
+
+	/**
+	 * Dada una unidad de tiempo (por ejemplo, semana o mes) y un servicio de salud10, considerando todo el tiempo
+	 *de operación de EPSAndes, indicar cuáles fueron las fechas de mayor demanda (mayor cantidad de servicios
+	 *solicitados), las de mayor actividad (mayor cantidad de servicios efectivamente prestados) y también las fechas
+	 *de menor demanda.
+	 */
+	public  List<Object []> rfc6(String unidadTiempo, String servicio) {
+		log.info ("Listando fechas de mayor y menor demanda");
+		List<Object []> tuplas = pp.rfc6(unidadTiempo, servicio);
+		log.info ("Listando Bebedores y cuántas visitas ha realizado: Listo!");
+		return tuplas;
+	}
+
+	/**
+	 * Encontrar la información de los afiliados exigente. Se considera exigente a un afiliado que, durante el último
+	 *año de operación de EPSAndes, ha solicitado y recibido más de doce (12) de servicios de salud, de por lo
+	 *menos tres (3) tipos de servicio diferentes11. La información en el resultado debe evidenciar el hecho de ser
+	 *afiliado exigente.
+	 */
+	public  List<Object []> rfc7(String fechaInicio, String fechaFin) {
+		log.info ("Listando afiliados exigentes");
+		List<Object []> tuplas = pp.rfc6(fechaInicio, fechaFin);
+		log.info ("Listando afiliados exigentes: Listo!");
+		return tuplas;
+	}
+
 	/**
 	 * El constructor qye recibe los nombres de las tablas en tableConfig
 	 * @param tableConfig - Objeto Json con los nombres de las tablas y de la unidad de persistencia

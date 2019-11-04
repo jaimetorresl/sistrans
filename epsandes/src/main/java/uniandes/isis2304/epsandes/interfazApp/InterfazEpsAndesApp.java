@@ -1,12 +1,14 @@
 package uniandes.isis2304.epsandes.interfazApp;
 
 import org.apache.log4j.Logger;
+import org.datanucleus.query.inmemory.method.SubstringFunction;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
+import com.sun.glass.ui.Pixels.Format;
 
 import uniandes.isis2304.epsandes.negocio.Consulta;
 import uniandes.isis2304.epsandes.negocio.EPSAndes;
@@ -35,6 +37,7 @@ import uniandes.isis2304.epsandes.negocio.VOReceta;
 import uniandes.isis2304.epsandes.negocio.VOTerapia;
 import uniandes.isis2304.epsandes.negocio.VOUsuarioEPS;
 import uniandes.isis2304.epsandes.negocio.VOUsuarioIPS;
+import uniandes.isis2304.parranderos.negocio.VOBebedor;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -250,6 +253,204 @@ public class InterfazEpsAndesApp extends JFrame implements ActionListener {
 		}        
 		setJMenuBar ( menuBar );	
 	}
+
+
+	//--------------------------------------------------------------------------------------------------------------
+	//						METODOS DE CONSULTA
+	//--------------------------------------------------------------------------------------------------------------
+
+	/**
+	 * MOSTRAR LA CANTIDAD DE SERVICIOS PRESTADOS POR CADA IPS DURANTE UN PERIODO DE TIEMPO Y EN
+	 *EL AÑO CORRIDO
+	 */
+	public void rfc1() {
+		try {
+			String fechaInicio = JOptionPane.showInputDialog("Dar fecha inicio (YYYY-MM-DD)");
+			String fechaFin = JOptionPane.showInputDialog("Dar fecha fin (YYYY-MM-DD)");
+
+			if(!fechaInicio.equals("") && !fechaFin.equals("")) {
+
+				List<Object[]> servicios = epsandes.rfc1(fechaInicio, fechaFin);
+				String resp = listarRCF1(servicios);
+				panelDatos.actualizarInterfaz(resp);
+			}
+		}
+
+		catch (Exception e) 
+		{
+			//			e.printStackTrace();
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
+
+	}
+
+	/**
+	 * Genera una cadena de caracteres con la lista de parejas de objetos recibida: una línea por cada pareja
+	 * @return La cadena con una línea para cada pareja recibido
+	 */
+	private String listarRCF1 (List<Object[]> lista) 
+	{
+		String resp = "La cantidad de servicios prestados por IPS sonrealizadas son:\n";
+		int i = 1;
+		for (Object [] tupla : lista)
+		{
+	
+			String resp1 ="nombre " +tupla[1] + ", ";
+			resp1 += "cantidad servicios prestados: " + tupla[2];
+			resp += resp1 + "\n";
+		}
+		return resp;
+	}
+	/**
+	 * Los servicios que fueron más solicitados en un período de tiempo dado.
+	 */
+	public void rfc2() {
+
+		try {
+			String fechaInicio = JOptionPane.showInputDialog("Dar fecha inicio (YYYY-MM-DD)");
+			String fechaFin = JOptionPane.showInputDialog("Dar fecha fin (YYYY-MM-DD)");
+
+			if(!fechaInicio.equals("") && !fechaFin.equals("")) {
+
+				List<Object[]> servicios = epsandes.rfc2(fechaInicio, fechaFin);
+				String resp = listarRCF2(servicios);
+				panelDatos.actualizarInterfaz(resp);
+			}
+		}
+
+		catch (Exception e) 
+		{
+			//			e.printStackTrace();
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
+	}
+	
+	/**
+	 * Genera una cadena de caracteres con la lista de parejas de objetos recibida: una línea por cada pareja
+	 * @return La cadena con una línea para cada pareja recibido
+	 */
+	private String listarRCF2 (List<Object[]> lista) 
+	{
+		String resp = "Los servicios que fueron mas solictados son:\n";
+		for (Object [] tupla : lista)
+		{
+			String resp1 = "";
+			if(!tupla[0].equals("")) {
+				resp1 ="consulta: " +tupla[1] + ", ";	
+				
+			}
+			if(!tupla[1].equals("")) {
+				resp1 ="terapia : " +tupla[1] + ", ";	
+				
+			}
+			if(!tupla[2].equals("")) {
+				resp1 ="procedimiento especial : " +tupla[1] + ", ";	
+				
+			}
+			if(!tupla[3].equals("")) {
+				resp1 ="hospitalizacion: " +tupla[1] + ", ";	
+				
+			}
+			
+			resp1 += "cantidad servicios prestados: " + tupla[4];
+			resp += resp1 + "\n";
+		}
+		return resp;
+	}
+
+	/**
+	 * Dada una unidad de tiempo (por ejemplo, semana o mes) y un servicio de salud, considerando todo el tiempo
+	 *de operación de EPSAndes, indicar cuáles fueron las fechas de mayor demanda (mayor cantidad de servicios
+	 *solicitados), las de mayor actividad (mayor cantidad de servicios efectivamente prestados) y también las fechas
+	 *de menor demanda.
+	 */
+	public void rfc6() {
+		try {
+			String cadena = JOptionPane.showInputDialog("Dar unidad de timepo, para dia 0, para semana 1, para mes 2");
+			int unidadTiempo  = Integer.parseInt(cadena);
+			String servicio = JOptionPane.showInputDialog("Indique el tipo de servicio, 0 pra consulta, 1 para terapia, 2 para procedimiento especial"
+					+ "y 3 para hospitalizacion");
+
+			if(unidadTiempo<=3 && unidadTiempo>=0) {
+
+				List<Object[]> servicios = epsandes.rfc6( cadena, servicio);
+				String resp = listarRCF2(servicios);
+				panelDatos.actualizarInterfaz(resp);
+			}
+
+		}
+
+		catch (Exception e) 
+		{
+			//			e.printStackTrace();
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
+	}
+	
+	/**
+	 * Genera una cadena de caracteres con la lista de parejas de objetos recibida: una línea por cada pareja
+	 * @return La cadena con una línea para cada pareja recibido
+	 */
+	private String listarRCF6 (List<Object[]> lista) 
+	{
+		String resp = "Las fechas de mayor demanda son:\n";
+		int i = 1;
+		for (Object [] tupla : lista)
+		{
+			
+			
+			String resp1 = "";
+			resp1 ="fecha: " +tupla[0] + ", ";	
+			resp1 ="cantidad : " +tupla[1] + ", ";	
+			resp1 += "]";
+			resp += resp1 + "\n";
+		}
+		return resp;
+	}
+
+	/**
+	 * Encontrar la información de los afiliados exigente. Se considera exigente a un afiliado que, durante el último
+	 *año de operación de EPSAndes, ha solicitado y recibido más de doce (12) de servicios de salud, de por lo
+	 *menos tres (3) tipos de servicio diferentes11. La información en el resultado debe evidenciar el hecho de ser
+	 *afiliado exigente.
+	 */
+	public void rfc7() {
+
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd ");
+
+		String fechaFin =  formatter.format(System.currentTimeMillis());
+		int num =  Integer.parseInt(fechaFin.substring(0, 4));
+		num --;
+		String fechaInicio =  ""+num+fechaFin.substring(4, 10);
+		
+		String resp = listarRCF7(lista);
+		
+	}
+
+	/**
+	 * Genera una cadena de caracteres con la lista de parejas de objetos recibida: una línea por cada pareja
+	 * @return La cadena con una línea para cada pareja recibido
+	 */
+	private String listarRCF7 (List<Object[]> lista) 
+	{
+		String resp = "Los afiliados exigentes son :\n";
+		int i = 1;
+		for (Object [] tupla : lista)
+		{
+			VOBebedor bdor = (VOBebedor) tupla [0];
+			int numVisitas = (int) tupla [1];
+			String resp1 = i++ + ". " + "[";
+			resp1 += bdor + ", ";
+			resp1 += "numVisitas: " + numVisitas;
+			resp1 += "]";
+			resp += resp1 + "\n";
+		}
+		return resp;
+	}
+
 
 	/* ****************************************************************
 	 * 			CRUD de EPS

@@ -287,7 +287,7 @@ class SQLCita
 		return (List<Cita>) q.executeList();
 	}
 	
-	public List<Object []> darCitasMasPedidas (PersistenceManager pm,String fechaInicio, String fechaFin)
+	public List<Object []> darRFC2 (PersistenceManager pm,String fechaInicio, String fechaFin)
 	{
 		String sql = "SELECT* FROM";
 		sql +="(SELECT cita.idConsulta, cita.idTerapia, cita.idProcedimientoEsp, cita.idHospitalizacion";
@@ -297,8 +297,8 @@ class SQLCita
 		sql	+= "INNER JOIN terapia ON cita.idTerapia = terapia.id";
 		sql	+= "INNER JOIN procedimiento_esp ON cita.procedimientoEsp = procedimiento_esp.id";
 		sql	+= "INNER JOIN hospitalizacion ON cita.idHospitalizacion = hospitalizacion.id";
-		sql	+= "WHERE TO_DATE('cita.fechaInicio', 'YYYY-MM-DD')>= TO_DATE('"+fechaInicio+",'YYYY-MM-DD')";
-		sql	+= "AND TO_DATE('cita.fechaFin', 'YYYY-MM-DD')<= TO_DATE('"+fechaFin+",'YYYY-MM-DD')";
+		sql	+= "WHERE TO_DATE(cita.fechaInicio, 'YYYY-MM-DD')>= TO_DATE('"+fechaInicio+"' ,'YYYY-MM-DD') \n";
+		sql	+= "AND TO_DATE(cita.fechaFin, 'YYYY-MM-DD')<= TO_DATE('"+fechaFin+"' ,'YYYY-MM-DD') \n";
 	  	sql	+= "GROUP BY (cita.idConsulta, cita.idTerapia, cita.idProcedimientoEsp, cita.idHospitalizacion)";
 	  	sql	+= "ORDER BY CUANTOS DESC)t";
 	  	sql	+="WHERE ROWNUM BETWEN 1 AND 20";
@@ -306,6 +306,22 @@ class SQLCita
 	  	Query q = pm.newQuery(SQL, sql);
 		
 		return q.executeList();
+	}
+	
+	public List<Object> darRFC6(PersistenceManager pm, String unidadTiempo, String servicio){
+		
+		String sql = "SELECT* FROM";
+		sql +="(SELECT cita.fechaInicio, COUNT(cita.fechaInicio) AS numcitas";
+		sql	+= "FROM cita";
+		sql	+= "cita.id"+servicio+" IS NOT NULL";
+		sql += "GROUP BY cita.fechaInicio";
+	  	sql	+= "ORDER BY CUANTOS DESC)t";
+		sql	+="WHERE ROWNUM BETWEN 1 AND 2";
+		
+	    Query q = pm.newQuery(SQL, sql);
+		
+		return q.executeList();
+		
 	}
 
 
