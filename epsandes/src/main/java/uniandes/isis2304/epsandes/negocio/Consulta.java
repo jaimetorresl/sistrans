@@ -28,6 +28,8 @@ public class Consulta implements VOConsulta{
 	
 	public long IDRECEPCIONISTA;
 	
+	public String reservado;
+	
 	/**
      * Constructor por defecto
      */
@@ -45,6 +47,7 @@ public class Consulta implements VOConsulta{
 		DIAINICIO = "";
 		DIAFIN = "";
 		IDRECEPCIONISTA = 0;
+		reservado = "";
 		
 	}
 	
@@ -57,7 +60,7 @@ public class Consulta implements VOConsulta{
 	 */
     public Consulta(long id, String esAfiliado, String ordenPrevia, long idIPS, int capacidad, 
     		String horaInicio, String horaFin, String fechaInicio, String fechaFin, 
-    		String diaInicio, String diaFin, long idRecepcionista) 
+    		String diaInicio, String diaFin, long idRecepcionista, String reservado) 
     {
     	this.ID = id;
     	this.ESAFILIADO = esAfiliado;
@@ -71,7 +74,8 @@ public class Consulta implements VOConsulta{
     	this.DIAINICIO = diaInicio;
     	this.DIAFIN = diaFin;
     	this.IDRECEPCIONISTA = idRecepcionista;
-		
+		this.reservado = reservado;
+    	
 	}
 	
 	
@@ -159,6 +163,12 @@ public class Consulta implements VOConsulta{
 		return IDRECEPCIONISTA;
 	}
 
+	public String getReservado() {
+		
+		return reservado;
+		
+	}
+	
 
 	@Override
 	public String toString() {

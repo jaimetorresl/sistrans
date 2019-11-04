@@ -73,9 +73,9 @@ class SQLTerapia
 	 */
 	public long adicionarTerapia (PersistenceManager pm, long id, String ordenPrevia, String esAfiliado, String numSesiones, String tipoTerapia, long idIPS, int capacidad, String horaInicio, String horaFin, String fechaInicio, String fechaFin, String diaInicio, String diaFin, long idRecepcionista) 
 	{
-        Query q = pm.newQuery(SQL, "INSERT INTO " + "TERAPIA" + "(id, ordenPrevia, esAfiliado, numseries, tipoTerapia, idIPS, capacidad, horaInicio, horaFin, fechaInicio, fechaFin, diaInicio, diaFin, idRecepcionista) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        Query q = pm.newQuery(SQL, "INSERT INTO " + "TERAPIA" + "(id, ordenPrevia, esAfiliado, numseries, tipoTerapia, idIPS, capacidad, horaInicio, horaFin, fechaInicio, fechaFin, diaInicio, diaFin, idRecepcionista, reservado) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
-        q.setParameters(id, ordenPrevia, esAfiliado, numSesiones, tipoTerapia, idIPS, capacidad, horaInicio, horaFin, fechaInicio, fechaFin, diaInicio, diaFin, idRecepcionista);
+        q.setParameters(id, ordenPrevia, esAfiliado, numSesiones, tipoTerapia, idIPS, capacidad, horaInicio, horaFin, fechaInicio, fechaFin, diaInicio, diaFin, idRecepcionista, "NO");
         return (long) q.executeUnique();
 	}
 
@@ -90,6 +90,37 @@ class SQLTerapia
         Query q = pm.newQuery(SQL, "DELETE FROM " + pp.darTablaTerapia () + " WHERE id = ?");
         q.setParameters(id);
         return (long) q.executeUnique();
+	}
+	
+	
+	public void cambiarReservaTerapia (PersistenceManager pm, long idTerapia)
+	{
+		
+		
+		Query select = pm.newQuery(SQL, "SELECT RESERVADO FROM TERAPIA WHERE id = ?");
+		select.setParameters(idTerapia);
+
+		String reservado = (String) select.executeUnique();
+		
+
+		Query q;
+
+		if(reservado.equals("SI")) {
+			
+			q = pm.newQuery(SQL, "UPDATE TERAPIA SET RESERVADO = 'NO'  WHERE id = ?");
+
+		} else {
+			
+			
+			q = pm.newQuery(SQL, "UPDATE TERAPIA SET RESERVADO = 'SI'  WHERE id = ?");
+
+		}
+
+		q.setParameters(idTerapia);
+		
+		q.executeUnique();
+
+		//return (long) q.executeUnique();
 	}
 
 	/**

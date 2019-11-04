@@ -49,5 +49,32 @@ public class SQLCampaniaProcedimiento {
         
         return (long) q.executeUnique();
 	}
+	
+	
+	public long eliminarCampaniaProcedimientoPorId (PersistenceManager pm, long idCampania, long idProcedimiento, int eliminar)
+	{
+		Query q;
+
+
+		q = pm.newQuery(SQL, "UPDATE CAMPANIA_PROCEDIMIENTO_ESP SET DISPONIBLE = 'NO'  WHERE idprocedimientoesp = ? AND id = ?");
+
+		q.setParameters(idProcedimiento, idCampania);
+		
+		q.executeUnique();
+
+
+		if(eliminar == 0) {
+			
+			Query x = pm.newQuery(SQL, "DELETE FROM " + "CAMPANIA_PROCEDIMIENTO_ESP" + " WHERE id = ? AND idprocedimientoesp = ?");
+			x.setParameters(idCampania, idProcedimiento);
+			x.executeUnique();
+
+		}
+
+		
+		
+		return 1;
+	}
+
 
 }

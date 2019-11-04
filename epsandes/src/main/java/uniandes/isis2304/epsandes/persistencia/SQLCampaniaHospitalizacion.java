@@ -50,5 +50,30 @@ public class SQLCampaniaHospitalizacion {
         return (long) q.executeUnique();
 	}
 
+	
+	public long eliminarCampaniaHospitalizacionPorId (PersistenceManager pm, long idCampania, long idHospitalizacion, int eliminar)
+	{
+		Query q;
+
+
+		q = pm.newQuery(SQL, "UPDATE CAMPANIA_HOSPITALIZACION SET DISPONIBLE = 'NO'  WHERE idhospitalizacion = ? AND id = ?");
+
+		q.setParameters(idHospitalizacion, idCampania);
+		
+		q.executeUnique();
+
+
+		if(eliminar == 0) {
+			
+			Query x = pm.newQuery(SQL, "DELETE FROM " + "CAMPANIA_HOSPITALIZACION" + " WHERE id = ? AND idhospitalizacion = ?");
+			x.setParameters(idCampania, idHospitalizacion);
+			x.executeUnique();
+
+		}
+
+		
+		
+		return 1;
+	}
 
 }

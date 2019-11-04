@@ -74,8 +74,8 @@ class SQLProcedimientoEsp
 	 */
 	public long adicionarProcedimientoEsp (PersistenceManager pm, long id, String esAfiliado,  String ordenPrevia,  String  conocimiento, String equipo, long idIPS, int capacidad, String horaInicio, String horaFin, String fechaInicio, String fechaFin, String diaInicio, String diaFin, long idRecepcionista) 
 	{
-        Query q = pm.newQuery(SQL, "INSERT INTO " + "PROCEDIMIENTO_ESP" + "(id,esAfiliado, ordenPrevia,  conocimiento, equipo, idIPS, capacidad, horaInicio, horaFin, fechaInicio, fechaFin, diaInicio, diaFin, idRecepcionista) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        q.setParameters(id,  esAfiliado, ordenPrevia, conocimiento, equipo, idIPS, capacidad,horaInicio, horaFin, fechaInicio, fechaFin, diaInicio, diaFin, idRecepcionista );
+        Query q = pm.newQuery(SQL, "INSERT INTO " + "PROCEDIMIENTO_ESP" + "(id,esAfiliado, ordenPrevia,  conocimiento, equipo, idIPS, capacidad, horaInicio, horaFin, fechaInicio, fechaFin, diaInicio, diaFin, idRecepcionista, reservado) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        q.setParameters(id,  esAfiliado, ordenPrevia, conocimiento, equipo, idIPS, capacidad,horaInicio, horaFin, fechaInicio, fechaFin, diaInicio, diaFin, idRecepcionista, "NO");
 
         return (long) q.executeUnique();
 	}
@@ -93,6 +93,38 @@ class SQLProcedimientoEsp
         return (long) q.executeUnique();
 	}
 
+	public void cambiarReservaProcedimiento (PersistenceManager pm, long idProcedimiento)
+	{
+		
+		
+		Query select = pm.newQuery(SQL, "SELECT RESERVADO FROM PROCEDIMIENTO_ESP WHERE id = ?");
+		select.setParameters(idProcedimiento);
+
+		String reservado = (String) select.executeUnique();
+		
+
+		Query q;
+
+		if(reservado.equals("SI")) {
+			
+			q = pm.newQuery(SQL, "UPDATE PROCEDIMIENTO_ESP SET RESERVADO = 'NO'  WHERE id = ?");
+
+		} else {
+			
+			
+			q = pm.newQuery(SQL, "UPDATE PROCEDIMIENTO_ESP SET RESERVADO = 'SI'  WHERE id = ?");
+
+		}
+
+		q.setParameters(idProcedimiento);
+		
+		q.executeUnique();
+
+		//return (long) q.executeUnique();
+	}
+	
+	
+	
 	/**
 	 * Crea y ejecuta la sentencia SQL para encontrar la información de UN BAR de la 
 	 * base de datos de Parranderos, por su identificador

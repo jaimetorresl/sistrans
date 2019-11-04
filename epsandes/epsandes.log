@@ -253,3 +253,109 @@ ORA-02291: integrity constraint (ISIS2304C221920.CAMPANIA_CONSULTA_FK2) violated
 10:49:25,760 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Adicionando consulta a la campania de prevencion: CampaniaConsulta [idCampania=287, idConsulta=232, fechaInicio=dwdwd, fechaFin=wddw, disponible=SI]
 10:49:25,760 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Adicionando una consulta asociada a la campania de prevencion: 287
 10:49:25,880 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Adicionando consulta a la campania de prevencion: CampaniaConsulta [idCampania=287, idConsulta=203, fechaInicio=dwdwd, fechaFin=wddw, disponible=SI]
+10:52:42,637 (main) INFO  [uniandes.isis2304.epsandes.interfazApp.InterfazEpsAndesApp] - Se encontr� un archivo de configuraci�n v�lido: Interfaz
+10:52:42,638 (main) INFO  [uniandes.isis2304.epsandes.interfazApp.InterfazEpsAndesApp] - Se aplica configuraci�n indicada en el archivo de configuraci�n
+10:54:12,081 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Adicionando campania de prevencion en la localizacion de: Usaquen
+10:54:12,327 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Adicionando campania de prevencion: CampaniaPrevencion [id=288, localizacion=Usaquen, fechaInicio=03-11-2019 08:30:00, fechaFin=05-11-2019 18:30:00, idEPS=1]
+10:54:12,327 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Adicionando una consulta asociada a la campania de prevencion: 288
+10:54:12,453 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Adicionando consulta a la campania de prevencion: CampaniaConsulta [idCampania=288, idConsulta=232, fechaInicio=03-11-2019 10:00:00, fechaFin=04-11-2019 10:00:00, disponible=SI]
+10:54:12,453 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Adicionando una consulta asociada a la campania de prevencion: 288
+10:54:12,576 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Adicionando consulta a la campania de prevencion: CampaniaConsulta [idCampania=288, idConsulta=203, fechaInicio=03-11-2019 10:00:00, fechaFin=04-11-2019 10:00:00, disponible=SI]
+10:54:12,576 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Adicionando una terapia asociada a la campania de prevencion: 288
+10:54:12,695 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Adicionando terapia a la campania de prevencion: CampaniaConsulta [idCampania=288, idTerapia=178, fechaInicio=03-11-2019 10:00:00, fechaFin=04-11-2019 10:00:00, disponible=SI]
+11:52:50,556 (main) INFO  [uniandes.isis2304.epsandes.interfazApp.InterfazEpsAndesApp] - Se encontr� un archivo de configuraci�n v�lido: Interfaz
+11:52:50,557 (main) INFO  [uniandes.isis2304.epsandes.interfazApp.InterfazEpsAndesApp] - Se aplica configuraci�n indicada en el archivo de configuraci�n
+11:53:22,652 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Eliminando consulta de campania de prevencion con id: 288
+11:53:23,232 (AWT-EventQueue-0) ERROR [uniandes.isis2304.epsandes.negocio.EPSAndes] - Exception : Error executing SQL query "DELETE FROM CAMPANIA_CONSULTA WHERE idCampania = ? AND idConsulta = ?".
+ORA-00904: "IDCAMPANIA": invalid identifier
+
+11:53:23,314 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Eliminado consulta de campania de prevencion con id: 288
+11:54:08,559 (main) INFO  [uniandes.isis2304.epsandes.interfazApp.InterfazEpsAndesApp] - Se encontr� un archivo de configuraci�n v�lido: Interfaz
+11:54:08,560 (main) INFO  [uniandes.isis2304.epsandes.interfazApp.InterfazEpsAndesApp] - Se aplica configuraci�n indicada en el archivo de configuraci�n
+11:54:20,147 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Eliminando consulta de campania de prevencion con id: 288
+11:54:20,760 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Eliminado consulta de campania de prevencion con id: 288
+18:43:52,226 (main) INFO  [uniandes.isis2304.epsandes.interfazApp.InterfazEpsAndesApp] - Se encontr� un archivo de configuraci�n v�lido: Interfaz
+18:43:52,227 (main) INFO  [uniandes.isis2304.epsandes.interfazApp.InterfazEpsAndesApp] - Se aplica configuraci�n indicada en el archivo de configuraci�n
+18:47:07,073 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Adicionando consulta de la IPS: 1
+18:47:08,129 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Adicionando consulta: Consulta [id=289, esAfiliado=SI, ordenPrevia=NO, idIPS=1, capacidad=20, horaInicio=01-01-2019 06:30:00, horaFin=25-12-2019 22:00:00, fechaInicio=01-01-2019 06:30:00, fechaFin=25-12-2019 22:00:00, diaInicio=LUNES, diaFin=VIERNES, idRecepcionista=53]
+18:48:45,567 (main) INFO  [uniandes.isis2304.epsandes.interfazApp.InterfazEpsAndesApp] - Se encontr� un archivo de configuraci�n v�lido: Interfaz
+18:48:45,567 (main) INFO  [uniandes.isis2304.epsandes.interfazApp.InterfazEpsAndesApp] - Se aplica configuraci�n indicada en el archivo de configuraci�n
+18:52:19,092 (main) INFO  [uniandes.isis2304.epsandes.interfazApp.InterfazEpsAndesApp] - Se encontr� un archivo de configuraci�n v�lido: Interfaz
+18:52:19,092 (main) INFO  [uniandes.isis2304.epsandes.interfazApp.InterfazEpsAndesApp] - Se aplica configuraci�n indicada en el archivo de configuraci�n
+18:55:07,157 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Adicionando campania de prevencion en la localizacion de: Usaquen
+18:55:07,416 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Adicionando campania de prevencion: CampaniaPrevencion [id=290, localizacion=Usaquen, fechaInicio=03-11-2019 08:00:00, fechaFin=05-11-2019 08:00:00, idEPS=1]
+18:55:07,416 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Adicionando una consulta asociada a la campania de prevencion: 290
+18:55:07,543 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Adicionando consulta a la campania de prevencion: CampaniaConsulta [idCampania=290, idConsulta=289, fechaInicio=03-11-2019 08:00:00, fechaFin=03-11-2019 10:00:00, disponible=SI]
+18:55:07,543 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Cambiando la columna reservado de consulta: 289
+18:55:07,663 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Cambiado la columna reservado de consulta: 289
+18:58:28,487 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Eliminando consulta de campania de prevencion con id: 290
+18:58:28,608 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Eliminado consulta de campania de prevencion con id: 290
+18:58:28,608 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Cambiando la columna reservado de consulta: 289
+18:58:28,731 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Cambiado la columna reservado de consulta: 289
+19:01:07,146 (main) INFO  [uniandes.isis2304.epsandes.interfazApp.InterfazEpsAndesApp] - Se encontr� un archivo de configuraci�n v�lido: Interfaz
+19:01:07,147 (main) INFO  [uniandes.isis2304.epsandes.interfazApp.InterfazEpsAndesApp] - Se aplica configuraci�n indicada en el archivo de configuraci�n
+19:04:37,513 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Adicionando campania de prevencion en la localizacion de: Usaquen
+19:04:37,789 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Adicionando campania de prevencion: CampaniaPrevencion [id=291, localizacion=Usaquen, fechaInicio=03-11-2019 08:00:00, fechaFin=05-11-2019 08:00:00, idEPS=1]
+19:04:37,789 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Adicionando una consulta asociada a la campania de prevencion: 291
+19:04:37,943 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Adicionando consulta a la campania de prevencion: CampaniaConsulta [idCampania=291, idConsulta=289, fechaInicio=03-11-2019 08:00:00, fechaFin=03-11-2019 10:00:00, disponible=SI]
+19:04:37,943 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Cambiando la columna reservado de consulta: 289
+19:04:38,066 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Cambiado la columna reservado de consulta: 289
+19:13:04,802 (main) INFO  [uniandes.isis2304.epsandes.interfazApp.InterfazEpsAndesApp] - Se encontr� un archivo de configuraci�n v�lido: Interfaz
+19:13:04,802 (main) INFO  [uniandes.isis2304.epsandes.interfazApp.InterfazEpsAndesApp] - Se aplica configuraci�n indicada en el archivo de configuraci�n
+19:14:46,588 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Adicionando campania de prevencion en la localizacion de: Usaquen
+19:14:46,830 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Adicionando campania de prevencion: CampaniaPrevencion [id=292, localizacion=Usaquen, fechaInicio=03-11-2019 08:00:00, fechaFin=05-11-2019 08:00:00, idEPS=1]
+19:14:46,831 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Adicionando una consulta asociada a la campania de prevencion: 292
+19:14:46,957 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Adicionando consulta a la campania de prevencion: CampaniaConsulta [idCampania=292, idConsulta=289, fechaInicio=03-11-2019 08:00:00, fechaFin=03-11-2019 10:00:00, disponible=SI]
+19:14:46,957 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Cambiando la columna reservado de consulta: 289
+19:14:47,098 (AWT-EventQueue-0) ERROR [uniandes.isis2304.epsandes.negocio.EPSAndes] - Exception : Error executing SQL query "UPDATE CONSULTA SET RESERVADO = SI  WHERE id = ?".
+ORA-00904: "SI": invalid identifier
+
+19:14:47,174 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Cambiado la columna reservado de consulta: 289
+19:19:43,939 (main) INFO  [uniandes.isis2304.epsandes.interfazApp.InterfazEpsAndesApp] - Se encontr� un archivo de configuraci�n v�lido: Interfaz
+19:19:43,939 (main) INFO  [uniandes.isis2304.epsandes.interfazApp.InterfazEpsAndesApp] - Se aplica configuraci�n indicada en el archivo de configuraci�n
+19:21:22,536 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Adicionando campania de prevencion en la localizacion de: Usaqueb
+19:21:22,785 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Adicionando campania de prevencion: CampaniaPrevencion [id=293, localizacion=Usaqueb, fechaInicio=03-11-2019 08:00:00, fechaFin=05-11-2019 08:00:00, idEPS=1]
+19:21:22,785 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Adicionando una consulta asociada a la campania de prevencion: 293
+19:21:22,911 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Adicionando consulta a la campania de prevencion: CampaniaConsulta [idCampania=293, idConsulta=289, fechaInicio=03-11-2019 08:00:00, fechaFin=03-11-2019 10:00:00, disponible=SI]
+19:21:22,911 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Cambiando la columna reservado de consulta: 289
+19:21:23,077 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Cambiado la columna reservado de consulta: 289
+19:22:01,135 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Eliminando consulta de campania de prevencion con id: 293
+19:22:01,255 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Eliminado consulta de campania de prevencion con id: 293
+19:22:01,255 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Cambiando la columna reservado de consulta: 289
+19:22:01,417 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Cambiado la columna reservado de consulta: 289
+20:02:24,932 (main) INFO  [uniandes.isis2304.epsandes.interfazApp.InterfazEpsAndesApp] - Se encontr� un archivo de configuraci�n v�lido: Interfaz
+20:02:24,932 (main) INFO  [uniandes.isis2304.epsandes.interfazApp.InterfazEpsAndesApp] - Se aplica configuraci�n indicada en el archivo de configuraci�n
+20:03:11,286 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Adicionando campania de prevencion en la localizacion de: Usaquen
+20:03:11,532 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Adicionando campania de prevencion: CampaniaPrevencion [id=294, localizacion=Usaquen, fechaInicio=03-11-2019 08:00:00, fechaFin=05-11-2019 08:00:00, idEPS=1]
+20:03:11,532 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Adicionando una consulta asociada a la campania de prevencion: 294
+20:03:11,688 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Adicionando consulta a la campania de prevencion: CampaniaConsulta [idCampania=294, idConsulta=289, fechaInicio=03-11-2019 08:00:00, fechaFin=03-11-2019 10:00:00, disponible=SI]
+20:03:11,688 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Cambiando la columna reservado de consulta: 289
+20:03:11,879 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Cambiado la columna reservado de consulta: 289
+20:03:50,953 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Eliminando consulta de campania de prevencion con id: 294
+20:03:51,121 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Eliminado consulta de campania de prevencion con id: 294
+20:03:51,121 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Cambiando la columna reservado de consulta: 289
+20:03:51,281 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Cambiado la columna reservado de consulta: 289
+20:04:31,715 (main) INFO  [uniandes.isis2304.epsandes.interfazApp.InterfazEpsAndesApp] - Se encontr� un archivo de configuraci�n v�lido: Interfaz
+20:04:31,715 (main) INFO  [uniandes.isis2304.epsandes.interfazApp.InterfazEpsAndesApp] - Se aplica configuraci�n indicada en el archivo de configuraci�n
+20:05:19,752 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Adicionando campania de prevencion en la localizacion de: Usaquen
+20:05:20,005 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Adicionando campania de prevencion: CampaniaPrevencion [id=295, localizacion=Usaquen, fechaInicio=03-11-2019 08:00:00, fechaFin=05-11-2019 08:00:00, idEPS=1]
+20:05:20,005 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Adicionando una consulta asociada a la campania de prevencion: 295
+20:05:20,133 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Adicionando consulta a la campania de prevencion: CampaniaConsulta [idCampania=295, idConsulta=289, fechaInicio=03-11-2019 08:00:00, fechaFin=03-11-2019 09:00:00, disponible=SI]
+20:05:20,133 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Cambiando la columna reservado de consulta: 289
+20:05:20,297 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Cambiado la columna reservado de consulta: 289
+20:05:41,498 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Eliminando consulta de campania de prevencion con id: 295
+20:05:41,623 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Eliminado consulta de campania de prevencion con id: 295
+20:05:41,623 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Cambiando la columna reservado de consulta: 289
+20:05:41,781 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Cambiado la columna reservado de consulta: 289
+20:07:18,439 (main) INFO  [uniandes.isis2304.epsandes.interfazApp.InterfazEpsAndesApp] - Se encontr� un archivo de configuraci�n v�lido: Interfaz
+20:07:18,439 (main) INFO  [uniandes.isis2304.epsandes.interfazApp.InterfazEpsAndesApp] - Se aplica configuraci�n indicada en el archivo de configuraci�n
+20:07:50,339 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Adicionando campania de prevencion en la localizacion de: uSAQUEN
+20:07:50,590 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Adicionando campania de prevencion: CampaniaPrevencion [id=296, localizacion=uSAQUEN, fechaInicio=03-11-2019 08:00:00, fechaFin=05-11-2019 08:00:00, idEPS=1]
+20:07:50,591 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Adicionando una consulta asociada a la campania de prevencion: 296
+20:07:50,715 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Adicionando consulta a la campania de prevencion: CampaniaConsulta [idCampania=296, idConsulta=289, fechaInicio=03-11-2019 08:00:00, fechaFin=03-11-2019 09:00:00, disponible=SI]
+20:07:50,715 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Cambiando la columna reservado de consulta: 289
+20:07:50,880 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Cambiado la columna reservado de consulta: 289
+20:08:18,286 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Eliminando consulta de campania de prevencion con id: 296
+20:08:18,409 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Eliminado consulta de campania de prevencion con id: 296
+20:08:18,409 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Cambiando la columna reservado de consulta: 289
+20:08:18,567 (AWT-EventQueue-0) INFO  [uniandes.isis2304.epsandes.negocio.EPSAndes] - Cambiado la columna reservado de consulta: 289

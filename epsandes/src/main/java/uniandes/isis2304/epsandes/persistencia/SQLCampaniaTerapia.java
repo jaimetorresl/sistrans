@@ -50,5 +50,32 @@ public class SQLCampaniaTerapia {
         
         return (long) q.executeUnique();
 	}
+	
+	
+	public long eliminarCampaniaTerapiaPorId (PersistenceManager pm, long idCampania, long idTerapia, int eliminar)
+	{
+		Query q;
+
+
+		q = pm.newQuery(SQL, "UPDATE CAMPANIA_TERAPIA SET DISPONIBLE = 'NO'  WHERE idterapia = ? AND id = ?");
+
+		q.setParameters(idTerapia, idCampania);
+		
+		q.executeUnique();
+
+
+		if(eliminar == 0) {
+			
+			Query x = pm.newQuery(SQL, "DELETE FROM " + "CAMPANIA_TERAPIA" + " WHERE id = ? AND idterapia = ?");
+			x.setParameters(idCampania, idTerapia);
+			x.executeUnique();
+
+		}
+
+		
+		
+		return 1;
+	}
+
 
 }

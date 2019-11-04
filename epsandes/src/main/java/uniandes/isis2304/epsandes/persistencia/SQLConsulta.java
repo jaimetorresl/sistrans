@@ -58,7 +58,7 @@ class SQLConsulta
 	{
 		this.pp = pp;
 	}
-	
+
 	/**
 	 * Crea y ejecuta la sentencia SQL para adicionar un BAR a la base de datos de Parranderos
 	 * @param pm - El manejador de persistencia
@@ -72,9 +72,9 @@ class SQLConsulta
 	public long adicionarConsulta (PersistenceManager pm, long id, String ordenPrevia, String esAfiliado, long IdIPS, int capacidad,
 			String horaInicio, String horaFin, String fechaInicio, String fechaFin, String diaInicio, String diaFin, long idRecepcionista) 
 	{
-        Query q = pm.newQuery(SQL, "INSERT INTO " + "CONSULTA" + "(id, ordenPrevia, esAfiliado, IdIPS, capacidad, horaInicio, horaFin, fechaInicio, fechaFin, diaInicio, diaFin, idRecepcionista) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        q.setParameters(id, ordenPrevia, esAfiliado, IdIPS, capacidad, horaInicio, horaFin, fechaInicio, fechaFin, diaInicio, diaFin, idRecepcionista);
-        return (long) q.executeUnique();
+		Query q = pm.newQuery(SQL, "INSERT INTO " + "CONSULTA" + "(id, ordenPrevia, esAfiliado, IdIPS, capacidad, horaInicio, horaFin, fechaInicio, fechaFin, diaInicio, diaFin, idRecepcionista, reservado) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+		q.setParameters(id, ordenPrevia, esAfiliado, IdIPS, capacidad, horaInicio, horaFin, fechaInicio, fechaFin, diaInicio, diaFin, idRecepcionista, "NO");
+		return (long) q.executeUnique();
 	}
 
 	/**
@@ -85,9 +85,40 @@ class SQLConsulta
 	 */
 	public long eliminarConsultaPorId (PersistenceManager pm, long id)
 	{
-        Query q = pm.newQuery(SQL, "DELETE FROM " + pp.darTablaConsulta () + " WHERE id = ?");
-        q.setParameters(id);
-        return (long) q.executeUnique();
+		Query q = pm.newQuery(SQL, "DELETE FROM " + pp.darTablaConsulta () + " WHERE id = ?");
+		q.setParameters(id);
+		return (long) q.executeUnique();
+	}
+
+
+	public void cambiarReservaConsulta (PersistenceManager pm, long idConsulta)
+	{
+		
+		
+		Query select = pm.newQuery(SQL, "SELECT RESERVADO FROM CONSULTA WHERE id = ?");
+		select.setParameters(idConsulta);
+
+		String reservado = (String) select.executeUnique();
+		
+
+		Query q;
+
+		if(reservado.equals("SI")) {
+			
+			q = pm.newQuery(SQL, "UPDATE CONSULTA SET RESERVADO = 'NO'  WHERE id = ?");
+
+		} else {
+			
+			
+			q = pm.newQuery(SQL, "UPDATE CONSULTA SET RESERVADO = 'SI'  WHERE id = ?");
+
+		}
+
+		q.setParameters(idConsulta);
+		
+		q.executeUnique();
+
+		//return (long) q.executeUnique();
 	}
 
 	/**
@@ -115,10 +146,10 @@ class SQLConsulta
 	{
 		Query q = pm.newQuery(SQL, "SELECT * FROM CONSULTA");
 		q.setResultClass(Consulta.class);
-		
+
 		List<Consulta> lista = (List<Consulta>) q.executeList();
-		
+
 		return lista;
 	}
-	
+
 }

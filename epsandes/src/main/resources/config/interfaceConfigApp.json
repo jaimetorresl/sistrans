@@ -140,6 +140,16 @@
 				{
 					"label": "Adicionar",
 					"event": "adicionarCampaniaPrevencion"
+				},
+				
+				{
+					"label": "Eliminar ss asociado a una campania de prevencion",
+					"event": "desreservarSSCampania"
+				},
+				
+				{
+					"label": "ReaperturaSS",
+					"event": "reaperturaServicio"
 				}
 			]
 		},

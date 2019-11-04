@@ -75,8 +75,8 @@ class SQLHospitalizacion
 	public long adicionarHospitalizacion (PersistenceManager pm, long id, String ordenPrevia, String esAfiliado, int numVisitas, long idIPS, int capacidad, 
 			String horaInicio, String horaFin, String fechaInicio, String fechaFin, String diaInicio, String diaFin, long idRecepcionista) 
 	{
-        Query q = pm.newQuery(SQL, "INSERT INTO " + "HOSPITALIZACION" + "(id, ordenPrevia, esAfiliado, numVisitas, idIPS, capacidad, horaInicio, horaFin, fechaInicio, fechaFin, idRecepcionista) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        q.setParameters(id, ordenPrevia, esAfiliado, numVisitas, idIPS, capacidad, horaInicio, horaFin, fechaInicio, fechaFin, idRecepcionista);
+        Query q = pm.newQuery(SQL, "INSERT INTO " + "HOSPITALIZACION" + "(id, ordenPrevia, esAfiliado, numVisitas, idIPS, capacidad, horaInicio, horaFin, fechaInicio, fechaFin, idRecepcionista, reservado) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        q.setParameters(id, ordenPrevia, esAfiliado, numVisitas, idIPS, capacidad, horaInicio, horaFin, fechaInicio, fechaFin, idRecepcionista, "NO");
         return (long) q.executeUnique();
 	}
 
@@ -91,6 +91,37 @@ class SQLHospitalizacion
         Query q = pm.newQuery(SQL, "DELETE FROM " + pp.darTablaHospitalizacion () + " WHERE id = ?");
         q.setParameters(id);
         return (long) q.executeUnique();
+	}
+	
+	
+	public void cambiarReservaHospitalizacion (PersistenceManager pm, long idHospitalizacion)
+	{
+		
+		
+		Query select = pm.newQuery(SQL, "SELECT RESERVADO FROM HOSPITALIZACION WHERE id = ?");
+		select.setParameters(idHospitalizacion);
+
+		String reservado = (String) select.executeUnique();
+		
+
+		Query q;
+
+		if(reservado.equals("SI")) {
+			
+			q = pm.newQuery(SQL, "UPDATE HOSPITALIZACION SET RESERVADO = 'NO'  WHERE id = ?");
+
+		} else {
+			
+			
+			q = pm.newQuery(SQL, "UPDATE HOSPITALIZACION SET RESERVADO = 'SI'  WHERE id = ?");
+
+		}
+
+		q.setParameters(idHospitalizacion);
+		
+		q.executeUnique();
+
+		//return (long) q.executeUnique();
 	}
 
 	/**

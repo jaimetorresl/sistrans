@@ -53,10 +53,10 @@ public class EPSAndes {
 	 * El constructor qye recibe los nombres de las tablas en tableConfig
 	 * @param tableConfig - Objeto Json con los nombres de las tablas y de la unidad de persistencia
 	 */
-//	public EPSAndes (JsonObject tableConfig)
-//	{
-//		pp = PersistenciaEPSAndes.getInstance (tableConfig);
-//	}
+	//	public EPSAndes (JsonObject tableConfig)
+	//	{
+	//		pp = PersistenciaEPSAndes.getInstance (tableConfig);
+	//	}
 
 	/**
 	 * Cierra la conexi�n con la base de datos (Unidad de persistencia)
@@ -332,8 +332,8 @@ public class EPSAndes {
 		return ordenConsulta;
 
 	}
-	
-	
+
+
 	public OrdenTerapia registrarOrdenTerapia(long idOrdenSS, long idTerapia) {
 
 		OrdenTerapia ordenTerapia;
@@ -344,7 +344,7 @@ public class EPSAndes {
 		return ordenTerapia;
 
 	}
-	
+
 	public OrdenProcedimientoEsp registrarOrdenProcedimientoEsp(long idOrdenSS, long idProcedimiento) {
 
 		OrdenProcedimientoEsp ordenProcedimiento;
@@ -355,8 +355,8 @@ public class EPSAndes {
 		return ordenProcedimiento;
 
 	}
-	
-	
+
+
 	public OrdenHospitalizacion registrarOrdenHospitalizacion(long idOrdenSS, long idHospitalizacion) {
 
 		OrdenHospitalizacion ordenHospitalizacion;
@@ -367,41 +367,41 @@ public class EPSAndes {
 		return ordenHospitalizacion;
 
 	}
-	
-	
+
+
 	/**--------------------------------------------------------------------------------
 	----------------------------------Iteracion 2 -------------------------------------
 	----------------------------------------------------------------------------------*/
-	
-	
-	
+
+
+
 	public List<Consulta> darConsultas() {
-		
+
 		return pp.darConsultas();
-		
+
 	}
-	
+
 	public List<Terapia> darTerapias() {
-		
+
 		return pp.darTerapias();
-		
+
 	}
-	
+
 	public List<ProcedimientoEsp> darProcedimientosEsp() {
-		
+
 		return pp.darProcedimientosEsp();
-		
+
 	}
-	
+
 	public List<Hospitalizacion> darHospitalizaciones() {
-		
+
 		return pp.darHospitalizacion();
-		
+
 	}
-	
-	
-	
-	
+
+
+
+
 	public CampaniaPrevencion registrarCampaniaPrevencion(String localizacion, String fechaInicio, String fechaFin, long idEPS) {
 
 		CampaniaPrevencion campaniaPrevencion;
@@ -412,8 +412,8 @@ public class EPSAndes {
 		return campaniaPrevencion;
 
 	}
-	
-	
+
+
 	public CampaniaConsulta registrarCampaniaConsulta(long idCampania, long idConsulta,
 			String fechaInicio, String fechaFin, String disponible) {
 
@@ -423,10 +423,10 @@ public class EPSAndes {
 		campaniaConsulta = pp.registrarCampaniaConsulta(idCampania, idConsulta, fechaInicio, fechaFin, disponible);
 		log.info ("Adicionando consulta a la campania de prevencion: " + campaniaConsulta);
 		return campaniaConsulta;
-		
+
 	}
-	
-	
+
+
 	public CampaniaTerapia registrarCampaniaTerapia(long idCampania, long idTerapia,
 			String fechaInicio, String fechaFin, String disponible) {
 
@@ -436,10 +436,10 @@ public class EPSAndes {
 		campaniaTerapia = pp.registrarCampaniaTerapia(idCampania, idTerapia, fechaInicio, fechaFin, disponible);
 		log.info ("Adicionando terapia a la campania de prevencion: " + campaniaTerapia);
 		return campaniaTerapia;
-		
+
 	}
-	
-	
+
+
 	public CampaniaProcedimientoEsp registrarCampaniaProcedimiento(long idCampania, long idProcedimiento,
 			String fechaInicio, String fechaFin, String disponible) {
 
@@ -449,10 +449,10 @@ public class EPSAndes {
 		campaniaProcedimiento = pp.registrarCampaniaProcedimiento(idCampania, idProcedimiento, fechaInicio, fechaFin, disponible);
 		log.info ("Adicionando procedimiento especial a la campania de prevencion: " + campaniaProcedimiento);
 		return campaniaProcedimiento;
-		
+
 	}
-	
-	
+
+
 	public CampaniaHospitalizacion registrarCampaniaHospitalizacion(long idCampania, long idHospitalizacion,
 			String fechaInicio, String fechaFin, String disponible) {
 
@@ -462,7 +462,92 @@ public class EPSAndes {
 		campaniaHospitalizacion = pp.registrarCampaniaHospitalizacion(idCampania, idHospitalizacion, fechaInicio, fechaFin, disponible);
 		log.info ("Adicionando hospitalizacion a la campania de prevencion: " + campaniaHospitalizacion);
 		return campaniaHospitalizacion;
-		
+
+	}
+
+
+	public void eliminarCampaniaConsultaPorId(long idCampania, long idConsulta, int eliminar) {
+
+
+		log.info ("Eliminando consulta de campania de prevencion con id: " + idCampania);
+		pp.eliminarCampaniaConsulta(idCampania, idConsulta, eliminar);
+		log.info ("Eliminado consulta de campania de prevencion con id: " + idCampania);
+
+	}
+
+
+	public void eliminarCampaniaTerapiaPorId(long idCampania, long idTerapia, int eliminar) {
+
+
+		log.info ("Eliminando terapia de campania de prevencion con id: " + idCampania);
+		pp.eliminarCampaniaTerapia(idCampania, idTerapia, eliminar);
+		log.info ("Eliminado terapia de campania de prevencion con id: " + idCampania);
+
+	}
+
+
+	public void eliminarCampaniaProcedimientoPorId(long idCampania, long idProcedimiento, int eliminar) {
+
+
+		log.info ("Eliminando procedimiento especial de campania de prevencion con id: " + idCampania);
+		pp.eliminarCampaniaProcedimiento(idCampania, idProcedimiento, eliminar);
+		log.info ("Eliminado procedimiento especial de campania de prevencion con id: " + idCampania);
+
+	}
+
+
+	public void eliminarCampaniaHospitalizacionPorId(long idCampania, long idHospitalizacion, int eliminar) {
+
+
+		log.info ("Eliminando hospitalizacion de campania de prevencion con id: " + idCampania);
+		pp.eliminarCampaniaHospitalizacion(idCampania, idHospitalizacion, eliminar);
+		log.info ("Eliminado hospitalizacion de campania de prevencion con id: " + idCampania);
+
+	}
+
+
+	public void cambiarReservaConsulta(long idConsulta) {
+
+		log.info ("Cambiando la columna reservado de consulta: " + idConsulta);
+		pp.cambiarReservaConsulta(idConsulta);
+		log.info ("Cambiado la columna reservado de consulta: " + idConsulta);
+
+	}
+
+
+	public void cambiarReservaTerapia(long idTerapia) {
+
+		log.info ("Cambiando la columna reservado de terapia: " + idTerapia);
+		pp.cambiarReservaTerapia(idTerapia);
+		log.info ("Cambiado la columna reservado de terapia: " + idTerapia);
+
+	}
+
+
+	public void cambiarReservaProcedimiento(long idProcedimiento) {
+
+		log.info ("Cambiando la columna reservado de procedimiento: " + idProcedimiento);
+		pp.cambiarReservaProcedimiento(idProcedimiento);
+		log.info ("Cambiado la columna reservado de procedimiento: " + idProcedimiento);
+
+	}
+
+
+	public void cambiarReservaHospitalizacion(long idHospitalizacion) {
+
+		log.info ("Cambiando la columna reservado de hospitalizacion: " + idHospitalizacion);
+		pp.cambiarReservaHospitalizacion(idHospitalizacion);
+		log.info ("Cambiado la columna reservado de hospitalizacion: " + idHospitalizacion);
+
+	}
+
+
+	public void reaperturaCampaniaConsulta(long idCampania, long idConsulta) {
+
+		log.info ("Realizando reapertura: " + idConsulta);
+		pp.reaperturaCampaniaConsulta(idCampania, idConsulta);
+		log.info ("Reapertura: " + idConsulta);
+
 	}
 
 

@@ -4,7 +4,7 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
 public class SQLCampaniaConsulta {
-	
+
 	private final static String SQL = PersistenciaEPSAndes.SQL;
 
 	/* ****************************************************************
@@ -27,7 +27,7 @@ public class SQLCampaniaConsulta {
 	{
 		this.pp = pp;
 	}
-	
+
 	/**
 	 * Crea y ejecuta la sentencia SQL para adicionar un BAR a la base de datos de Parranderos
 	 * @param pm - El manejador de persistencia
@@ -41,13 +41,66 @@ public class SQLCampaniaConsulta {
 	public long adicionarCampaniaConsulta(PersistenceManager pm, long idCampania, 
 			long idConsulta, String fechaInicio, String fechaFin, String disponible) 
 	{
+
+		Query q = pm.newQuery(SQL, "INSERT INTO " + "CAMPANIA_CONSULTA" + "(id, idconsulta, fechainicio, fechafin, disponible) values (?, ?, ?, ?, ?)");
+		q.setParameters(idCampania, idConsulta, fechaInicio, fechaFin, disponible);
+
+
+
+		return (long) q.executeUnique();
+	}
+
+
+	/**
+	 * Crea y ejecuta la sentencia SQL para eliminar BARES de la base de datos de Parranderos, por su nombre
+	 * @param pm - El manejador de persistencia
+	 * @param nombreEPS - El nombre del bar
+	 * @return EL número de tuplas eliminadas
+	 */
+	public long eliminarCampaniaConsultaPorId (PersistenceManager pm, long idCampania, long idConsulta, int eliminar)
+	{
+
+
+		Query q;
+
+
+		q = pm.newQuery(SQL, "UPDATE CAMPANIA_CONSULTA SET DISPONIBLE = 'NO'  WHERE idConsulta = ? AND id = ?");
+
+		q.setParameters(idConsulta, idCampania);
 		
-        Query q = pm.newQuery(SQL, "INSERT INTO " + "CAMPANIA_CONSULTA" + "(id, idconsulta, fechainicio, fechafin, disponible) values (?, ?, ?, ?, ?)");
-        q.setParameters(idCampania, idConsulta, fechaInicio, fechaFin, disponible);
-        
-        
-        
-        return (long) q.executeUnique();
+		q.executeUnique();
+
+
+		if(eliminar == 0) {
+			
+			Query x = pm.newQuery(SQL, "DELETE FROM " + "CAMPANIA_CONSULTA" + " WHERE id = ? AND idConsulta = ?");
+			x.setParameters(idCampania, idConsulta);
+			x.executeUnique();
+
+		}
+
+		
+		
+		return 1;
+
+	}
+	
+	
+	
+	public void reapertura(PersistenceManager pm, long idCampania, long idConsulta) {
+		
+		
+
+		Query q;
+
+
+		q = pm.newQuery(SQL, "UPDATE CAMPANIA_CONSULTA SET DISPONIBLE = 'SI'  WHERE idConsulta = ? AND id = ?");
+
+		q.setParameters(idConsulta, idCampania);
+		
+		q.executeUnique();
+		
+		
 	}
 
 }

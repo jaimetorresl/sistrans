@@ -1409,6 +1409,7 @@ public class InterfazEpsAndesApp extends JFrame implements ActionListener {
 				for(int i = 0; i < listaIdConsulta.size(); i++) {
 
 					epsandes.registrarCampaniaConsulta(campania.getId(), Long.parseLong(listaIdConsulta.get(i)), fechaInicioSS, fechaFinSS, "SI");
+					epsandes.cambiarReservaConsulta(Long.parseLong(listaIdConsulta.get(i)));
 
 				}
 
@@ -1419,7 +1420,8 @@ public class InterfazEpsAndesApp extends JFrame implements ActionListener {
 				for(int i = 0; i < listaIdTerapia.size(); i++) {
 
 					epsandes.registrarCampaniaTerapia(campania.getId(), Long.parseLong(listaIdTerapia.get(i)), fechaInicioSS, fechaFinSS, "SI");
-
+					epsandes.cambiarReservaTerapia(Long.parseLong(listaIdTerapia.get(i)));
+					
 				}
 
 			} 
@@ -1429,7 +1431,8 @@ public class InterfazEpsAndesApp extends JFrame implements ActionListener {
 				for(int i = 0; i < listaIdProcedimiento.size(); i++) {
 
 					epsandes.registrarCampaniaProcedimiento(campania.getId(), Long.parseLong(listaIdProcedimiento.get(i)), fechaInicio, fechaFin, "SI");
-
+					epsandes.cambiarReservaProcedimiento(Long.parseLong(listaIdProcedimiento.get(i)));
+					
 				}
 
 			} 
@@ -1438,7 +1441,8 @@ public class InterfazEpsAndesApp extends JFrame implements ActionListener {
 				for(int i = 0; i < listaIdHospitalizacion.size(); i++) {
 
 					epsandes.registrarCampaniaHospitalizacion(campania.getId(), Long.parseLong(listaIdHospitalizacion.get(i)), fechaInicio, fechaFin, "SI");
-
+					epsandes.cambiarReservaHospitalizacion(Long.parseLong(listaIdHospitalizacion.get(i)));
+					
 				}
 
 			}
@@ -1460,6 +1464,126 @@ public class InterfazEpsAndesApp extends JFrame implements ActionListener {
 		}
 
 
+	}
+	
+	
+	
+	public void desreservarSSCampania()
+	{
+		try 
+		{
+			
+			String idCampania = JOptionPane.showInputDialog(this, "Id de la campania?", "Desereservar ss de Campania Prevencion", JOptionPane.QUESTION_MESSAGE);
+			long idCampania2 = Long.parseLong(idCampania);
+			
+			Object[] options1 = {"Consulta", "Terapia", "Procedimiento Especial", "Hospitalizacion"};
+			int opcion = JOptionPane.showOptionDialog(null,
+					"Elige el tipo de servicio que desea desreservar",
+					"Desereservar ss de Campania Prevencion",
+					JOptionPane.YES_NO_CANCEL_OPTION,
+					JOptionPane.PLAIN_MESSAGE,
+					null,
+					options1,
+					null);
+			
+			
+			if(opcion == 0) {
+				
+				String idConsulta = JOptionPane.showInputDialog(this, "Id de la consulta que desea desreservar?", "Desereservar ss de Campania Prevencion", JOptionPane.QUESTION_MESSAGE);
+				long idConsulta2 = Long.parseLong(idConsulta);
+				
+				int eliminar = JOptionPane.showConfirmDialog(this, "Desea eliminar el ss asociado a la campania?");
+				
+				epsandes.eliminarCampaniaConsultaPorId(idCampania2, idConsulta2, eliminar);
+				epsandes.cambiarReservaConsulta(idConsulta2);
+				
+			} else if(opcion == 1) {
+				
+				String idTerapia = JOptionPane.showInputDialog(this, "Id de la terapia que desea desreservar?", "Desereservar ss de Campania Prevencion", JOptionPane.QUESTION_MESSAGE);
+				long idTerapia2 = Long.parseLong(idTerapia);
+				
+				int eliminar = JOptionPane.showConfirmDialog(this, "Desea eliminar el ss asociado a la campania?");
+				
+				epsandes.eliminarCampaniaTerapiaPorId(idCampania2, idTerapia2, eliminar);
+				epsandes.cambiarReservaTerapia(idTerapia2);
+				
+			} else if(opcion == 2) {
+				
+				String idProcedimiento = JOptionPane.showInputDialog(this, "Id del procedimiento especial que desea desreservar?", "Desereservar ss de Campania Prevencion", JOptionPane.QUESTION_MESSAGE);
+				long idProcedimiento2 = Long.parseLong(idProcedimiento);
+				
+				int eliminar = JOptionPane.showConfirmDialog(this, "Desea eliminar el ss asociado a la campania?");
+				
+				epsandes.eliminarCampaniaProcedimientoPorId(idCampania2, idProcedimiento2, eliminar);
+				epsandes.cambiarReservaProcedimiento(idProcedimiento2);
+				
+			} else if(opcion == 3) {
+				
+				String idHospitalizacion = JOptionPane.showInputDialog(this, "Id del hospitalizacion que desea desreservar?", "Desereservar ss de Campania Prevencion", JOptionPane.QUESTION_MESSAGE);
+				long idHospitalizacion2 = Long.parseLong(idHospitalizacion);
+				
+				int eliminar = JOptionPane.showConfirmDialog(this, "Desea eliminar el ss asociado a la campania?");
+				
+				epsandes.eliminarCampaniaHospitalizacionPorId(idCampania2, idHospitalizacion2, eliminar);
+				epsandes.cambiarReservaHospitalizacion(idHospitalizacion2);
+				
+			}
+
+			
+				String resultado = "En desreservarSSCampania\n\n";
+				resultado += "SS eliminado de la campania exitosamente";
+				resultado += "\n Operaci�n terminada";
+				panelDatos.actualizarInterfaz(resultado);
+
+		} 
+		catch (Exception e) 
+		{
+			//			e.printStackTrace();
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
+	}
+	
+	
+	
+	public void reaperturaServicio() {
+		
+		
+		try {
+			
+			String idCampania = JOptionPane.showInputDialog(this, "Id de la campania?", "Recuperar ss de Campania Prevencion", JOptionPane.QUESTION_MESSAGE);
+			long idCampania2 = Long.parseLong(idCampania);
+			
+			Object[] options1 = {"Consulta", "Terapia", "Procedimiento Especial", "Hospitalizacion"};
+			int opcion = JOptionPane.showOptionDialog(null,
+					"Elige el tipo de servicio que desea realizar reapertura",
+					"Reapertura ss de Campania Prevencion",
+					JOptionPane.YES_NO_CANCEL_OPTION,
+					JOptionPane.PLAIN_MESSAGE,
+					null,
+					options1,
+					null);
+			
+			
+			if(opcion == 0) {
+				
+				String idConsulta = JOptionPane.showInputDialog(this, "Id de la consulta reapertura?", "Reapertura ss", JOptionPane.QUESTION_MESSAGE);
+				long idConsulta2 = Long.parseLong(idConsulta);
+				
+				epsandes.reaperturaCampaniaConsulta(idCampania2, idConsulta2);
+				
+				
+			} 
+			
+			
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		
+		
+		
 	}
 
 

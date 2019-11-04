@@ -772,7 +772,7 @@ public class PersistenciaEPSAndes {
 
 			log.trace ("Inserci�n de consulta afiliada a la ips: " + idIPS + ": " + tuplasInsertadas + " tuplas insertadas");
 
-			return new Consulta(id, esAfiliado, ordenPrevia, idIPS, capacidad, horaInicio, horaFin, fechaInicio, fechaFin, diaInicio, diaFin, idRecepcionista);
+			return new Consulta(id, esAfiliado, ordenPrevia, idIPS, capacidad, horaInicio, horaFin, fechaInicio, fechaFin, diaInicio, diaFin, idRecepcionista, "NO");
 		}
 		catch (Exception e)
 		{
@@ -1561,7 +1561,291 @@ public class PersistenciaEPSAndes {
 		}
 	}
 
+	
+	
+	public void eliminarCampaniaConsulta(long idCampania, long idConsulta, int eliminar)
+	{
+		
+		PersistenceManager pm = pmf.getPersistenceManager();
 
+		Transaction tx=pm.currentTransaction();
+		try
+		{
+			tx.begin();
+			long tuplasInsertadas = sqlCampaniaConsulta.eliminarCampaniaConsultaPorId(pm, idCampania, idConsulta, eliminar);
+			tx.commit();
+
+			log.trace ("Eliminacion de consulta asociada a la campania: " + idCampania + ": " + tuplasInsertadas + " tuplas eliminadas");
+		}
+		catch (Exception e)
+		{
+			//        	e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
+	}
+
+	
+	public void eliminarCampaniaTerapia(long idCampania, long idTerapia, int eliminar)
+	{
+		
+		PersistenceManager pm = pmf.getPersistenceManager();
+
+		Transaction tx=pm.currentTransaction();
+		try
+		{
+			tx.begin();
+			long tuplasInsertadas = sqlCampaniaTerapia.eliminarCampaniaTerapiaPorId(pm, idCampania, idTerapia, eliminar);
+			tx.commit();
+
+			log.trace ("Eliminacion de terapia asociada a la campania: " + idCampania + ": " + tuplasInsertadas + " tuplas eliminadas");
+		}
+		catch (Exception e)
+		{
+			//        	e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
+	}
+	
+	
+	public void eliminarCampaniaProcedimiento(long idCampania, long idProcedimiento, int eliminar)
+	{
+		
+		PersistenceManager pm = pmf.getPersistenceManager();
+
+		Transaction tx=pm.currentTransaction();
+		try
+		{
+			tx.begin();
+			long tuplasInsertadas = sqlCampaniaProcedimiento.eliminarCampaniaProcedimientoPorId(pm, idCampania, idProcedimiento, eliminar);
+			tx.commit();
+
+			log.trace ("Eliminacion de terapia asociada a la campania: " + idCampania + ": " + tuplasInsertadas + " tuplas eliminadas");
+		}
+		catch (Exception e)
+		{
+			//        	e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
+	}
+	
+	
+	public void eliminarCampaniaHospitalizacion(long idCampania, long idHospitalizacion, int eliminar)
+	{
+		
+		PersistenceManager pm = pmf.getPersistenceManager();
+
+		Transaction tx=pm.currentTransaction();
+		try
+		{
+			tx.begin();
+			long tuplasInsertadas = sqlCampaniaHospitalizacion.eliminarCampaniaHospitalizacionPorId(pm, idCampania, idHospitalizacion, eliminar);
+			tx.commit();
+
+			log.trace ("Eliminacion de hospitalizacion asociada a la campania: " + idCampania + ": " + tuplasInsertadas + " tuplas eliminadas");
+		}
+		catch (Exception e)
+		{
+			//        	e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
+	}
+	
+	
+	
+	public void cambiarReservaConsulta(long idConsulta)
+	{
+		
+		PersistenceManager pm = pmf.getPersistenceManager();
+
+		Transaction tx=pm.currentTransaction();
+		try
+		{
+			tx.begin();
+		
+			sqlConsulta.cambiarReservaConsulta(pm, idConsulta);
+			
+			tx.commit();
+			
+			log.trace ("Cambio de reservado en la consulta: " + idConsulta);
+		}
+		catch (Exception e)
+		{
+			//        	e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
+	}
+	
+	
+	
+	public void cambiarReservaTerapia(long idTerapia)
+	{
+		
+		PersistenceManager pm = pmf.getPersistenceManager();
+
+		Transaction tx=pm.currentTransaction();
+		try
+		{
+			tx.begin();
+		
+			sqlTerapia.cambiarReservaTerapia(pm, idTerapia);
+			
+			tx.commit();
+			
+			log.trace ("Cambio de reservado en la terapia: " + idTerapia);
+		}
+		catch (Exception e)
+		{
+			//        	e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
+	}
+	
+	
+	public void cambiarReservaProcedimiento(long idProcedimiento)
+	{
+		
+		PersistenceManager pm = pmf.getPersistenceManager();
+
+		Transaction tx=pm.currentTransaction();
+		try
+		{
+			tx.begin();
+		
+			sqlProcedimientoEsp.cambiarReservaProcedimiento(pm, idProcedimiento);
+			
+			tx.commit();
+			
+			log.trace ("Cambio de reservado en la procedimiento: " + idProcedimiento);
+		}
+		catch (Exception e)
+		{
+			//        	e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
+	}
+	
+	
+	
+	public void cambiarReservaHospitalizacion(long idHospitalizacion)
+	{
+		
+		PersistenceManager pm = pmf.getPersistenceManager();
+
+		Transaction tx=pm.currentTransaction();
+		try
+		{
+			tx.begin();
+		
+			sqlHospitalizacion.cambiarReservaHospitalizacion(pm, idHospitalizacion);
+			
+			tx.commit();
+			
+			log.trace ("Cambio de reservado en la hospitalizacion: " + idHospitalizacion);
+		}
+		catch (Exception e)
+		{
+			//        	e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
+	}
+	
+	
+	
+	public void reaperturaCampaniaConsulta(long idCampania, long idConsulta)
+	{
+		
+		PersistenceManager pm = pmf.getPersistenceManager();
+
+		Transaction tx=pm.currentTransaction();
+		try
+		{
+			tx.begin();
+		
+			sqlCampaniaConsulta.reapertura(pm, idCampania, idConsulta);
+			
+			tx.commit();
+			
+			log.trace ("Cambio reapertura: " + idConsulta);
+		}
+		catch (Exception e)
+		{
+			//        	e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
+	}
+	
 	/**
 	 * Extrae el mensaje de la exception JDODataStoreException embebido en la Exception e, que da el detalle espec�fico del problema encontrado
 	 * @param e - La excepci�n que ocurrio
