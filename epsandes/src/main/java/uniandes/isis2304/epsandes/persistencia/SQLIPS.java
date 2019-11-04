@@ -146,10 +146,10 @@ class SQLIPS
 		q.setResultClass(IPS.class);
 		return (List<IPS>) q.executeList();
 	}
-	public List<Object []> darServicosPrestadosPorIPS(PersistenceManager pm, String fechaInicio, String fechaFin){
-		String sql = "SELECT IPS.nombre, COUNT(DISTINCT(IPS.ID) AS CUANTOS)";
+	public List<Object> darRFC1(PersistenceManager pm, String fechaInicio, String fechaFin){
+		String sql = "SELECT ips.id, ips.nombre, COUNT(IPS.ID) AS CUANTOS";
 		sql += "FROM";
-		sql += "receta, ";
+		sql += "receta ";
 		sql += "INNER JOIN cita ON receta.idCita = cita.id";
 		sql += "INNER JOIN  ips ON cita.idIPS = ips.id";
 		sql	+= "WHERE TO_DATE('cita.fechaInicio', 'YYYY-MM-DD')>= TO_DATE('"+fechaInicio+",'YYYY-MM-DD')";

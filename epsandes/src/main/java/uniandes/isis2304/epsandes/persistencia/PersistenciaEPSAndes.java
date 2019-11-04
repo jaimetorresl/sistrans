@@ -1,5 +1,6 @@
 package uniandes.isis2304.epsandes.persistencia;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -40,6 +41,8 @@ import uniandes.isis2304.epsandes.negocio.Receta;
 import uniandes.isis2304.epsandes.negocio.Terapia;
 import uniandes.isis2304.epsandes.negocio.UsuarioEPS;
 import uniandes.isis2304.epsandes.negocio.UsuarioIPS;
+import uniandes.isis2304.parranderos.negocio.Bar;
+import uniandes.isis2304.parranderos.negocio.Bebedor;
 
 public class PersistenciaEPSAndes {
 
@@ -1170,35 +1173,26 @@ public class PersistenciaEPSAndes {
 	 * mostrar la cantidad de servicios prestados por cada IPS durante un periodo de tiempo 
 	 * y en el año corrido
 	 */
-	public void serviciosPorIPS(String fechaInicio, String fechaFin) {
-		PersistenceManager pm = pmf.getPersistenceManager();
+	public List<Object []> rfc1 (String fechaInicio, String fechaFin)
+	{
+		List<Object []> respuesta = new LinkedList <Object []> ();
+		List<Object> tuplas = sqlIPS.darRFC1 (pmf.getPersistenceManager(), fechaInicio, fechaFin);
+        for ( Object tupla : tuplas)
+        {
+			Object [] datos = (Object []) tupla;
+			int idIPS = ((BigDecimal) datos [0]).intValue ();
+			String nombreIPS = (String) datos [1];
+			int cantidadServiciosPrestados = ((BigDecimal) datos [0]).intValue ();
+			
+			Object [] servicio = new Object [3];
+			servicio [0] = idIPS;
+			servicio [1] = nombreIPS;
+			servicio [2] = cantidadServiciosPrestados;
+			
+			respuesta.add(servicio);
+        }
 
-		Transaction tx=pm.currentTransaction();
-		try
-		{
-			List<Object []> respuesta = new LinkedList <Object []> ();
-			List<Object[]> tuplas = sqlIPS.darServicosPrestadosPorIPS(pm, fechaInicio, fechaFin);
-			tx.begin();
-
-			//metodo
-
-			tx.commit();
-
-
-		}
-		catch (Exception e)
-		{
-			//        	e.printStackTrace();
-			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
-		}
-		finally
-		{
-			if (tx.isActive())
-			{
-				tx.rollback();
-			}
-			pm.close();
-		}
+		return respuesta;
 	}
 
 

@@ -49,14 +49,68 @@ public class EPSAndes {
 		pp = PersistenciaEPSAndes.getInstance ();
 	}
 
+	//--------------------------------------------------------------------------------------------------------------
+	//						METODOS DE CONSULTA
+	//--------------------------------------------------------------------------------------------------------------
+
+
+	/**
+	 * MOSTRAR LA CANTIDAD DE SERVICIOS PRESTADOS POR CADA IPS DURANTE UN PERIODO DE TIEMPO Y EN
+	 *EL AÑO CORRIDO
+	 */
+	public List<Object []> rfc1(String fechaInicio, String fechaFin) {
+		log.info ("Listado servicios prestados por una IPS en un tiempo dado");
+		List<Object []> tuplas = pp.rfc1(fechaInicio, fechaFin);
+		log.info ("Listado servicios prestados por una IPS en un tiempo dado: Listo!");
+		return tuplas;
+
+	}
+
+	/**
+	 * Los servicios que fueron más solicitados en un período de tiempo dado.
+	 */
+	public void rfc2(String fechaInicio, String fechaFin) {
+
+		log.info ("Listando servicios que fueron más solicitados");
+		List<Object []> tuplas = pp.dar;
+		log.info ("Listando servicios que fueron más solicitados: Listo!");
+		return tuplas;
+	}
+
+	/**
+	 * Dada una unidad de tiempo (por ejemplo, semana o mes) y un servicio de salud10, considerando todo el tiempo
+	 *de operación de EPSAndes, indicar cuáles fueron las fechas de mayor demanda (mayor cantidad de servicios
+	 *solicitados), las de mayor actividad (mayor cantidad de servicios efectivamente prestados) y también las fechas
+	 *de menor demanda.
+	 */
+	public void rfc6(String unidadTiempo, String servicio ) {
+		log.info ("Listando fechas de mayor y menor demanda");
+		List<Object []> tuplas = pp.dar();
+		log.info ("Listando Bebedores y cuántas visitas ha realizado: Listo!");
+		return tuplas;
+	}
+
+	/**
+	 * Encontrar la información de los afiliados exigente. Se considera exigente a un afiliado que, durante el último
+	 *año de operación de EPSAndes, ha solicitado y recibido más de doce (12) de servicios de salud, de por lo
+	 *menos tres (3) tipos de servicio diferentes11. La información en el resultado debe evidenciar el hecho de ser
+	 *afiliado exigente.
+	 */
+	public void rfc7(String fechaInicio, String fechaFin) {
+		log.info ("Listando afiliados exigentes");
+		List<Object []> tuplas = pp.dar();
+		log.info ("Listando afiliados exigentes: Listo!");
+		return tuplas;
+	}
+
 	/**
 	 * El constructor qye recibe los nombres de las tablas en tableConfig
 	 * @param tableConfig - Objeto Json con los nombres de las tablas y de la unidad de persistencia
 	 */
-//	public EPSAndes (JsonObject tableConfig)
-//	{
-//		pp = PersistenciaEPSAndes.getInstance (tableConfig);
-//	}
+	//	public EPSAndes (JsonObject tableConfig)
+	//	{
+	//		pp = PersistenciaEPSAndes.getInstance (tableConfig);
+	//	}
 
 	/**
 	 * Cierra la conexi�n con la base de datos (Unidad de persistencia)
@@ -332,8 +386,8 @@ public class EPSAndes {
 		return ordenConsulta;
 
 	}
-	
-	
+
+
 	public OrdenTerapia registrarOrdenTerapia(long idOrdenSS, long idTerapia) {
 
 		OrdenTerapia ordenTerapia;
@@ -344,7 +398,7 @@ public class EPSAndes {
 		return ordenTerapia;
 
 	}
-	
+
 	public OrdenProcedimientoEsp registrarOrdenProcedimientoEsp(long idOrdenSS, long idProcedimiento) {
 
 		OrdenProcedimientoEsp ordenProcedimiento;
@@ -355,8 +409,8 @@ public class EPSAndes {
 		return ordenProcedimiento;
 
 	}
-	
-	
+
+
 	public OrdenHospitalizacion registrarOrdenHospitalizacion(long idOrdenSS, long idHospitalizacion) {
 
 		OrdenHospitalizacion ordenHospitalizacion;
@@ -367,41 +421,41 @@ public class EPSAndes {
 		return ordenHospitalizacion;
 
 	}
-	
-	
+
+
 	/**--------------------------------------------------------------------------------
 	----------------------------------Iteracion 2 -------------------------------------
 	----------------------------------------------------------------------------------*/
-	
-	
-	
+
+
+
 	public List<Consulta> darConsultas() {
-		
+
 		return pp.darConsultas();
-		
+
 	}
-	
+
 	public List<Terapia> darTerapias() {
-		
+
 		return pp.darTerapias();
-		
+
 	}
-	
+
 	public List<ProcedimientoEsp> darProcedimientosEsp() {
-		
+
 		return pp.darProcedimientosEsp();
-		
+
 	}
-	
+
 	public List<Hospitalizacion> darHospitalizaciones() {
-		
+
 		return pp.darHospitalizacion();
-		
+
 	}
-	
-	
-	
-	
+
+
+
+
 	public CampaniaPrevencion registrarCampaniaPrevencion(String localizacion, String fechaInicio, String fechaFin, long idEPS) {
 
 		CampaniaPrevencion campaniaPrevencion;
@@ -412,8 +466,8 @@ public class EPSAndes {
 		return campaniaPrevencion;
 
 	}
-	
-	
+
+
 	public CampaniaConsulta registrarCampaniaConsulta(long idCampania, long idConsulta,
 			String fechaInicio, String fechaFin, String disponible) {
 
@@ -423,10 +477,10 @@ public class EPSAndes {
 		campaniaConsulta = pp.registrarCampaniaConsulta(idCampania, idConsulta, fechaInicio, fechaFin, disponible);
 		log.info ("Adicionando consulta a la campania de prevencion: " + campaniaConsulta);
 		return campaniaConsulta;
-		
+
 	}
-	
-	
+
+
 	public CampaniaTerapia registrarCampaniaTerapia(long idCampania, long idTerapia,
 			String fechaInicio, String fechaFin, String disponible) {
 
@@ -436,10 +490,10 @@ public class EPSAndes {
 		campaniaTerapia = pp.registrarCampaniaTerapia(idCampania, idTerapia, fechaInicio, fechaFin, disponible);
 		log.info ("Adicionando terapia a la campania de prevencion: " + campaniaTerapia);
 		return campaniaTerapia;
-		
+
 	}
-	
-	
+
+
 	public CampaniaProcedimientoEsp registrarCampaniaProcedimiento(long idCampania, long idProcedimiento,
 			String fechaInicio, String fechaFin, String disponible) {
 
@@ -449,10 +503,10 @@ public class EPSAndes {
 		campaniaProcedimiento = pp.registrarCampaniaProcedimiento(idCampania, idProcedimiento, fechaInicio, fechaFin, disponible);
 		log.info ("Adicionando procedimiento especial a la campania de prevencion: " + campaniaProcedimiento);
 		return campaniaProcedimiento;
-		
+
 	}
-	
-	
+
+
 	public CampaniaHospitalizacion registrarCampaniaHospitalizacion(long idCampania, long idHospitalizacion,
 			String fechaInicio, String fechaFin, String disponible) {
 
@@ -462,7 +516,7 @@ public class EPSAndes {
 		campaniaHospitalizacion = pp.registrarCampaniaHospitalizacion(idCampania, idHospitalizacion, fechaInicio, fechaFin, disponible);
 		log.info ("Adicionando hospitalizacion a la campania de prevencion: " + campaniaHospitalizacion);
 		return campaniaHospitalizacion;
-		
+
 	}
 
 

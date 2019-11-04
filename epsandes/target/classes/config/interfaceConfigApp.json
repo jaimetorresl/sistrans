@@ -5,6 +5,34 @@
 	"bannerPath": "./src/main/resources/config/logo.png",
 	"menuBar":
 	[
+
+
+		
+		{ "menuTitle": "Consultas",
+		  "options":
+			[
+				{
+					"label": "RFC1 servicios prestados por IPS",
+					"event": "rfc1"
+				},
+				{
+					"label": "RFC2 20 SERVICIOS MAS SOLICITADOS",
+					"event": "rfc2"
+				},
+				{
+					"label": "RFC6 Analizar operacion EPSAndes",
+					"event": "rfc6"
+				},
+				{
+					"label": "RFC7 Afiliados Exigentes",
+					"event": "rfc7"
+				}
+
+
+
+			]
+		},
+
 		{ "menuTitle": "EPS",
 		  "options":
 			[
